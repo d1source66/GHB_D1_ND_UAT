@@ -1,0 +1,413 @@
+﻿@*@model GHB_D1.Models.GroupUserModel*@
+@*@model GHB_D1.Models.MenuViewModel*@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title GHB Report </title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/boxicons1.css" rel="stylesheet" />
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        #wrap {
+            min-height: 100%;
+        }
+
+        #main {
+            overflow: auto;
+            padding-bottom: 150px; /* this needs to be bigger than footer height*/
+        }
+
+        .footer {
+            position: relative;
+            margin-top: -150px; /* negative value of footer height */
+            height: 150px;
+            clear: both;
+            padding-top: 20px;
+        }
+
+        .sideHeader {
+            width: 30%;
+        }
+
+        .navFontColor {
+            color: #ffffff;
+        }
+
+        .newNav {
+            background-color: unset !important;
+            background: unset !important;
+            color: #ff850c;
+        }
+
+            .newNav:hover {
+                background-color: unset !important;
+                background: unset !important;
+                color: red;
+            }
+
+        .avata {
+            min-width: auto;
+        }
+
+        .nav li.active a {
+            font-weight: bold;
+            color: #007bff; /* Highlight color */
+        }
+    </style>
+</head>
+<body style="background-color:unset;font-size:14px;">
+    <div>
+        <!-- navbar -->
+        <nav class="navbar" style="background-color: #ff850c; border-radius: 0px;position:fixed;">
+            <div class="logo_item" style="position:absolute;top:18px;color:#ffffff">
+                <i class="bx bx-menu" id="sidebarOpen"></i>
+                <div>
+                    <div>GHB ATM/CDM <span>[SIT]</span></div>
+                    <div style="position: absolute;font-size:18px;"></div>
+                    @*@Html.Partial("pagePosition")*@
+                </div>
+            </div>
+            <div class="sideHeader">&nbsp;</div>
+            <div class="search_bar">
+                @*<input type="text" placeholder="Search" />*@
+            </div>
+            <div class="sideHeader">&nbsp;</div>
+            <div class="navbar_content" style="width:inherit;">
+                <i class="bi bi-grid"></i>
+                <i class='bx bx-sun' id="darkLight" style="display:none;"></i>
+                @if (Session["Fullname"] != null)
+                {
+                    <div style="text-align:end;">
+                        <div class="avata">@Session["Username"].ToString()</div>
+                        <div class="avata">LAST LOGIN:&nbsp;@Session["LastLogon"].ToString()</div>
+                        @if (@Session["BranchName"].ToString() != "")
+                        {
+                            <div class="avata">
+                                สาขา:&nbsp;@Session["BranchName"].ToString()&nbsp;
+                                สถานะ:&nbsp;@Session["IsActive"].ToString()
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="avata">
+                                สถานะ:&nbsp;@Session["IsActive"].ToString()
+                            </div>
+                        }
+                    </div>
+
+                }
+                else
+                {
+                    <div style="display: flex; flex-direction: row-reverse; flex-wrap: wrap;">
+                        <div class="avata"></div>
+                        <div class="avata">LAST LOGIN:&nbsp;</div>
+                        <div class="avata">สาขา:&nbsp;&nbsp;สถานะ:&nbsp;</div>
+                    </div>
+                }
+                @*<i class='bx bx-bell'></i>
+                    <img src="~/images/profile.jpg" alt="" class="profile" />*@
+                <div class="dropdown">
+                    <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                       id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+                        @*<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
+                            alt="Black and White Portrait of a Man" loading="lazy" />*@
+                        <span class="navlink_icon newNav">
+                            <i class="bx bx-face" style="font-size:30px;color:#fff;margin-left:-24px;"></i>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="min-width:100px!important" aria-labelledby="navbarDropdownMenuAvatar">
+                        @*<li>
+                                <a class="dropdown-item" href="#">My profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Settings</a>
+                            </li>*@
+                        <li>
+                            @*<a class="dropdown-item" href="#">Logout</a>*@
+                            @Html.ActionLink("Log out", "Logout", "Account", null, new { @class = "dropdown-item nav-link logout" })
+                            @*@Html.Partial("_LoginPartialV3")*@
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- sidebar -->
+        <nav class="sidebar" style="font-size: 12.5px; background-color: #3c1e00;">
+            <div class="menu_content">
+                <ul class="menu_items">
+                    <li class="item">
+                        <a href="@Url.Action("Index", "Administrator")" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-home-alt"></i>
+                            </span>
+                            <span class="navlink navFontColor">หน้าหลัก</span>
+                        </a>
+                    </li>
+                    @if (ViewBag.GroupReport != null)
+                    {
+                        var groupreport = ViewBag.GroupReport;
+
+
+                        <li class="item">
+                            @if (groupreport.Contains("R02") || groupreport.Contains("R01") || groupreport.Contains("R03"))
+                            {
+                                <div href="#" class="nav_link submenu_item">
+                                    <span class="navlink_icon">
+                                        <i class="bx bx-group"></i>
+                                    </span>
+                                    <span class="navlink navFontColor">พนักงาน</span>
+                                    <i class="bx bx-chevron-right arrow-left navFontColor"></i>
+                                </div>
+                            }
+                            <ul class="menu_items submenu" style="background-color:#000000">
+                                @if (groupreport.Contains("R02"))
+                                {
+                                    <a href="@Url.Action("NdUserManagement", "Administrator")" class="nav_link sublink">User Management</a>
+                                }
+                                @if (groupreport.Contains("R01"))
+                                {
+                                    <a href="@Url.Action("NdRoleManagement", "Administrator")" class="nav_link sublink">Role Management</a>
+                                }
+                                @if (groupreport.Contains("R03"))
+                                {
+                                    <a href="@Url.Action("NdUserTransfer", "Administrator")" class="nav_link sublink">Transfer Schedule Management</a>
+                                }
+                            </ul>
+                        </li>
+                        <li class="item">
+                            @if (groupreport.Contains("ALL") || groupreport.Contains("IND"))
+                            {
+                                <a href="@Url.Action("Index", "Home")" class="nav_link">
+                                    <span class="navlink_icon">
+                                        <i class="bx bx-file"></i>
+                                    </span>
+                                    <span class="navlink navFontColor">จัดการ Report</span>
+                                </a>
+                            }
+                        </li>
+                        <li class="item">
+                            @if (groupreport.Contains("R04"))
+                            {
+                                <a href="@Url.Action("NdAudiLog", "Administrator")" class="nav_link">
+                                    <span class="navlink_icon">
+                                        <i class="bx bxs-landmark"></i>
+                                    </span>
+                                    <span class="navlink navFontColor">Audit Log</span>
+                                </a>
+                            }
+                        </li>
+                        <li class="item">
+                            @if (groupreport.Contains("R05"))
+                            {
+                                <a href="@Url.Action("NdMainUserAttrib", "Administrator")" class="nav_link">
+                                    <span class="navlink_icon">
+                                        <i class="bx bxs-cog"></i>
+                                    </span>
+                                    <span class="navlink navFontColor">Configuration</span>
+                                </a>
+                            }
+                        </li>
+                    }
+                </ul>
+
+                <ul class="menu_items" style="display:none;">
+                    <div class="menu_title menu_editor"></div>
+                    <!-- duplicate these li tag if you want to add or remove navlink only -->
+                    <!-- Start -->
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bxs-magic-wand"></i>
+                            </span>
+                            <span class="navlink">Magic build</span>
+                        </a>
+                    </li>
+                    <!-- End -->
+
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-loader-circle"></i>
+                            </span>
+                            <span class="navlink">Filters</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-filter"></i>
+                            </span>
+                            <span class="navlink">Filter</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-cloud-upload"></i>
+                            </span>
+                            <span class="navlink">Upload new</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="menu_items" style="display:none;">
+                    <div class="menu_title menu_setting"></div>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-flag"></i>
+                            </span>
+                            <span class="navlink">Notice board</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-medal"></i>
+                            </span>
+                            <span class="navlink">Award</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-cog"></i>
+                            </span>
+                            <span class="navlink">Setting</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-layer"></i>
+                            </span>
+                            <span class="navlink">Features</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Sidebar Open / Close -->
+                <div class="bottom_content" style="display:none;">
+                    <div class="bottom expand_sidebar">
+                        <span> Expand</span>
+                        <i class='bx bx-log-in'></i>
+                    </div>
+                    <div class="bottom collapse_sidebar">
+                        <span> Collapse</span>
+                        <i class='bx bx-log-out'></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+
+            <div class="container">
+                <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+
+            </div>
+        </div>*@
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />*@
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+
+        <div id="wrap">
+            <div id="main" class="container clear-top">
+                @*<p>Your content here</p>*@
+            </div>
+        </div>
+        <footer class="footer"></footer>
+        <section id="footerLogin">
+            @Html.Partial("footer")
+        </section>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="~/Scripts/script.js"></script>
+    <script src="~/Scripts/mdb.umd.min.js"></script>
+    @RenderSection("scripts", required: false)
+    <script>
+        const options = {
+            enableHighAccuracy: true,// Request more precise location
+            timeout: 5000,// Wait up to 10 seconds
+            maximumAge: 0,// Always get fresh location
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                //navigator.geolocation.getCurrentPosition(sendPosition, showError, {
+                //    enableHighAccuracy: true, // Request more precise location
+                //    timeout: 10000, // Wait up to 10 seconds
+                //    maximumAge: 0  // Always get fresh location
+                //});
+                navigator.geolocation.getCurrentPosition(sendPosition, showError, options);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function sendPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            var accuracy = position.coords.accuracy; // Accuracy in meters
+
+            // Send data to MVC Controller via AJAX
+            fetch('/Home/SaveLocation2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ latitude: lat, longitude: lng, accuracy: accuracy })
+            })
+                .then(response => response.json())
+                .then(data => console.log('Success:', data));
+            //.catch(error => console.error('Error:', error));
+        }
+
+        function showError(error) {
+            //switch (error.code) {
+            //    case error.PERMISSION_DENIED:
+            //        alert("User denied the request for Geolocation.");
+            //        break;
+            //    case error.POSITION_UNAVAILABLE:
+            //        alert("Location information is unavailable.");
+            //        break;
+            //    case error.TIMEOUT:
+            //        alert("The request to get user location timed out.");
+            //        break;
+            //    case error.UNKNOWN_ERROR:
+            //        alert("An unknown error occurred.");
+            //        break;
+            //}
+        }
+
+        // Call function when page loads
+        window.onload = getLocation;
+    </script>
+</body>
+</html>

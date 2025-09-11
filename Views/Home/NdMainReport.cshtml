@@ -1,0 +1,660 @@
+﻿@model  GHB_D1.Models.MenuViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+@Styles.Render("~/Content/css")
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+<style>
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .ghbFont-color {
+        color: #23527c;
+        font-size: 14pt;
+    }
+
+        .ghbFont-color:focus, .ghbFont-color:hover, .ghbFont-color:active {
+            color: #ff850c; /*#ff850c;*/
+            font-size: 14pt;
+        }
+
+    .ghbFont-color1 {
+        color: #ff850c;
+        font-size: 14pt;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .divContainer {
+        /*background-color: rgb(255,102,204);*/
+        height: auto;
+        /*width: 1200px;
+        position: absolute;*/
+    }
+
+        .divContainer .divMain {
+            /*background-color: rgb(204,51,0);*/
+            height: auto;
+            width: 100%;
+            overflow: auto;
+        }
+
+            .divContainer .divMain .div1 {
+                /*background-color: rgb(0,204,255);*/
+                /*float: left;
+            padding: 5px;*/
+                height: auto;
+                /*margin: 20px;*/
+            }
+
+    .clear {
+        clear: both;
+    }
+
+    .tblHeader {
+        border: 1px solid rgb(170, 170, 170);
+        border-radius: 13px;
+        overflow: hidden;
+        width: 100%;
+        border-collapse: separate !important;
+        border-spacing: 0;
+    }
+
+    .Highlighted {
+        color: red !important;
+        font-weight: bold !important;
+        font-size: 12pt;
+    }
+
+    /*spinner*/
+    .loader {
+        border: 5px solid #f3f3f3;
+        /* Light grey */
+        border-top: 5px solid #3498db;
+        /* Blue */
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        animation: spin 2s linear infinite;
+        position: relative;
+    }
+
+    .loader-container {
+        position: relative;
+        display: inline-block;
+    }
+
+        .loader-container span {
+            position: absolute;
+            top: 45%;
+            left: 45%;
+        }
+
+    .spinner {
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        top: 44%;
+        left: 32%;
+        margin-left: -50px;
+        margin-top: -50px;
+        /*background: url(/link/to/your/image);*/
+        /*background-image: url('../../images/bg_color.jpg');*/
+        z-index: 100;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    #displayLoading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    /*spinner*/
+</style>
+<script>
+    $().ready(function () {
+
+
+        $("#btnAllDownload").click(function (e) {
+            GenerateReport('#searchTable tr',e);
+        });
+
+        $("#iconFr").click(function (e) {
+            $("#FrDate").datepicker("show");
+        });
+        //SetDatePickerTop(150);
+
+        //$("#T_DATE").change(function () {
+        //    let d = $(this).val();
+        //    var b = $("#T_DATE").val();
+        //    $("#displayDate").text(d);
+        //    $("#T_DATE").val(d);
+        //    $("#msg").hide();
+        //})
+
+        //let rows = document.querySelectorAll('tr');
+
+        //rows.forEach((row) => {
+        //    let z = document.createElement("td");
+        //    z.textContent = `(row #${row.rowIndex})`;
+        //    row.appendChild(z);
+        //});
+    })
+
+    function GenerateReport(name,e) {
+
+        //$('.groupReport li').each(function () {
+        $(name).each(function () {
+                var groupNo = $(this).find('.groupNo').val();
+                var groupName = $(this).find('.groupName').val();
+                var isChecked = $(this).find('.selectItem').is(':checked');
+                console.log("isChecked:" + isChecked + " groupNo:" + groupNo + " groupName:" + groupName)
+                if (isChecked == 1 && groupNo != undefined) {
+
+                    $("#popmsg").hide();
+                    $("#popmsg-success").hide();
+                    $("#msg").text("");
+                    $("#msg-success").text("");
+                    $("#displayLoading").show();
+
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '", "T_DATE" : "' + $("#ToDate").val() + '", "groupNo" : "' + groupNo + '" }',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '@Url.Action("AllDownload", "Home")', beforeSend: function (xhr) {
+                            $("#displayLoading").show();
+                        },
+                        success: function (result) {
+                            $("#displayLoading").hide();
+                            $("#popmsg-success").hide();
+                            if (result.length == 0) {
+
+                            } else {
+                                $("#msg").hide();
+                                $("#msg-success").text("โหลดข้อมูลรายงานทั้งหมด เรียบร้อยแล้ว สามารถเข้าไปดูรายงานได้ที่ D:\\GHBReportFiles\\");
+                                $("#popmsg-success").show();
+                                window.location.href = result.fileUrl;
+                            }
+                        }
+                        ,
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $("#displayLoading").hide();
+                            $("#msg").text("ไม่สามารถโหลดรายงาน");
+                            $("#msg").show();
+                            $("#popmsg").show();
+                        }
+
+                    });
+                }
+            });
+    }
+    function GenerateReport2(groupNo,groupName) {
+
+        //alert("groupNo:" + groupNo + " groupName:" + groupName);
+        $("#displayLoading").show();
+        console.log("groupNo:" + groupNo + " groupName:" + groupName)
+                if (groupNo != undefined) {
+
+                    $("#popmsg").hide();
+                    $("#popmsg-success").hide();
+                    $("#msg").text("");
+                    $("#msg-success").text("");
+
+
+                    //e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '", "T_DATE" : "' + $("#ToDate").val() + '", "groupNo" : "' + groupNo + '", "groupName" : "' + groupName + '", "SOLCODE" : "' + $("#SOLCODE").val() + '" }',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '@Url.Action("AllDownload", "Home")', beforeSend: function (xhr) {
+                            //$("#displayLoading").show();
+                        },
+                        success: function (result) {
+                            $("#displayLoading").hide();
+                            $("#popmsg-success").hide();
+                            if (result.length == 0) {
+
+                            } else {
+                                $("#msg").hide();
+                                $("#msg-success").text("โหลดข้อมูลรายงานกลุ่ม " + groupName +" ทั้งหมด เรียบร้อยแล้ว");
+                                $("#popmsg-success").show();
+                                window.location.href = result.fileUrl;
+                            }
+                        }
+                        ,
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $("#displayLoading").hide();
+                            $("#msg").text("ไม่สามารถโหลดรายงาน");
+                            $("#msg").show();
+                            $("#popmsg").show();
+                        }
+
+                    });
+                }
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#FrDate").datepicker({
+
+            language: 'en-en',
+            format: 'dd/mm/yyyy',
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#ToDate").datepicker({
+
+            language: 'en-en',
+            format: 'dd/mm/yyyy',
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#iconFr").click(function () {
+            $("#FrDate").datepicker("show");
+        });
+
+        $("#iconTo").click(function () {
+            $("#ToDate").datepicker("show");
+        });
+
+
+
+        $("#FrDate1").change(function () {
+            var inputStartDate = $("#FrDate").val();
+            var [Sday, Smonth, Syear] = inputStartDate.split('/');
+            var formattedStarDate = new Date(`${Smonth}/${Sday}/${Syear}`);
+            var startDate = new Date(formattedStarDate);
+
+            var inputEndDate = $("#ToDate").val();
+            var [day, month, year] = inputEndDate.split('/');
+            var formattedEndDate = new Date(`${month}/${day}/${year}`);
+            var endDate = new Date(formattedEndDate);
+
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+
+            if (dayDiff > 30) {
+                alert("จำนวนวันต้องไม่เกิน 30 วัน")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#FrDate").datepicker("update", yesterday);
+                $("#FrDate").datepicker({ todayHighlight: true });
+            } else if (dayDiff < 0) {
+                alert("วันเริ่มต้องมาก่อนวันสิ้นสุด")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#FrDate").datepicker("update", yesterday);
+            } else {
+                //alert("Dates are valid. Difference: " + dayDiff + " days.")
+            }
+
+        });
+
+        $("#ToDate1").change(function () {
+            var inputStartDate = $("#FrDate").val();
+            var [Sday, Smonth, Syear] = inputStartDate.split('/');
+            var formattedStarDate = new Date(`${Smonth}/${Sday}/${Syear}`);
+            var startDate = new Date(formattedStarDate);
+
+            var inputEndDate = $("#ToDate").val();
+            var [day, month, year] = inputEndDate.split('/');
+            var formattedEndDate = new Date(`${month}/${day}/${year}`);
+            var endDate = new Date(formattedEndDate);
+
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+
+            if (dayDiff > 30) {
+                alert("จำนวนวันต้องไม่เกิน 30 วัน")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#ToDate").datepicker("update", yesterday);
+                //$('#ToDate').datepicker('clearDates'); // Clear first
+                //$('#ToDate').datepicker('setDate', new Date()); // Set to today
+                //$("#ToDate").datepicker("setDate", yesterday);
+                /*$("#ToDate").datepicker("refresh");*/
+            } else if (dayDiff < 0) {
+                alert("วันเริ่มต้องมาก่อนวันสิ้นสุด")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#ToDate").datepicker("update", yesterday);
+            } else {
+                //alert("Dates are valid. Difference: " + dayDiff + " days.")
+            }
+
+
+            //var inputDate = $(this).val();
+            //var arrdate = inputDate.split("/");
+            //var output = arrdate[1] + "/" + arrdate[0] + "/" + arrdate[2];
+            //let d = $(this).val();
+            //var b = $("#ToDate").val();
+            //if (!inputDate) {
+            //    //$('#result').text("Please enter a date.");
+            //    return;
+            //}
+
+            //var inputDateTime = new Date(output);
+            //var currentDate = new Date();
+            //var pastLimit = new Date();
+            //pastLimit.setDate(currentDate.getDate() - 30);
+
+            //if (inputDateTime >= pastLimit) {
+            //    //$('#result').text("Valid: The date is within the last 30 days.");
+            //    //alert("")
+            //} else {
+            //    //$('#result').text("Invalid: The date is more than 30 days old.");
+            //    alert("จำนวนวันต้องไม่เกิน 30 วัน")
+            //}
+
+        });
+
+        GetSelectItem(true);
+        $('#select-all').click(function () {
+
+            var isChecked = $(this).is(':checked');
+            //$('input[type="checkbox"]').each(function () {
+            //    $(this).prop('checked', isChecked);
+            //});
+            GetSelectItem(isChecked);
+
+        });
+
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#searchTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    function GetSelectItem(isChecked) {
+        $("#select-all").prop('checked', isChecked);
+        $("#searchTable tr:visible .selectItem").prop('checked', isChecked);
+    }
+
+    $('#SOLCODE').on('input', function () {
+        const maxLength = 3;
+        const value = $(this).val();
+
+        // Restrict input to numbers only
+        if (value.length > maxLength) {
+            $(this).val(value.slice(0, maxLength));
+        }
+    });
+
+</script>
+
+@*<div id="displayLoading" style="display:none;">
+        <img id="loading-image" src="~/images/Spinner-6.gif" alt="Loading..." />
+    </div>*@
+<div class="from-row" id="displayLoading" style="display:none;">
+    <div class="col-12">
+        <div class="loader"></div>
+    </div>
+</div>
+@*<div class="loader-container spinner" id="displayLoading" style="display:none;">
+    <span style="display:none;">icon</span>
+    <div class="loader"></div>
+</div>*@
+@if (Model != null)
+{
+    string groupName = "";
+    <div class="container">
+        @*<p id="message" style="color: red;"></p>*@
+
+        @using (Html.BeginForm("NdAllDownload", "Home", FormMethod.Post, new { autocomplete = "off" }))
+        {
+            <div class="col-md-12 setNav">
+                <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+                <label class="setNavFont"> / </label>
+                <label class="setNavFont">Details Report</label>
+            </div>
+            <div class="setPage ">
+                <div class="row g-3 formColor">
+                    <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                        <div class="col-md-8">
+                            <label class="form-label labelForm">Details Report</label>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2 setButton1">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="col-md-12">
+                        <div class="col-md-5" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
+                            <label class="form-label labelCss" style=" margin-right: 7px;">วันนี่เริ่มต้น</label>
+                            @*<input type="text" class="form-control" id="departInput" style="width:50%;">*@
+                            <div class="input-group date calendar-width ">
+                                @Html.TextBox("FrDate", @Model.F_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd/mm/yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 204px;", autocomplete = "off" })
+                                <span class="input-group-addon" id="iconFr"><i class="glyphicon glyphicon-calendar" id="iconFr"></i></span>
+                            </div>
+                        </div>
+                        @if (Session["RoleName"].ToString() == "B01" || Session["RoleName"].ToString() == "B02" || Session["RoleName"].ToString() == "B03" || Session["RoleName"].ToString() == "B04")
+                        {
+                            <div class="col-md-2" style="display: flex; justify-content: flex-end; width: 19%; margin-left:-20px;">
+                                <input type="text" class="form-control rounded-lg txtinput inputWD" id="SOLCODE" style="border: 1px solid #aaa;" placeholder="รหัสสาขา-ondemand" name="SOLCODE" value="@ViewBag.SOLCODE">
+                                <input type="hidden" id="SOLCODE" name="SOLCODE" value="@ViewBag.SOLCODE" />
+                            </div>
+                        }
+                        <div class="col-md-5" style="display: flex; align-items: flex-end; margin-left: -11px;">
+                            <label class="form-label labelCss" style="margin-right: 5px;">วันที่สิ้นสุด</label>
+                            @*<input type="text" class="form-control" id="disInput" style="width:50%;">*@
+                            <div class="input-group date calendar-width ">
+                                @Html.TextBox("ToDate", @Model.T_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd/mm/yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 204px;", autocomplete = "off" })
+                                <span class="input-group-addon" id="iconTo"><i class="glyphicon glyphicon-calendar" id="iconTo"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                    <div style="padding:0px 18px;">
+                        <div class="card-body">
+                            <div class="col-12">
+                                <div class="divContainer">
+                                    <div class="divMain">
+                                        <div class="div1">
+                                            <div class="tableFixHead" style="width: 100%; ">
+                                                <table class="table table-striped display nowrap tblHeader">
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2" style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ลำดับ</th>
+                                                            <th rowspan="2" style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อกลุ่ม</th>
+                                                            <th colspan="3" style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ดาวน์โหลด All</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">PDF</th>
+                                                            @*<th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Excel</th>
+                                                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Text</th>*@
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="searchTable" class="groupReport">
+                                                        @if (Model._groupReportVMList != null)
+                                                        {
+                                                            int num = 1;
+
+                                                            foreach (var m in Model._groupReportVMList)
+                                                            {
+                                                                string[] typeSpl = m.GROUP_NAME.Split('_');
+
+                                                                if (typeSpl.Length == 1)
+                                                                {
+                                                                    groupName = @m.GROUP_NAME + "Report";
+                                                                    <tr>
+                                                                        @*<td style="text-align:center;">
+                                                                                @Html.CheckBoxFor(c => m.IsSelected, new { @class = "selectItem" })
+                                                                            </td>*@
+                                                                        <td style="text-align:center;vertical-align:middle;" width="10%" class="ghbFont-color1">@num .</td>
+                                                                        <td style="text-align: left; vertical-align: middle;">
+                                                                            <a name="titlereport" class="ghbFont-color" style="cursor: pointer; text-decoration: none;" href="@Url.Action("Index", @groupName, new { px = Model.BRANCH_ID, py = Model.USER_ID, pz = @m.GROUP_NAME, @style="font-size:16px!important;" })">@Html.DisplayFor(d => m.GROUP_NAME)</a>
+                                                                            @Html.HiddenFor(h => m.GROUP_NO, new { @class = "groupNo" })
+                                                                            @Html.HiddenFor(h => m.GROUP_NAME, new { @class = "groupName" })
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            @*<div class="loader-container spinner" id="displayLoading" style="display:none;">
+                                                                                    <span style="display:none;">icon</span>
+                                                                                    <div class="loader"></div>
+                                                                                </div>*@
+                                                                            <button id="btnDownload" type="button" class="btn-ghb-zip-export" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download"></button>
+                                                                        </td>
+                                                                        <td style="text-align: center; display: none;">
+                                                                            <button id="btnDownload" type="button" class="btn-ghb-excel-export" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download"></button>
+                                                                        </td>
+                                                                        <td style="text-align: center; display: none;">
+                                                                            <button id="btnDownload" type="button" class="btn-ghb-text-export" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download"></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                                num++;
+                                                            }
+
+                                                            foreach (var m in Model._groupReportVMList)
+                                                            {
+                                                                string[] typeSpl = m.GROUP_NAME.Split('_');
+
+                                                                if (typeSpl.Length > 1)
+                                                                {
+                                                                    groupName = @m.GROUP_NAME + "Report";
+
+                                                                    <tr>
+                                                                        @*<td style="text-align:center;">
+                                                                                @Html.CheckBoxFor(c => m.IsSelected, new { @class = "selectItem" })
+                                                                            </td>*@
+                                                                        <td style="text-align:center;vertical-align:top;" width="10%" class="ghbFont-color1">@num</td>
+                                                                        <td style="text-align:left;">
+                                                                            <a name="titlereport" class="ghbFont-color" style="cursor: pointer; text-decoration: none;" href="@Url.Action("Index", @groupName, new { px = Model.BRANCH_ID, py = Model.USER_ID, pz = @m.GROUP_NAME })">@Html.DisplayFor(d => m.GROUP_NAME)</a>
+                                                                            @Html.HiddenFor(h => m.GROUP_NO, new { @class = "groupNo" })
+                                                                            @Html.HiddenFor(h => m.GROUP_NAME, new { @class = "groupName" })
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            <button id="btnDownload2" type="button" class="btn-ghb-pdf-export" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download">   @*<span class="spinner-border spinner-border-sm"></span> <i class="fa fa-download"></i> DOWNLOAD*@ </button>
+                                                                        </td>
+                                                                        @*<td style="text-align:center;" display: none;">
+                                                                                <button id="btnDownload2" type="button" class="btn btn-ghb-primary btn-mg" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download">   <span class="spinner-border spinner-border-sm"></span> <i class="fa fa-download"></i> DOWNLOAD </button>
+                                                                            </td>
+                                                                            <td style="text-align:center;" display: none;">
+                                                                                <button id="btnDownload2" type="button" class="btn btn-ghb-primary btn-mg" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download">   <span class="spinner-border spinner-border-sm"></span> <i class="fa fa-download"></i> DOWNLOAD </button>
+                                                                            </td>*@
+                                                                    </tr>
+                                                                }
+
+                                                                num++;
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+
+    </div>
+
+    @Html.HiddenFor(x => x.USER_ID)
+    @Html.HiddenFor(x => x.BRANCH_ID)
+    @Html.HiddenFor(x => x.T_DATE)
+
+}
+
+
+@*<div class="row" id="msg" style="margin-top: 120px;display:none;">
+        <div class="alert alert-danger show" role="alert">
+            <strong>Information</strong> @Model.MESSAGE
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>*@

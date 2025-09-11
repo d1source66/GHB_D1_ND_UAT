@@ -1,0 +1,328 @@
+﻿@model List<GHB_D1.Models.RoleModels>
+@{
+    ViewBag.Title = "MenuView";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<link href="~/Scripts/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<style>
+
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .setButton {
+        display: flex;
+        flex-direction: row;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButtonFont {
+        color: #fff;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    .button[type=submit] {
+        width: 68% !important;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #ff850c !important;
+        border-color: #ff850c !important;
+        width: 68% !important;
+    }
+
+        .btn-primary:hover {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:focus {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:active {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+            .btn-primary:active:hover {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+            .btn-primary:active:active {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+    .mg {
+        margin: 0px 5px;
+    }
+
+    .roleSet {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .newNav {
+        background-color: unset !important;
+        background: unset !important;
+        color: #ff850c;
+    }
+
+        .newNav:hover {
+            background-color: unset !important;
+            background: unset !important;
+            color: red;
+        }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        z-index: 3;
+        color: #fff;
+        cursor: default;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    #tbl1_wrapper {
+        font-size: 11px;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('div.nav_link.submenu_item').addClass('show_submenu');
+    });
+  function removeRole() {
+            //var btn = $(this).attr('Value');
+            var data = "";
+            var x = confirm("คุณต้องการลบ Role นี้หรือไม่")
+            if (x) {
+                return true;
+            } else {
+                data = { cmdButton: "NO" };
+                var url = '@Url.Action("NdRoleManage", "Administrator")';
+                // method POST -> '$.post()'
+                $.post(url, data, function (result) {
+                    window.location = '@Url.Action("NdRoleManagement", "Administrator")';
+                });
+                return false;
+            }
+        }
+</script>
+@using (Html.BeginForm("NdRoleManage", "Administrator", FormMethod.Post))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">Role Management </label>
+    </div>
+    <div class="setPage ">
+        @*<h2>MenuView</h2>*@
+
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Role Management</label>
+                </div>
+                <div class="col-md-4 setButton">
+                    @if (ViewBag.Create_Role == true)
+                    {
+                        <button type="submit" class="btn btn-primary mg" id="create" name="cmdButton" value="Add">สร้าง</button>
+                    }
+                    <button type="submit" class="btn btn-primary mg" id="exExcel" name="cmdButton" value="ExportExcel">Export Excel</button>
+                    <button type="submit" class="btn btn-primary mg" id="exCsv" name="cmdButton" value="ExportCSV">Export CSV</button>
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12">
+                <div class="col-md-4 roleSet ">
+                    <label class="form-label" for="searchInput" style="font-size: 12px; color: #ff850c;">Role</label>
+                    <input type="text" class="form-control txtinput" id="searchInput" name="searchInput" value="@ViewBag.searchInput">
+                    <button type="submit" class="btn btn-primary mg" style="height:35px;" name="cmdButton" value="roleSearch" id="btnSearchRole">ค้นหา</button>
+                </div>
+                <div class="col-md-4">
+                    &nbsp;
+                </div>
+                <div class="col-md-4">
+                    &nbsp;
+                </div>
+            </div>
+            <div style="padding:0px 8px;">
+                <div class="card-body">
+                    <table class="table table-striped display nowrap" id="tbl1" style="border: 1px solid rgb(170, 170, 170); border-radius: 13px; overflow: hidden; width: 100%; ">
+                        <thead>
+                            <tr>
+                                <th style="text-align:left;vertical-align:top;" width="60%" class="ghb-background-color">Role Name</th>
+                                @*<th style="text-align:center;vertical-align:top;" width="15%" class="ghb-background-color">ระดับ(Role)</th>
+                                    <th style="text-align:center;vertical-align:top;" width="30%" class="ghb-background-color">ชื่อ นามสกุล</th>*@
+                                @if (ViewBag.Update_Role == true)
+                                {
+                                    <th style="text-align:center;vertical-align:top;" width="5%" class="ghb-background-color">Modify</th>
+                                }
+                                else
+                                {
+                                    <th style="text-align:center;vertical-align:top;" width="5%" class="ghb-background-color">&nbsp;</th>
+                                }
+                                @if (ViewBag.Delete_Role == true)
+                                {
+                                    <th style="text-align:center;vertical-align:top;" width="5%" class="ghb-background-color">Delete</th>
+                                }
+                                else
+                                {
+                                    <th style="text-align:center;vertical-align:top;" width="5%" class="ghb-background-color">&nbsp;</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody id="searchTable">
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td style="text-align: left;">@Html.DisplayFor(m => Model[i].Role_Name)</td>
+                                    @*<td style="text-align: center;">@Html.DisplayFor(m => Model[i].User_Role_Level)</td>
+                                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].USER_FIRSTNAME) @Html.DisplayFor(m => Model[i].USER_LASTNAME)</td>*@
+                                    <td style="text-align: center;">
+                                        @*<div href="#" class="nav_link submenu_item newNav" value="Edit|@Model[i].USER_ID" name="cmdButton">
+                                                <span class="navlink_icon newNav">
+                                                    <i class="bx bx-edit"></i>
+                                                </span>
+                                            </div>*@
+                                        @if (ViewBag.Update_Role == true)
+                                        {
+                                            <button id="btnEdit" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Edit" value="Edit|@Model[i].Role_Name" style="padding: 0; border: none; background: none; outline: unset; width: auto;"><i class="bx bxs-edit" style="font-size: 18px; color: #ff850c;"></i></button>
+                                        }
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @if (ViewBag.Delete_Role == true)
+                                        {
+                                            <button id="btnDelete" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Delete" value="Delete|@Model[i].Role_Name" onclick="removeRole()" style="padding: 0; border: none; background: none; outline: unset; width: auto;"><i class="bx bxs-trash" style="font-size: 18px; color: #ff850c;"></i></button>
+                                        }
+                                    </td>
+                                    @*@Html.HiddenFor(m => Model[i].USER_ID)
+                                        @Html.HiddenFor(m => Model[i].USER_LOGIN)
+                                        @Html.HiddenFor(m => Model[i].USER_LEVEL)
+                                        @Html.HiddenFor(m => Model[i].User_Role_Level)
+                                        @Html.HiddenFor(m => Model[i].IS_ACTIVE)
+                                        @Html.HiddenFor(m => Model[i].User_Branch)*@
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @*<div class="card-body" style="display:none;">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                                Save
+                                <div class="overlay"><i class="fas fa-3x fa-sync-alt fa-spin"></i><div class="text-bold pt-2">Loading...</div></div>
+                            </button>
+                        </div>*@
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+}
+
+<script>
+    $(function () {
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+        });
+
+        $("#btnSearchRole").click(function () {
+            var rn = $('#searchInput').val();
+            if (rn == "") {
+                alert("โปรดระบุชื่อ Role");
+                //return false;
+            }
+            else {
+                location.href = '@Url.Action("NdRoleManage", "Administrator")';
+            }
+        });
+        //$("#searchInput").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#searchTable tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+
+        //$("#tbl1").DataTable({
+        //    "responsive": true, "lengthChange": false, "autoWidth": false, searching: false,
+        //    //"oLanguage": {
+        //    //    "sSearch": "Role"
+        //    //}
+        //});
+
+        var table = $("#tbl1").DataTable({
+            "responsive": true, "lengthChange": true, "autoWidth": false, searching: false,
+            select: {
+                selector: 'td:not(:nth-child(2))',
+            }
+
+        });
+    });
+</script>

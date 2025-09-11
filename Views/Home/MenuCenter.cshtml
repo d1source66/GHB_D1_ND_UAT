@@ -1,0 +1,624 @@
+﻿@model  GHB_D1.Models.MenuViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Styles.Render("~/Content/css")
+
+@*<link rel="stylesheet" href='~/Content/style' media="screen" />*@
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+        position: relative;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .logo-header {
+        position: relative;
+        z-index: 1000;
+        display: inline-block;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+        .logo-header .logo-main {
+            width: 96px;
+            padding: 5px 0;
+            /*margin-left: 164%;*/
+        }
+
+    .logo-ghb-img {
+        vertical-align: middle;
+        width: 114%;
+    }
+
+    hr {
+        border-top: 1px solid #ff850c;
+        border-width: 5px;
+    }
+
+    html {
+        background-color: white !important;
+    }
+    .aGHBLink {
+        color: orange;
+        font-weight: bold;
+    }
+
+    .aGHBLink:hover {
+        color: orangered;
+    }
+
+    #displayLoading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+
+    /* HTML: <div class="loader"></div> */
+    /*.loader {
+        width: fit-content;
+        font-weight: bold;
+        font-family: monospace;
+        font-size: 30px;
+        background: linear-gradient(90deg, #ff850c1a 50%, #0000 0) right / 200% 100%;
+        animation: l21 2s infinite linear;
+    }
+
+        .loader::before {
+            content: "Loading...";
+            color: orange;
+            padding: 0 5px;
+            background: inherit;
+            background: linear-gradient(90deg, #ff850c1a 50%, #0000 0) right / 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+    @@keyframes l21 {
+        100% {
+            background-position: left
+        }
+    }*/
+</style>
+
+<style>
+    /* HTML: <div class="loader"></div> */
+    .loader {
+        width: 80px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 3.5px solid #0000;
+        border-right-color: #ff850c;
+        position: relative;
+        animation: l24 1s infinite linear;
+    }
+
+        .loader:before,
+        .loader:after {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: inherit;
+            animation: inherit;
+            animation-duration: 2s;
+        }
+
+        .loader:after {
+            animation-duration: 4s;
+        }
+
+    @@keyframes l24 {
+        100% {
+            transform: rotate(1turn)
+        }
+    }
+</style>
+
+
+
+@*<script>
+        $().ready(function () {
+               $("#btnAllDownload").click(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        //data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '" }',
+                        data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '", "T_DATE" : "' + $("#T_DATE").val() + '" }',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '@Url.Action("AllDownload", "Home")', beforeSend: function (xhr) {
+                            $("#displayLoading").show();
+                        },
+                        success: function (result) {
+                            $("#displayLoading").hide();
+                            $("#msg").hide();
+                            if (result.length == 0) {
+
+                            } else {
+                                $("#msg").show();
+                                $("#msg").val("โหลดข้อมูลรายงานทั้งหมด เรียบร้อยแล้ว");
+                            }
+                        },
+                        error: function (err) {
+                            $("#displayLoading").hide();
+                            $("#msg").hide();
+                        }
+                    });
+                });
+
+
+            $('#sandbox-container input').datepicker({
+                autoclose: true,
+                showWeek: true,
+                showOtherMonths: true,
+                todayHighlight: true,
+                //language: 'th-th',
+                language: 'en-en',
+                format: "dd/mm/yyyy",
+                endDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+                setDate: new Date(new Date().setDate(new Date().getDate() - 1))
+            });
+
+
+            $("#sandbox-container input").change(function () {
+                let d = $(this).val();
+                var b = $("#sandbox-container").val();
+                $("#displayDate").text(d);
+                $("#T_DATE").val(d);
+                $("#msg").hide();
+            })
+        })
+    </script>*@
+
+
+<script>
+    $().ready(function () {
+
+
+        $("#btnAllDownload").click(function (e) {
+            GenerateReport('#searchTable tr',e);
+        });
+
+        SetDatePickerTop(150);
+
+        $("#T_DATE").change(function () {
+            let d = $(this).val();
+            var b = $("#T_DATE").val();
+            $("#displayDate").text(d);
+            $("#T_DATE").val(d);
+            $("#msg").hide();
+        })
+
+        //$('#sandbox-container input').datepicker({
+        //    autoclose: true,
+        //    showWeek: true,
+        //    showOtherMonths: true,
+        //    todayHighlight: true,
+        //    language: 'th-th',
+        //    format: "dd/mm/yyyy",
+        //    endDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+        //    setDate: new Date(new Date().setDate(new Date().getDate() - 1))
+        //});
+
+
+        //$("#sandbox-container input").change(function () {
+        //    let d = $(this).val();
+        //    var b = $("#sandbox-container").val();
+        //    $("#displayDate").text(d);
+        //    $("#T_DATE").val(d);
+        //    $("#msg").hide();
+        //})
+
+
+
+
+    })
+
+    function GenerateReport(name,e) {
+
+        //$('.groupReport li').each(function () {
+        $(name).each(function () {
+                var groupNo = $(this).find('.groupNo').val();
+                var groupName = $(this).find('.groupName').val();
+                var isChecked = $(this).find('.selectItem').is(':checked');
+                console.log("isChecked:" + isChecked + " groupNo:" + groupNo + " groupName:" + groupName)
+                if (isChecked == 1 && groupNo != undefined) {
+
+                    $("#popmsg").hide();
+                    $("#popmsg-success").hide();
+                    $("#msg").text("");
+                    $("#msg-success").text("");
+
+
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '", "T_DATE" : "' + $("#T_DATE").val() + '", "groupNo" : "' + groupNo + '" }',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '@Url.Action("AllDownload", "Home")', beforeSend: function (xhr) {
+                            $("#displayLoading").show();
+                        },
+                        success: function (result) {
+                            $("#displayLoading").hide();
+                            $("#popmsg-success").hide();
+                            if (result.length == 0) {
+
+                            } else {
+                                $("#msg").hide();
+                                $("#msg-success").text("โหลดข้อมูลรายงานทั้งหมด เรียบร้อยแล้ว สามารถเข้าไปดูรายงานได้ที่ D:\\GHBReportFiles\\");
+                                $("#popmsg-success").show();
+                                window.location.href = result.fileUrl;
+                            }
+                        }
+                        ,
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $("#displayLoading").hide();
+                            $("#msg").text("ไม่สามารถโหลดรายงาน");
+                            $("#msg").show();
+                            $("#popmsg").show();
+                        }
+
+                    });
+                }
+            });
+    }
+    function GenerateReport2(groupNo,groupName) {
+
+        //alert("groupNo:" + groupNo + " groupName:" + groupName);
+
+        console.log("groupNo:" + groupNo + " groupName:" + groupName)
+                if (groupNo != undefined) {
+
+                    $("#popmsg").hide();
+                    $("#popmsg-success").hide();
+                    $("#msg").text("");
+                    $("#msg-success").text("");
+
+
+                    //e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '", "T_DATE" : "' + $("#T_DATE").val() + '", "groupNo" : "' + groupNo + '", "groupName" : "' + groupName + '" }',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '@Url.Action("AllDownload", "Home")', beforeSend: function (xhr) {
+                            $("#displayLoading").show();
+                        },
+                        success: function (result) {
+                            $("#displayLoading").hide();
+                            $("#popmsg-success").hide();
+                            if (result.length == 0) {
+
+                            } else {
+                                $("#msg").hide();
+                                $("#msg-success").text("โหลดข้อมูลรายงานกลุ่ม " + groupName +" ทั้งหมด เรียบร้อยแล้ว");
+                                $("#popmsg-success").show();
+                                window.location.href = result.fileUrl;
+                            }
+                        }
+                        ,
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $("#displayLoading").hide();
+                            $("#msg").text("ไม่สามารถโหลดรายงาน");
+                            $("#msg").show();
+                            $("#popmsg").show();
+                        }
+
+                    });
+                }
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        GetSelectItem(true);
+        $('#select-all').click(function () {
+
+            var isChecked = $(this).is(':checked');
+            //$('input[type="checkbox"]').each(function () {
+            //    $(this).prop('checked', isChecked);
+            //});
+            GetSelectItem(isChecked);
+
+        });
+
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#searchTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    function GetSelectItem(isChecked) {
+        $("#select-all").prop('checked', isChecked);
+        $("#searchTable tr:visible .selectItem").prop('checked', isChecked);
+    }
+
+
+  
+</script>
+
+
+
+@if (Model != null)
+{
+    string groupName = "";
+<div class="container">
+
+
+    @using (Html.BeginForm("AllDownload", "Home", FormMethod.Post, new { autocomplete = "off" }))
+    {
+
+        <div class="row">
+            <div class="form-row">
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-4">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;"> GHB ALL </h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">     REPORTS  - <span style="font-weight: bold;color: black;"> @Model.BRANCH_NAME  </span> </h5>
+                </div>
+                <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1 text-right" style="padding-right: 0px;">
+                    <label class="ghbFont-color lbtext" style="padding-top: 5px;"><i class="fa fa-calendar-minus-o"></i> วันที่&nbsp;</label>
+                </div>
+
+                <div class="col-xs-9 col-sm-4 col-md-2 col-lg-3">
+                    <input type="text" name="T_DATE" id="T_DATE" class="form-control rounded-lg lbtext" value="@Model.T_DATE" placeholder="dd/mm/yyyy" />
+                </div>
+
+                <div class="col-xs-3 col-sm-1 col-md-2 col-lg-1 text-right">
+                    <label class="ghbFont-color lbtext"> <i class="fa fa-search"></i> ค้นหา&nbsp;</label>
+                </div>
+                <div class="col-xs-9 col-sm-4 col-md-3 col-lg-3">
+                    @Html.TextBoxFor(x => x.SEARCH_KEY, new { @class = "form-control lbtext", @style = "width:15rem;", id = "searchInput", placeholder = "Report name" })
+                </div>
+                @*<div class="col-6 col-sm-3 col-md-3 col-lg-3 mg-top-20" id="sandbox-container">
+                        <input type="text" name="T_DATE" id="T_DATE" class="form-control rounded-lg" value="@Model.T_DATE" />
+                    </div>*@
+                <div class="col-6 col-sm-3 col-md-3 col-lg-3 mg-top-20">
+                    @*<button id="btnAllDownload" type="button" class="btn btn-ghb-primary btn-mg" name="cmdButton" value="AllDownload">   <span class="spinner-border spinner-border-sm"></span> <i class="fa fa-download"></i> ALL DOWNLOAD </button>*@
+                </div>
+                @*<div class="loader"></div>*@
+
+                @*<div class="from-row" id="displayLoading" style="display:none;">
+                        <div class="col-12">
+                            <div class="loader"></div>
+                        </div>
+                    </div>*@
+
+                <div id="displayLoading" style="display:none;">
+                    <img id="loading-image" src="~/images/Spinner-6.gif" alt="Loading..." />
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+                <input type="checkbox" id="select-all" />
+            </div>*@
+
+        <hr class="form-row">
+        <div class="form-row text-right">
+            <div class="col-5 col-sm-5 col-md-5 col-lg-5 text-left mn-link-left">     
+                <i class="fa fa-home fa-color-orange"></i>
+                <label>  HOME </label>
+            </div>
+            <div class="col-7 col-sm-7 col-md-7 col-lg-7 mn-link-right">
+                <i class="fa fa-filter fa-color-orange"></i>
+                <label class="ghbFont-color" style="font-size: smaller;"> <i class="fab fa-mdb"></i>  กรองตาม </label>
+                <label id="displayDate">  @Html.DisplayTextFor(x => x.DISPLAY_FILTER) </label>
+                <label>  @Html.DisplayTextFor(x => x.SEARCH_KEY)   </label>
+            </div>
+        </div>
+        @*<div class="form-row text-right">
+                <div class="col-12">
+                    <i class="fa fa-filter fa-color-orange"></i>
+                    <label class="ghbFont-color" style="font-size: smaller;"> <i class="fab fa-mdb"></i>  กรองตาม </label>
+                    <label id="displayDate">  @Html.DisplayTextFor(x => x.DISPLAY_FILTER) </label>
+                    <label>  @Html.DisplayTextFor(x => x.SEARCH_KEY)   </label>
+                </div>
+            </div>*@
+
+
+        <div class="form-row" id="popmsg" style="margin-top: 120px;display:none;">
+            <div class="alert alert-danger show" role="alert">
+                <div class="row" style="margin-left: 5px; padding-right: 10px;">
+                    <div class="col-11">
+                        <span id="msg"></span>
+                        @*<strong>Information</strong> @Model.MESSAGE*@
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="col-1">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row" id="popmsg-success" style="display:none;margin-top:50px;">
+            <div class="alert alert-success show" role="alert">
+                <div class="row" style="margin-left: 15px; padding-right: 10px;">
+                    <div class="col-11" style="margin:10px">
+                        <span id="msg-success"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="col-1">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tableFixHead" style="width: 100%; height: 700px;">
+            <table style="font: 300 16px 'Tahoma'; color: black; width: auto; width: 100%;" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        @*<th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"><input type="checkbox" id="select-all" /></th>*@
+                        <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อกลุ่ม</th>
+                        <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ดาวน์โหลด</th>
+                    </tr>
+                </thead>
+                <tbody id="searchTable" class="groupReport">
+                    @foreach (var m in Model._groupReportVMList)
+                    {
+                        string[] typeSpl = m.GROUP_NAME.Split('_');
+
+                        if (typeSpl.Length == 1)
+                        {
+                            groupName = @m.GROUP_NAME + "Report";
+
+                            <tr>
+                                @*<td style="text-align:center;">
+                                        @Html.CheckBoxFor(c => m.IsSelected, new { @class = "selectItem" })
+                                    </td>*@
+                                <td style="text-align:left;">
+                                    <a name="titlereport" class="aGHBLink" style="cursor:pointer;" href="@Url.Action("Index", @groupName, new { px = Model.BRANCH_ID, py = Model.USER_ID, pz = @m.GROUP_NAME })">@Html.DisplayFor(d => m.GROUP_NAME)</a>
+                                    @Html.HiddenFor(h => m.GROUP_NO, new { @class = "groupNo" })
+                                    @Html.HiddenFor(h => m.GROUP_NAME, new { @class = "groupName" })
+                                </td>
+                                <td style="text-align:center;">
+                                    <button id="btnDownload" type="button" class="btn btn-ghb-primary btn-mg" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download">   <span class="spinner-border spinner-border-sm"></span> <i class="fa fa-download"></i> DOWNLOAD </button>
+                                </td>
+                            </tr>
+
+
+                        }
+
+
+                    }
+                    @foreach (var m in Model._groupReportVMList)
+                    {
+                        string[] typeSpl = m.GROUP_NAME.Split('_');
+
+                        if (typeSpl.Length > 1)
+                        {
+                            groupName = @m.GROUP_NAME + "Report";
+
+                            <tr>
+                                @*<td style="text-align:center;">
+                                        @Html.CheckBoxFor(c => m.IsSelected, new { @class = "selectItem" })
+                                    </td>*@
+                                <td style="text-align:left;">
+                                    <a name="titlereport" class="aGHBLink" style="cursor:pointer;" href="@Url.Action("Index", @groupName, new { px = Model.BRANCH_ID, py = Model.USER_ID, pz = @m.GROUP_NAME })">@Html.DisplayFor(d => m.GROUP_NAME)</a>
+                                    @Html.HiddenFor(h => m.GROUP_NO, new { @class = "groupNo" })
+                                    @Html.HiddenFor(h => m.GROUP_NAME, new { @class = "groupName" })
+                                </td>
+                                <td style="text-align:center;">
+                                    <button id="btnDownload2" type="button" class="btn btn-ghb-primary btn-mg" name="cmdButton" onclick="GenerateReport2('@m.GROUP_NO','@m.GROUP_NAME')" value="Download">   <span class="spinner-border spinner-border-sm"></span> <i class="fa fa-download"></i> DOWNLOAD </button>
+                                </td>
+                            </tr>
+
+
+                        }
+
+
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+    @*<div class="navlist-primary">
+            <ul class="groupReport">
+                @foreach (var m in Model._groupReportVMList)
+                {
+                    string[] typeSpl = m.GROUP_NAME.Split('_');
+
+                    if (typeSpl.Length == 1)
+                    {
+                        groupName = @m.GROUP_NAME + "Report";
+
+                        <li class="active">
+
+                            <div class="row">
+                                @Html.HiddenFor(h => m.GROUP_NO, new { @class = "groupNo" })
+                                <div class="col-6 col-sm-10 col-md-10 col-lg-9">
+                                    @Html.CheckBoxFor(c => m.IsSelected, new { @class = "selectItem" })
+                                    <a name="titlereport" href="@Url.Action("Index", @groupName, new {px = Model.BRANCH_ID,py = Model.USER_ID, pz = @m.GROUP_NAME})">@Html.DisplayFor(d => m.GROUP_NAME)</a>
+                                    @Html.HiddenFor(h => m.GROUP_NAME, new { @class = "groupName" })
+                                </div>
+
+                            </div>
+
+                        </li>
+
+
+                    }
+
+
+                }
+            </ul>
+        </div>
+
+
+        <div class="navlist-primary">
+            <ul class="groupReport2">
+                @foreach (var m in Model._groupReportVMList)
+                {
+                    string[] typeSpl = m.GROUP_NAME.Split('_');
+
+                    if (typeSpl.Length != 1)
+                    {
+                        groupName = @m.GROUP_NAME + "Report";
+
+                        <li class="active">
+                            <div class="row">
+                                @Html.HiddenFor(h => m.GROUP_NO, new { @class = "groupNo" })
+                                <div class="col-6 col-sm-10 col-md-10 col-lg-9">
+                                    @Html.CheckBoxFor(c => m.IsSelected, new { @class = "selectItem" })
+                                    <a name="titlereport" href="@Url.Action("Index", @groupName, new {px = Model.BRANCH_ID,py = Model.USER_ID, pz = @m.GROUP_NAME})">@Html.DisplayFor(d => m.GROUP_NAME)</a>
+                                    @Html.HiddenFor(h => m.GROUP_NAME, new { @class = "groupName" })
+                                </div>
+
+                            </div>
+                        </li>
+
+                    }
+
+
+                }
+            </ul>
+        </div>*@
+
+</div>
+
+    @Html.HiddenFor(x => x.USER_ID)
+    @Html.HiddenFor(x => x.BRANCH_ID)
+    @Html.HiddenFor(x => x.T_DATE)
+
+}
+
+
+@*<div class="row" id="msg" style="margin-top: 120px;display:none;">
+        <div class="alert alert-danger show" role="alert">
+            <strong>Information</strong> @Model.MESSAGE
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>*@

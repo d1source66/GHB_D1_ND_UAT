@@ -1,0 +1,568 @@
+﻿@model GHB_D1.Models.ADMViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+
+
+@Styles.Render("~/Content/bootstrap.css")
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+<script>
+    $().ready(function () {
+        $("#FrDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#ToDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#iconFr").click(function () {
+            $("#FrDate").datepicker("show");
+        });
+
+        $("#iconTo").click(function () {
+            $("#ToDate").datepicker("show");
+        });
+
+        $("#FrDate1").change(function () {
+            var inputStartDate = $("#FrDate").val();
+            var [Sday, Smonth, Syear] = inputStartDate.split('/');
+            var formattedStarDate = new Date(`${Smonth}/${Sday}/${Syear}`);
+            var startDate = new Date(formattedStarDate);
+
+            var inputEndDate = $("#ToDate").val();
+            var [day, month, year] = inputEndDate.split('/');
+            var formattedEndDate = new Date(`${month}/${day}/${year}`);
+            var endDate = new Date(formattedEndDate);
+
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+
+            if (dayDiff > 30) {
+                alert("จำนวนวันต้องไม่เกิน 30 วัน")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#FrDate").datepicker("setDate", yesterday);
+                $("#FrDate").datepicker("refresh");
+            } else if (dayDiff < 0) {
+                alert("วันเริ่มต้องมาก่อนวันสิ้นสุด")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#FrDate").datepicker("setDate", yesterday);
+                $("#FrDate").datepicker("refresh");
+            } else {
+                //alert("Dates are valid. Difference: " + dayDiff + " days.")
+            }
+
+        });
+
+        $("#ToDate1").change(function () {
+            var inputStartDate = $("#FrDate").val();
+            var [Sday, Smonth, Syear] = inputStartDate.split('/');
+            var formattedStarDate = new Date(`${Smonth}/${Sday}/${Syear}`);
+            var startDate = new Date(formattedStarDate);
+
+            var inputEndDate = $("#ToDate").val();
+            var [day, month, year] = inputEndDate.split('/');
+            var formattedEndDate = new Date(`${month}/${day}/${year}`);
+            var endDate = new Date(formattedEndDate);
+
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+
+            if (dayDiff > 30) {
+                alert("จำนวนวันต้องไม่เกิน 30 วัน")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#ToDate").datepicker("setDate", yesterday);
+                /*$("#ToDate").datepicker("refresh");*/
+            } else if (dayDiff < 0) {
+                alert("วันเริ่มต้องมาก่อนวันสิ้นสุด")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#ToDate").datepicker("setDate", yesterday);
+                //$("#ToDate").datepicker("refresh");
+            } else {
+                //alert("Dates are valid. Difference: " + dayDiff + " days.")
+            }
+        });
+
+        $("#T_DATE").change(function () {
+            let d = $(this).val();
+            var b = $("#T_DATE").val();
+            $("#displayDate").text(d);
+            $("#T_DATE").val(d);
+            $("#msg").hide();
+        })
+
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#searchTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#cmdClose").on("click", function () {
+            $("#msg").hide();
+        });
+
+        $('#SOLCODE').on('input', function () {
+            const maxLength = 3;
+            const value = $(this).val();
+
+            // Restrict input to numbers only
+            if (value.length > maxLength) {
+                $(this).val(value.slice(0, maxLength));
+            }
+        });
+
+    })
+</script>
+
+
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid #ff850c;
+        border-width: 5px;
+    }
+
+    .tblHeader {
+        border: 1px solid rgb(170, 170, 170);
+        border-radius: 13px;
+        overflow: hidden;
+        width: 100%;
+        border-collapse: separate !important;
+        border-spacing: 0;
+    }
+</style>
+
+
+<style>
+    /* HTML: <div class="loader"></div> */
+    /*.loader {
+        width: 85px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 8px solid #0000;
+        border-right-color: #ff850c;
+        position: relative;
+        animation: l24 1s infinite linear;
+    }
+
+        .loader:before,
+        .loader:after {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: inherit;
+            animation: inherit;
+            animation-duration: 2s;
+        }
+
+        .loader:after {
+            animation-duration: 4s;
+        }
+
+    @@keyframes l24 {
+        100% {
+            transform: rotate(1turn)
+        }
+    }*/
+
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .ghbFont-color {
+        color: #ff850c;
+        font-size: 12pt;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .divContainer {
+        /*background-color: rgb(255,102,204);*/
+        height: auto;
+        /*width: 1200px;
+        position: absolute;*/
+    }
+
+        .divContainer .divMain {
+            /*background-color: rgb(204,51,0);*/
+            height: auto;
+            width: 100%;
+            overflow: auto;
+        }
+
+            .divContainer .divMain .div1 {
+                /*background-color: rgb(0,204,255);*/
+                /*float: left;
+            padding: 5px;*/
+                height: auto;
+                /*margin: 20px;*/
+            }
+
+    .clear {
+        clear: both;
+    }
+</style>
+
+@using (Html.BeginForm("GenReport", "ADMReport", FormMethod.Post, new { autocomplete = "off" }))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Home")"><i class="fa fa-home fa-color-orange"></i>Details Report</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">ADM</label>
+    </div>
+    <div class="setPage ">
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Detail Report ADM</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+
+            <div class="col-md-12">
+                <div class="col-md-5" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
+                    <label class="form-label labelCss" style=" margin-right: 7px;">วันที่เริ่มต้น</label>
+                    @*<input type="text" class="form-control" id="departInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("FrDate", @Model.F_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd-mm-yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 204px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconFr"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                @if (Session["RoleName"].ToString() == "Branch" || Session["RoleName"].ToString() == "HQ01")
+                {
+                    <div style="display:none;">
+                        <div class="col-md-2" style="display: flex; justify-content: flex-end; width: 19%; margin-left:-20px;">
+                            <input type="text" class="form-control rounded-lg txtinput inputWD" id="SOLCODE" style="border: 1px solid #aaa;" placeholder="รหัสสาขา-ondemand" name="SOLCODE" value="@ViewBag.SOLCODE">
+                            <input type="hidden" id="SOLCODE" name="SOLCODE" value="@ViewBag.SOLCODE" />
+                        </div>
+                    </div>
+                }
+                <div class="col-md-5" style="display: flex; align-items: flex-end; margin-left: -11px;">
+                    <label class="form-label labelCss" style="margin-right: 5px;">วันที่สิ้นสุด</label>
+                    @*<input type="text" class="form-control" id="disInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("ToDate", @Model.T_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd-mm-yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 204px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconTo"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                &nbsp;
+                <a onclick="history.back()" title="ย้อนกลับ">
+                    <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;"></i>
+                </a>
+                @if (Model.MESSAGE != null && Model.MESSAGE != "")
+                {
+                    <div class="form-row" id="msg">
+                        <div class="alert alert-danger show" role="alert">
+                            <strong>แจ้งเตือน</strong> @Model.MESSAGE
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="cmdClose">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-row">
+                <div class="col-12" style="padding:0px 18px;">
+                    <div class="divContainer">
+                        <div class="divMain">
+                            <div class="div1">
+                                <div class="tableFixHead" style="width: 100%;">
+                                    <table class="table table-striped display nowrap tblHeader">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ลำดับ</th>
+                                                <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อรายงาน</th>
+                                                @*@if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                                                    {}*@
+                                                <th style="text-align: center; vertical-align: top; " width="10%" class="ghb-background-color"> PDF Download </th>
+                                                <th style="text-align: center; vertical-align: top; " width="10%" class="ghb-background-color"> EXCEL Download </th>
+                                                <th style="text-align: center; vertical-align: top; " width="10%" class="ghb-background-color"> TEXT Download </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="searchTable">
+                                            @foreach (var item in ViewBag.GroupDetailReport)
+                                            {
+                                                var idBtnPDF = "btn_" + @item.REPORT_NAME + "_PDF_" + item.ID;
+                                                var idBtnEXCEL = "btn_" + @item.REPORT_NAME + "_EXCEL_" + item.ID;
+                                                var idBtnTEXT = "btn_" + @item.REPORT_NAME + "_TEXT_" + item.ID;
+                                                <tr>
+                                                    <td style="text-align: right; vertical-align: middle;">@item.ID</td>
+                                                    <td style="text-align: left; vertical-align: middle;">@item.REPORT_NAME</td>
+                                                    @*@if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                                                        { }*@
+                                                    @if (item.REPORT_NAME.Contains("EXCEL") == false && item.REPORT_NAME.Contains("TEXT") == false)
+                                                    {
+                                                        <td style="text-align: center;">
+                                                            <button id="btnADMPDF" type="submit" class="btn-ghb-pdf-export" data-toggle="tooltip" name="cmdButton" title="Export PDF File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|1" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|1"></button>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;">
+                                                        </td>
+                                                    }
+                                                    @if (item.REPORT_NAME.Contains("EXCEL"))
+                                                    {
+                                                        <td style="text-align: center;">
+                                                            <button id="btnADMXLS" type="submit" class="btn-ghb-excel-export" data-toggle="tooltip" name="cmdButton" title="Export Excel File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|2" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|2"></button>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;">
+                                                        </td>
+                                                    }
+                                                    @if (item.REPORT_NAME.Contains("TEXT"))
+                                                    {
+                                                        <td style="text-align: center; display: none;">
+                                                            <button id="btnADMTXT" type="submit" class="btn-ghb-text-export" data-toggle="tooltip" name="cmdButton" title="Export Text File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|3" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|3"></button>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;">
+                                                        </td>
+                                                    }
+                                                </tr>
+
+
+                                            }
+                                        </tbody>
+
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-4">
+                <h2 class="header-topic" style="color: orange; margin-bottom: 0px;"> @Model.TITLE_REPORT </h2>
+                <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">     REPORTS </h5>
+            </div>
+            <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1 text-right mg-top-10">
+                <label class="ghbFont-color lbtext"> <i class="fa fa-calendar-minus-o"></i> วันที่&nbsp;</label>
+            </div>
+            <div class="col-xs-9 col-sm-4 col-md-2 col-lg-3">
+                <input type="text" name="T_DATE" id="T_DATE" class="form-control rounded-lg lbtext" value="@Model.T_DATE" placeholder="dd/mm/yyyy" />
+            </div>
+
+            <div class="col-xs-3 col-sm-1 col-md-2 col-lg-1 text-right mg-top-10">
+                <label class="ghbFont-color lbtext"> <i class="fa fa-search"></i> ค้นหา&nbsp;</label>
+            </div>
+            <div class="col-xs-9 col-sm-4 col-md-3 col-lg-3">
+                @Html.TextBoxFor(x => x.SEARCH_KEY, new { @class = "form-control lbtext", @style = "width:15rem;", id = "searchInput", placeholder = "Report name" })
+            </div>
+            @*<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-left mg-top-10">
+                    <button id="btnSeach" type="submit" class="btn btn-ghb-primary btn-mg" data-titlereport="@Model.TITLE_REPORT" data-toggle="tooltip" name="cmdButton" title="ค้นหา" value="Search" style="margin-top: 30px; width: 5rem;"> <i class="fa fa-search  fa-color-white"></i>  </button>
+                </div>*@
+            <div class="from-row" id="displayLoading" style="display:none;">
+                <div class="col-12">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+
+        <a onclick="history.back()" title="ย้อนกลับ">
+            <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;"></i>
+        </a>
+
+        <hr />
+
+        <div class="form-row text-right">
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 text-left mn-link-left">
+                <a name="titlereport" class="aGHBLink ghbFont-color" style="cursor: pointer; font-size: smaller;" href="@Url.Action("Index","Home")"><i class="fa fa-home fa-color-orange"></i> Home</a>
+                <label class="aGHBLink ghbFont-color" style="font-size: smaller;">/</label>
+                <label>  ADM </label>
+            </div>
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9 mn-link-right">
+                <i class="fa fa-filter fa-color-orange"></i>
+                <label class="ghbFont-color" style="font-size: smaller;"> <i class="fab fa-mdb"></i>  กรองตาม </label>
+                <label id="displayDate">  @Html.DisplayTextFor(x => x.DISPLAY_FILTER) </label>
+                <label>  @Html.DisplayTextFor(x => x.SEARCH_KEY)   </label>
+            </div>
+        </div>
+
+        if (Model.MESSAGE != null && Model.MESSAGE != "")
+        {
+        <div class="from-row" id="msg">
+            <div class="alert alert-danger show" role="alert">
+                <strong>แจ้งเตือน</strong> @Model.MESSAGE
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        }
+
+
+        <div class="form-row">
+            <div class="col-12">
+                <div class="tableFixHead" style="width: 100%; height: 600px;">
+                    <table style="font: 300 16px 'Tahoma'; color: black; width: auto; " class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ลำดับ</th>
+                                <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อรายงาน</th>
+                                @if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                                {
+                                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> PDF Download </th>
+                                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> EXCEL Download </th>
+                                }
+
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> TEXT Download </th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="searchTable">
+                            @foreach (var item in ViewBag.GroupDetailReport)
+                            {
+                                var idBtnPDF = "btn_" + @item.REPORT_NAME + "_PDF_" + item.ID;
+                                var idBtnEXCEL = "btn_" + @item.REPORT_NAME + "_EXCEL_" + item.ID;
+                                var idBtnTEXT = "btn_" + @item.REPORT_NAME + "_TEXT_" + item.ID;
+                                <tr>
+                                    <td style="text-align: right;">@item.ID</td>
+                                    <td style="text-align: left;">@item.REPORT_NAME</td>
+                                    @if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                                    {
+                                        <td style="text-align: center;">
+                                            <button id="btnADMPDF" type="submit" class="btn-ghb-pdf-export" data-toggle="tooltip" name="cmdButton" title="Export PDF File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|1" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|1"></button>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <button id="btnADMXLS" type="submit" class="btn-ghb-excel-export" data-toggle="tooltip" name="cmdButton" title="Export Excel File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|2" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|2"></button>
+                                        </td>
+                                    }
+
+
+                                    <td style="text-align: center;">
+                                        <button id="btnADMTXT" type="submit" class="btn-ghb-text-export" data-toggle="tooltip" name="cmdButton" title="Export Text File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|3" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|3"></button>
+                                    </td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(x => x.TITLE_REPORT)
+    @Html.HiddenFor(x => x.USER_ID)
+    @Html.HiddenFor(x => x.BRANCH_ID)
+    @Html.HiddenFor(x => x.T_DATE)
+    @Html.HiddenFor(x => x.ToDate)
+    @Html.HiddenFor(x => x.FrDate)
+}
+
+
+
+
+

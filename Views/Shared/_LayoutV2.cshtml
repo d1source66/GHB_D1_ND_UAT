@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "GHB Reports";
+}
+@{
+    var currentUrl = Request.Url.ToString();
+    //var currentActionUrl = Url.Action("ActionName", "ControllerName");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/Content/css")*@
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jqueryui")*@
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/ScriptAddOnDate")*@
+    @Styles.Render("~/Content/font-awesome.css")
+    @Styles.Render("~/Content/bootstrap.css")
+    <style>
+        .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: "Glyphicons Halflings";
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .vertical-align-middle {
+            vertical-align: middle;
+        }
+
+        .form-control {
+            width: initial !important;
+        }
+
+        .tableFixHead {
+            overflow-y: auto; /* make the table scrollable if height is more than 200 px  */
+            height: 200px; /* gives an initial height of 200px to the table */
+        }
+
+            .tableFixHead thead th {
+                position: sticky; /* make the table heads sticky */
+                top: -1px; /* table head will be placed from the top of the table and sticks to it */
+                background-color: orange;
+            }
+
+        .logout {
+            color: white !important;
+            text-decoration: none;
+        }
+
+        .form-control:focus {
+            border-color: #ff850c !important;
+        }
+    </style>
+
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #ff850c;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: rgb(255 106 0);
+            }
+
+        .custom-link {
+            text-decoration: none; /* Remove underline */
+            color: #ffffff !important; /* Initial color */
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+            .custom-link:hover {
+                color: #ffffff !important; /* Color on hover */
+                background-color: lightgreen !important;
+            }
+
+            .custom-link:active {
+                color: #ffffff !important; /* Color on hover */
+            }
+    </style>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="~/Scripts/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap/bootstrap.min.css" media="screen" />
+    <!-- Bootstrap -->
+    <!-- Bootstrap DatePicker -->
+    @*<link rel="stylesheet" href="~/Content/bootstrap/bootstrap-datepicker.css" type="text/css" />*@
+    @*<script src="~/Scripts/bootstrap/bootstrap-datepicker.js" type="text/javascript"></script>*@
+    <link rel="stylesheet" href="~/Content/bootstrap-datepicker-thai/css/datepicker.css" type="text/css" />
+    <script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js" type="text/javascript"></script>
+    <script src="~/Scripts/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js" type="text/javascript"></script>
+    <!-- Bootstrap DatePicker -->
+    <script src="~/Scripts/DateCommonView.js"></script>
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="~/Content/select2.min.css" type="text/css" />
+    <!-- Select2 JS -->
+    <script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+
+</head>
+<body style="font-size: 16pt; font-family: DBHeaventt-Light; ">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("GHB REPORTS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "margin-top:5.5px;font-weight:700;display:none;" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @{
+                    string[] levelLst = { "1", "4", "5" };
+                    var level = (string)Session["Level"];
+                }
+                @if (levelLst.Contains(level) && level != "5")
+                {
+                    <ul class="nav navbar-nav" style="padding: 15px 0px;">
+                        <li><i class="fa fa-cog fa-color-white"></i>&nbsp;@Html.ActionLink("Setting", "Index", "Administrator", new { area = "" }, new { @class = "nav-link logout", Style = "float: right;display: contents;" }) </li>
+                    </ul>
+
+                    @*<ul class="nav navbar-nav" style="padding:15px">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                        </div>
+                    <li class="navbar-right nav-item"> <i class="fa fa-cog fa-color-white"></i>    @Html.ActionLink("Setting", "Index", "Administrator", new { area = "" }, new { @class = "nav-link logout" })  </li>
+            </div>
+            </ul>*@
+                }
+                else if (levelLst.Contains(level) && level == "5")
+                {
+                    <ul class="nav navbar-nav" style="padding: 15px 0px;">
+                        <li><i class="fa fa-cog fa-color-white"></i>&nbsp;@Html.ActionLink("Setting", "Index", "Administrator", new { area = "" }, new { @class = "nav-link logout", Style = "float: right;display: contents;" }) </li>
+                        <li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li>@Html.ActionLink("Report", "Index", "Home", new { area = "" }, new { @class = "nav-link logout", Style = "float: right;display: contents;" })</li>
+                        @*<li>Current URL: @currentUrl</li>
+                <li>abc: @currentActionUrl</li>*@
+                    </ul>
+                }
+                else
+                {
+
+                    <ul class="nav navbar-nav" style="padding: 20px; padding-left: 0px;">
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+
+                            </div>
+                        <li class="navbar-right nav-item"> <i class="fa fa-home fa-color-white"></i>    @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link logout" })  </li>
+
+                </div>
+
+            </ul>
+        }
+                @Html.Partial("_LoginPartial")
+
+
+
+
+            </div>
+            </div>
+            </div>
+            <div class="container body-content" style="margin-top:10px;">
+                @RenderBody()
+
+
+            </div>
+
+
+            @RenderSection("scripts", required: false)
+        </body>
+    </html>

@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "EditBranch";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+        });
+    });
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+<div class="row">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">EDIT BRANCH</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm("EditBranch", "Administrator", FormMethod.Post))
+{
+    
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            @*@Html.Hidden("BRANCH", ViewBag.BRANCH as string)*@
+            <label class="ghbFont-color">BRANCH&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("BRANCH", ViewBag.BRANCH as string, new { @class = "form-control rounded-lg", maxlength = "100", @readonly = "readonly" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">DESC&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("DESC", ViewBag.DESC as string, new { @class = "form-control rounded-lg", maxlength = "100" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">DESC_ENG&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("DESC_ENG", ViewBag.DESC_ENG as string, new { @class = "form-control rounded-lg", maxlength = "100" })
+        </div>
+    </div>
+    <div class="row" style="display:none;">
+        <div class="col-md-4">
+            <label class="ghbFont-color">ZONE&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("ZONE", ViewBag.ZONE as string, new { @class = "form-control rounded-lg", maxlength = "5" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">REGION&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("REGION", ViewBag.REGION as string, new { @class = "form-control rounded-lg", maxlength = "5" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">EMAIL&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("EMAIL", ViewBag.EMAIL as string, new { @class = "form-control rounded-lg", maxlength = "50" })
+        </div>
+    </div>
+    <div class="row" style="display:none;">
+        <div class="col-md-4">
+            <label class="ghbFont-color">EXCEPTREGION&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("EXCEPTREGION", ViewBag.EXCEPTREGION as string, new { @class = "form-control rounded-lg", maxlength = "5" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">BNREGION&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("BNREGION", ViewBag.BNREGION as string, new { @class = "form-control rounded-lg", maxlength = "1" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">FLAGCLOSE&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("FLAGCLOSE", ViewBag.FLAGCLOSE as string, new { @class = "form-control rounded-lg", maxlength = "1" })
+        </div>
+    </div>
+    <div class="row" style="display:none;">
+        <div class="col-md-4">
+            <label class="ghbFont-color">Alt1&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("Alt1", ViewBag.Alt1 as string, new { @class = "form-control rounded-lg", maxlength = "5" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">Alt2&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("Alt2", ViewBag.Alt2 as string, new { @class = "form-control rounded-lg", maxlength = "5" })
+        </div>
+        <div class="col-md-4">
+            <label class="ghbFont-color">Alt3&nbsp;</label>&nbsp;&nbsp;
+            @Html.TextBox("Alt3", ViewBag.Alt3 as string, new { @class = "form-control rounded-lg", maxlength = "5" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;">SAVE</button>
+            <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px;">CANCEL</button>
+        </div>
+    </div>
+</div>
+}

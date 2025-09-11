@@ -1,0 +1,315 @@
+﻿
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<script src="~/Scripts/check-password-strength@2.0.10-umd.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("USER_PASSWORD").onkeyup = function () { FunctionPassStrength() };
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+
+            var item = document.getElementById('isactive');
+            var chk = false;
+            if (item.checked) {
+                chk = true;
+            }
+            document.getElementById('isChecked').value = chk;
+
+            var userFlag = '@ViewBag.USER_FLAG'.toUpperCase();
+            if ("TRUE" == userFlag) {
+                document.getElementById('_userFlag').value = true;
+            }
+            else {
+                document.getElementById('_userFlag').value = false;
+            }
+        });
+    });
+    function FunctionPassStrength() {
+        let str = "Strength Password : ";
+        let val = document.getElementById("USER_PASSWORD");
+
+        const PasswordStrength = checkPasswordStrength.passwordStrength(val.value).value; // 'Weak'
+
+        if (val.value.length < 6) {
+            document.getElementById("check_password").innerHTML = "";
+            document.getElementById("check_password").innerHTML = "<b style='color:red'>Enter a password of <span style='font-size:35px'>more than 6 characters</span></b>";
+            document.getElementById("btnSave").disabled = true;
+
+        }
+        else {
+            if (PasswordStrength === "Weak") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:red'>" + str + "<span style='font-size:35px'>Weak</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+            else if (PasswordStrength === "Medium") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:orange'>" + str + "<span style='font-size:35px'>Medium</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+            else if (PasswordStrength === "Strong") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:green'>" + str + "<span style='font-size:35px'>Strong</span></b>";
+                document.getElementById("btnSave").disabled = false;
+
+            }
+            else {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:red'>" + str + "<span style='font-size:35px'>Weak</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+
+        }
+
+    }
+
+</script>
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .disabled {
+        pointer-events: none; /* No cursor */
+        background-color: #eee; /* Gray background */
+    }
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    .chkbox_css {
+        display: inline;
+        margin-top: 0px !important;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+<div class="row">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">EDIT USER</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <a onclick="history.back()" title="ย้อนกลับ">
+        <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+    </a>
+</div>
+
+
+@using (Html.BeginForm("EditUser", "Administrator", FormMethod.Post))
+{
+    @Html.Hidden("ID", ViewBag.ID as string)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="ghbFont-color">ชื่อผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+                @if (ViewBag.USER_FLAG == true)
+                {
+                    @Html.TextBox("USER_LOGIN", ViewBag.USER_LOGIN as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextBox("USER_LOGIN", ViewBag.USER_LOGIN as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                }
+            </div>
+            <div class="col-md-3">
+                <label class="ghbFont-color">รหัสผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+                @if (ViewBag.USER_FLAG == true)
+                {
+                    @Html.Password("USER_PASSWORD", ViewBag.USER_PASSWORD as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.Password("USER_PASSWORD", ViewBag.USER_PASSWORD as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                }
+            </div>
+            <div class="col-md-6">
+                <div id="check_password"></div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="ghbFont-color">ชื่อ&nbsp;</label>&nbsp;&nbsp;
+                @if (ViewBag.USER_FLAG == true)
+                {
+                    @Html.TextBox("USER_FIRSTNAME", ViewBag.USER_FIRSTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextBox("USER_FIRSTNAME", ViewBag.USER_FIRSTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                }
+            </div>
+            <div class="col-md-3">
+                <label class="ghbFont-color">สกุล&nbsp;</label>&nbsp;&nbsp;
+                @if (ViewBag.USER_FLAG == true)
+                {
+                    @Html.TextBox("USER_LASTNAME", ViewBag.USER_LASTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextBox("USER_LASTNAME", ViewBag.USER_LASTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                }
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+
+                <label class="ghbFont-color">email&nbsp;</label>&nbsp;&nbsp;
+                @if (ViewBag.USER_FLAG == true)
+                {
+                    @Html.TextBox("USER_EMAIL", ViewBag.USER_EMAIL as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextBox("USER_EMAIL", ViewBag.USER_EMAIL as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                }
+            </div>
+            <div class="col-md-3">
+                <label class="ghbFont-color">ระดับ&nbsp;</label>&nbsp;&nbsp;
+                
+                    <select name="USER_LEVEL" id="USER_LEVEL" class="form-control w-100 rounded-lg " >
+                        @{
+                            <option value="0">โปรดเลือก</option>
+                            if (ViewBag.CurrentRoleList != "")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.CurrentRoleList;
+                                string strSel = Convert.ToString(ViewBag.USER_LEVEL);
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+
+
+
+
+                        }
+                    </select>
+                             
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="ghbFont-color">ล็อกบัญชีผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+
+                <select name="USER_LOCK" id="USER_LOCK" class="form-control w-100 rounded-lg ">
+                    @{
+                        <option value="0">โปรดเลือก</option>
+                        if (ViewBag.CurrentLockAccountList != "")
+                        {
+                            char[] _spl = new char[] { '|' };
+                            char[] _spf = new char[] { ',' };
+                            string[] _arrLine = null;
+                            string[] _arrField = null;
+                            string Tmpstr = ViewBag.CurrentLockAccountList;
+                            int strSel = Convert.ToInt32(ViewBag.USER_LOCK);
+                            _arrLine = Tmpstr.Split(_spl);
+                            foreach (string str in _arrLine)
+                            {
+                                _arrField = str.Split(_spf);
+                                if (strSel == Convert.ToInt32(_arrField[0]))
+                                {
+                                    <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                                else
+                                {
+                                    <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                            }
+                        }
+
+
+
+
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="ghbFont-color">สถานะ&nbsp;</label>&nbsp;&nbsp;
+                <br />
+                <input type="checkbox" id="isactive" name="isactive" checked="@ViewBag.IS_ACTIVE" class="form-control">
+                <input type="hidden" id="isChecked" name="isChecked" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;">SAVE</button>
+                <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+}

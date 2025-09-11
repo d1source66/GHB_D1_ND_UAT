@@ -1,0 +1,389 @@
+﻿
+@{
+    ViewBag.Title = "EditMapUserBranch";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+
+    .divscreen {
+        /*width: 90%;
+        background-color: white;
+        position: absolute;
+        height: 228px;
+        opacity: 0.48;*/
+        width: 291px;
+        background-color: white;
+        position: absolute;
+        height: 210px;
+        opacity: 0.48;
+    }
+
+    .msg_error {
+        color: #ff0000;
+        font-size: 12pt;
+    }
+
+    #select2-ID_BRANCH-container, #select2-ID_USER-container {
+        font-size: 14px;
+    }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        $("#msg").hide();
+        $("#scene").hide();
+        $('#loading').hide();
+
+        $('#ID_USER').select2();
+        $('#ID_BRANCH').select2();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+
+            var item = $('#ID_BRANCH2').val();
+            var bd = $('#B_DATE').val();
+            var ed = $('#E_DATE').val();
+            var idu = $('#ID_USER').val();
+
+            document.getElementById('_idbranch2').value = item;
+            document.getElementById('_bdate').value = bd;
+            document.getElementById('_edate').value = ed;
+            document.getElementById('_iduser').value = idu;
+        });
+        $("#btnCancel").click(function () {
+            var idu = $('#ID_USER').val();
+            document.getElementById('_iduser').value = idu;
+        });
+
+        var opt = '@ViewBag.OPEN_OPT'.toUpperCase();
+        var perma = '@ViewBag.PERMA'.toUpperCase();
+        if ("TRUE" == opt) {
+            $('#ID_BRANCH2').prop('disabled', false);
+            $('#B_DATE').prop('disabled', false);
+            $('#E_DATE').prop('disabled', false);
+            $('#chkStatus').prop('disabled', false);
+            if ("TRUE" == perma) {
+                //$("#scene").show();
+                $('#ID_BRANCH2').prop('disabled', true);
+                $('#B_DATE').prop('disabled', true);
+                $('#E_DATE').prop('disabled', true);
+            }
+            else {
+                //$("#scene").hide();
+                $('#ID_BRANCH2').prop('disabled', false);
+                $('#B_DATE').prop('disabled', false);
+                $('#E_DATE').prop('disabled', false);
+                $('#chkStatus').prop('disabled', false);
+            }
+        }
+        else {
+            $('#ID_BRANCH2').prop('disabled', true);
+            $('#B_DATE').prop('disabled', true);
+            $('#E_DATE').prop('disabled', true);
+            $('#chkStatus').prop('disabled', true);
+        }
+
+        //var $b_date = $('#B_DATE');
+        //$b_date.datepicker();
+        //$b_date.datepicker('setDate', new Date());
+        //var $e_date = $('#E_DATE');
+        //$e_date.datepicker();
+        //$e_date.datepicker('setDate', new Date());
+
+        $("#B_DATE").change(function () {
+            let d = $(this).val();
+            var a = $("#B_DATE").val();
+            var b = $("#E_DATE").val();
+            $("#displayDate").text(d);
+            $("#B_DATE").val(d);
+            $("#msg").hide();
+            if (a != "" && b != "") {
+                overLap(a, b);
+            }
+        });
+
+        $("#E_DATE").change(function () {
+            let d = $(this).val();
+            var a = $("#B_DATE").val();
+            var b = $("#E_DATE").val();
+            $("#displayDate").text(d);
+            $("#E_DATE").val(d);
+            $("#msg").hide();
+            if (a != "" && b != "") {
+                overLap(a, b);
+            }
+        })
+
+        $('#chkMoreGroup').change(function () {
+            var isChecked = $(this).is(':checked');
+            $('#ID_BRANCH2').prop('disabled', !isChecked);
+            $('#B_DATE').prop('disabled', !isChecked);
+            $('#E_DATE').prop('disabled', !isChecked);
+            $('#chkStatus').prop('disabled', !isChecked);
+            $('#ID_BRANCH2').val(0);
+        });
+
+        $('#chkStatus').change(function () {
+            var isChecked = $(this).is(':checked');
+            var idb2 = $('#ID_BRANCH2').val();
+            if (isChecked == true) {
+                //$("#scene").show();
+                if (idb2 == "0") {
+                    alert("โปรดเลือกกลุ่มรายงานที่เพิ่ม");
+                    $(this).prop('checked', false);
+                } else {
+                    $('#ID_BRANCH2').prop('disabled', isChecked);
+                    $('#B_DATE').prop('disabled', isChecked);
+                    $('#E_DATE').prop('disabled', isChecked);
+                }
+            }
+            else {
+                //$("#scene").hide();
+                $('#ID_BRANCH2').prop('disabled', isChecked);
+                $('#B_DATE').prop('disabled', isChecked);
+                $('#E_DATE').prop('disabled', isChecked);
+            }
+
+        });
+
+        function overLap(a, b) {
+            if (a > b) {
+                $("#msg").show();
+                $('#btnSave').prop('disabled', true);
+            }
+            else {
+                $("#msg").hide();
+                $('#btnSave').prop('disabled', false);
+            }
+        }
+
+    });
+</script>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+<div class="row">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">EDIT MAP USER BRANCH</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <a onclick="history.back()" title="ย้อนกลับ">
+        <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+    </a>
+</div>
+
+@using (Html.BeginForm("EditMapUserBranch", "Administrator", FormMethod.Post))
+{
+    @Html.Hidden("ID", ViewBag.ID as string)
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <label class="ghbFont-color">รหัสผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+                <input type="hidden" name="_iduser" id="_iduser" />
+                <select name="ID_USER" id="ID_USER" class="form-control w-100 rounded-lg" disabled>
+                    @{
+                        <option value="All">โปรดเลือก</option>
+                        if (ViewBag.CurrentUserList != "" && ViewBag.CurrentUserList != "All")
+                        {
+                            char[] _spl = new char[] { '|' };
+                            char[] _spf = new char[] { ',' };
+                            string[] _arrLine = null;
+                            string[] _arrField = null;
+                            string Tmpstr = ViewBag.CurrentUserList;
+                            string strSel = ViewBag.ID_USER;
+                            _arrLine = Tmpstr.Split(_spl);
+                            foreach (string str in _arrLine)
+                            {
+                                _arrField = str.Split(_spf);
+                                if (strSel == _arrField[0].ToString())
+                                {
+                                    <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                                else
+                                {
+                                    <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label class="ghbFont-color">กลุ่มรายงาน&nbsp;</label>&nbsp;&nbsp;
+
+                <select name="ID_BRANCH" id="ID_BRANCH" class="form-control w-100 rounded-lg" disabled>
+                    @{
+                        <option value="All">โปรดเลือก</option>
+                        if (ViewBag.CurrentBranchList != "" && ViewBag.CurrentBranchList != "All")
+                        {
+                            char[] _spl = new char[] { '|' };
+                            char[] _spf = new char[] { ',' };
+                            string[] _arrLine = null;
+                            string[] _arrField = null;
+                            string Tmpstr = ViewBag.CurrentBranchList;
+                            string strSel = ViewBag.ID_BRANCH;
+                            _arrLine = Tmpstr.Split(_spl);
+                            foreach (string str in _arrLine)
+                            {
+                                _arrField = str.Split(_spf);
+                                if (strSel == _arrField[0].ToString())
+                                {
+                                    <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                                else
+                                {
+                                    <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+                <input type="hidden" name="ID_BRANCH1" id="ID_BRANCH1" value="@ViewBag.ID_BRANCH" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2" style="display: inline-block; padding: 0px 10px;">
+                <br />
+                <div style="float:left;"><label class="ghbFont-color" for="chkMoreGroup">เพิ่มกลุ่มรายงาน&nbsp;</label></div>
+                <div>
+                    @if (ViewBag.OPEN_OPT)
+                    {
+                        @Html.CheckBox("OPEN_OPT", true, new { id = "chkMoreGroup", @class = "form-control rounded-lg" })
+                    }
+                    else
+                    {
+                        @Html.CheckBox("OPEN_OPT", false, new { id = "chkMoreGroup", @class = "form-control rounded-lg" })
+                    }
+
+                </div>
+                @*</div>
+                    <div class="col-lg-2" style="display: inline-block; padding: 10px 10px; width:auto;">*@
+                @*<div id="scene" class="divscreen"></div>*@
+            <div style="border: 2px solid #ff850c; border-radius: 25px; padding: 10px 10px; display: inline-block; ">
+                @*<div id="scene" class="divscreen"></div>*@
+                <label class="ghbFont-color">กลุ่มรายงานที่เพิ่ม&nbsp;</label>
+                <select name="ID_BRANCH2" id="ID_BRANCH2" class="form-control w-100 rounded-lg" disabled>
+                    @{
+                        <option value="0">โปรดเลือก</option>
+                        if (ViewBag.CurrentBranchList != "" && ViewBag.CurrentBranchList != "All")
+                        {
+                            char[] _spl = new char[] { '|' };
+                            char[] _spf = new char[] { ',' };
+                            string[] _arrLine = null;
+                            string[] _arrField = null;
+                            string Tmpstr = ViewBag.CurrentBranchList;
+                            string strSel = ViewBag.ID_BRANCH2;
+                            _arrLine = Tmpstr.Split(_spl);
+                            foreach (string str in _arrLine)
+                            {
+                                _arrField = str.Split(_spf);
+                                if (strSel == _arrField[0].ToString())
+                                {
+                                    <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                                else
+                                {
+                                    <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+                <input type="hidden" name="_idbranch2" id="_idbranch2" />
+                <label class="ghbFont-color">Begin date&nbsp;</label>
+                @*<input type="text" name="B_DATE" id="B_DATE" class="form-control rounded-lg" placeholder="dd/mm/yyyy" disabled />*@
+                @Html.TextBox("B_DATE", ViewBag.B_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd-mm-yyyy", @indexer = "-1", autocomplete = "off", @disabled = "disabled" })
+                <label class="ghbFont-color">End date&nbsp;</label>
+                @*<input type="text" name="E_DATE" id="E_DATE" class="form-control rounded-lg" placeholder="dd/mm/yyyy" disabled />*@
+                @Html.TextBox("E_DATE", ViewBag.E_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd-mm-yyyy", @indexer = "-1", autocomplete = "off", @disabled = "disabled" })
+                <div id="msg" class="msg_error" style=""><span>***overlap detected***</span></div>
+                <input type="hidden" name="_bdate" id="_bdate" />
+                <input type="hidden" name="_edate" id="_edate" />
+                <div style="float:left;"><label class="ghbFont-color" for="chkStatus">Permanent&nbsp;</label></div>
+                <div>
+                    @if (ViewBag.PERMA && ViewBag.OPEN_OPT)
+                    {
+                        @Html.CheckBox("PERMA", true, new { id = "chkStatus", @class = "form-control rounded-lg" })
+                    }
+                    else if (!ViewBag.PERMA && ViewBag.OPEN_OPT)
+                    {
+                        @Html.CheckBox("PERMA", false, new { id = "chkStatus", @class = "form-control rounded-lg" })
+                    }
+                    else if (!ViewBag.PERMA && !ViewBag.OPEN_OPT)
+                    {
+                        @Html.CheckBox("PERMA", false, new { id = "chkStatus", @class = "form-control rounded-lg", @disabled = "disabled" })
+                    }
+
+                </div>
+            </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;margin-bottom:20px;">SAVE</button>
+                <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px; margin-bottom: 20px;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+}

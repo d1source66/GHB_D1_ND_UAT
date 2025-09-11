@@ -1,0 +1,1114 @@
+﻿@model List<GHB_D1.Models.RoleModuleMasterModel>
+
+@{
+    ViewBag.Title = "AddRole";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@*<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>*@
+@*<script src="~/Scripts/jquery-3.7.1.min.js"></script>*@
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<link href="~/Scripts/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('div.nav_link.submenu_item').addClass('show_submenu');
+    });
+        //$(function () {
+        //    $('#loading').hide();
+        //    $("#btnSave").click(function () {
+        //        $('#loading').show();
+        //    });
+        //});
+    </script>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+            font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+            text-decoration: none;
+        }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .setButton {
+        display: flex;
+        flex-direction: row;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButtonFont {
+        color: #fff;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    .button[type=submit] {
+        width: 68% !important;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #ff850c !important;
+        border-color: #ff850c !important;
+        width: 68% !important;
+    }
+
+        .btn-primary:hover {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:focus {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:active {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+            .btn-primary:active:hover {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+            .btn-primary:active:active {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+    .mg {
+        margin: 0px 5px;
+    }
+
+    .roleSet {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .newNav {
+        background-color: unset !important;
+        background: unset !important;
+        color: #ff850c;
+    }
+
+        .newNav:hover {
+            background-color: unset !important;
+            background: unset !important;
+            color: red;
+        }
+
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+
+    .radioPad {
+        padding: 5px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    /*
+        tr.hide-table-padding td {
+            padding: 0;
+        }
+
+        .expand-button {
+            position: relative;
+        }
+
+        .accordion-toggle .expand-button:after {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translate(0, -50%);
+            content: '-';
+        }
+
+        .accordion-toggle.collapsed .expand-button:after {
+            content: '+';
+        }
+    */
+    .zeroPadding {
+        padding: 0 !important;
+    }
+
+    tr.row:nth-child(n) {
+        display: none
+    }
+
+    .row:before {
+        display: unset;
+        content: none;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+@*@using (Html.BeginForm("NdAddRoleSelected", "Administrator", FormMethod.Post))*@
+
+<div class="col-md-12 setNav">
+    <a name="" class="setNavFont headPath" href="@Url.Action("Index", "Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+    <label class="setNavFont"> / </label>
+    <a name="" class="setNavFont headPath" href="@Url.Action("NdRoleManagement", "Administrator")"><i class="fa fa-home fa-color-orange"></i>Role Management </a>
+    <label class="setNavFont"> / </label>
+    <label class="setNavFont">New Role</label>
+</div>
+<div class="setPage ">
+    @*<h2>MenuView</h2>*@
+
+    <div class="row g-3 formColor">
+        <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+            <div class="col-md-8">
+                <label class="form-label labelForm">New Role</label>
+            </div>
+            <div class="col-md-4 setButton">
+                @*<button type="submit" class="btn btn-primary mg" id="create" name="cmdButton" value="Add">สร้าง</button>
+                    <button type="submit" class="btn btn-primary mg" id="exExcel">Export Excel</button>
+                    <button type="submit" class="btn btn-primary mg" id="exCsv">Export CSV</button>*@
+            </div>
+        </div>
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-12">
+            <div class="col-md-4 roleSet ">
+                <label class="form-label" for="roleName" style="font-size: 16px; color: #ff850c;">Role*</label>
+                <input type="text" class="form-control txtinput" id="roleName" name="roleName">
+                @*<button type="submit" class="btn btn-primary mg" style="height:35px;">ค้นหา</button>*@
+            </div>
+            <div class="col-md-4">
+                &nbsp;
+            </div>
+            <div class="col-md-4">
+                &nbsp;
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-10" style="display:flex;">
+                <div class="radioPad">Position Role</div>
+                @if (ViewBag.StatusRadioLst != null)
+                {
+                    char[] _spl = new char[] { '|' };
+                    char[] _spf = new char[] { ',' };
+                    string[] _arrLine = null;
+                    string[] _arrField = null;
+                    string Tmpstr = ViewBag.StatusRadioLst;
+                    string strSel = ViewBag.Seleted;
+                    _arrLine = Tmpstr.Split(_spl);
+                    foreach (string str in _arrLine)
+                    {
+                        _arrField = str.Split(_spf);
+                        if (strSel == _arrField[0].ToString())
+                        {
+                            <div class="radioPad">
+                                <input type="radio" name="_role" class="role" value="@(_arrField[0].ToString())" checked>@(_arrField[1].ToString())
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="radioPad">
+                                <input type="radio" name="_role" class="role" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())
+                            </div>
+                        }
+                    }
+                }
+                @*<div class="radioPad"><input type="radio" name="_role" class="role" value="4" id="hqAdmin">HQ Admin</div>
+                    <div class="radioPad"><input type="radio" name="_role" class="role" value="5" id="branchAdmin">Branch Admin</div>
+                    <div class="radioPad"><input type="radio" name="_role" class="role" value="6" id="hq">HQ</div>
+                    <div class="radioPad"><input type="radio" name="_role" class="role" value="2" id="branch">Branch</div>*@
+            </div>
+            <div class="col-md-2" style="display: flex; align-items: center; justify-content: flex-end; margin-top: 9px;">
+                <a href="#" class="uncheckall" style="text-decoration: none;display:none;">Uncheck all</a>
+            </div>
+        </div>
+        <div style="padding:18px;">
+            <div class="card-body">
+                <table id="tbl1" class="table  table-striped display nowrap" width="100%" style="border: 1px solid #aaa; border-radius: 13px; overflow: hidden; ">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">No</th>
+                            <th style="text-align:center;vertical-align:top;" width="40%" class="ghb-background-color">Module</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">All</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">List</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Create</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">View</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Update</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Delete</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Export</th>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="searchTable">
+                        @{
+                            int a = 1;
+                        }
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            if (Model[i].Module_No.Length < 2 && Model[i].Module_No.Contains("6") == false)//1-5 Roles
+                            {
+                                <tr>
+                                    <th style="text-align: center;font-weight:400;">@Html.DisplayFor(m => Model[i].Module_No)</th>
+                                    <th style="text-align: left; font-weight: 400;">@Html.DisplayFor(m => Model[i].Module_Name)</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].IsSelected, new { @class = "check_row", @id = @Model[i].Group_Report })</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].List_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " List_Role" })</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].Create_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " Create_Role" })</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].View_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " View_Role" })</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].Update_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " Update_Role" })</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].Delete_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " Delete_Role" })</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].Export_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " Export_Role" })</th>
+                                    <th style="text-align: center;"></th>
+                                </tr>
+                            }
+                            if (Model[i].Module_No == "6" && a == 1)
+                            {
+                                //เพิ่มแถวหัวข้อ จัดการ Report
+                                <tr>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].Module_No)</td>
+                                    <td style="text-align: left;">จัดการ Report</td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                </tr>
+                                a++;
+                            }
+                            if (Model[i].Module_No == "6" && a > 1)
+                            {
+                                //ทุกสาขา เฉพาะสาขา
+                                <tr>
+                                    <th style="text-align: center;"></th>
+                                    <th style="text-align: left;">- @Html.DisplayFor(m => Model[i].Module_Name)</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].IsSelected, new { @class = "check_row", @id = @Model[i].Group_Report })</th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].List_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " List_Role" })</th>
+                                    <th style="text-align: center;"></th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].View_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " View_Role" })</th>
+                                    <th style="text-align: center;"></th>
+                                    <th style="text-align: center;"></th>
+                                    <th style="text-align: center;">@Html.CheckBoxFor(m => Model[i].Export_Role, new { @name = "permissions[]", @class = @Model[i].Group_Report + " " + @Model[i].Group_No + " Export_Role" })</th>
+                                    <th style="text-align: center;"></th>
+                                </tr>
+                            }
+                            else
+                            {
+                                if (Model[i].Module_No.Length == 3)//Report Head
+                                {
+                                    //var getid = @Model[i].Module_Name.ToString() + @Model[i].Module_No.ToString() + "IsSelected";
+                                    //var getid1 = @Model[i].Module_Name.ToString() + @Model[i].Module_No.ToString() + "List_Role";
+
+                                    <tr>
+                                        <td style="text-align: center;">@Html.DisplayFor(m => Model[i].Module_No)</td>
+                                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].Module_Name)<span style="float:right;">ทั้งหมด</span></td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].IsSelected, new { @class = "columnIsSelected " + @Model[i].Group_No + " " + @Model[i].Module_Name, @id = @Model[i].Group_Report })</td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].List_Role, new { @class = "columnList_Role " + @Model[i].Group_No + " " + @Model[i].Module_Name, @id = @Model[i].Group_Report })</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].View_Role, new { @class = "columnView_Role " + @Model[i].Group_No + " " + @Model[i].Module_Name, @id = @Model[i].Group_Report })</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].Export_Role, new { @class = "columnExport_Role " + @Model[i].Group_No + " " + @Model[i].Module_Name, @id = @Model[i].Group_Report })</td>
+                                        <td style="text-align: center;"><span id="sh" class="@Model[i].Group_Report" style="cursor:pointer;"><i class="bx bx-down-arrow-alt"></i></span></td>
+                                    </tr>
+                                }
+                                else if (Model[i].Module_No.Length > 3)//Report Details
+                                {
+                                    <tr class="row @Model[i].Group_Report">
+                                        <td style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(m => Model[i].Module_No)</td>
+                                        <td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(m => Model[i].Module_Name)</td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].IsSelected, new { @class = @Model[i].Group_Report + " IsSelected " + @Model[i].Group_No + " " + @Model[i].Module_Name + " check_row" })</td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].List_Role, new { @class = @Model[i].Group_Report + " List_Role " + @Model[i].Group_No + " " + @Model[i].Module_Name + " " + @Model[i].Group_Module })</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].View_Role, new { @class = @Model[i].Group_Report + " View_Role " + @Model[i].Group_No + " " + @Model[i].Module_Name + " " + @Model[i].Group_Module })</td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">@Html.CheckBoxFor(m => Model[i].Export_Role, new { @class = @Model[i].Group_Report + " Export_Role " + @Model[i].Group_No + " " + @Model[i].Module_Name + " " + @Model[i].Group_Module })</td>
+                                        <td style="text-align: center;"></td>
+                                    </tr>
+                                }
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">&nbsp;</div>
+                        <div class="col-md-4" style="display:flex;">
+                            <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin: 20px;margin-bottom: 20px;">SAVE</button>
+                            <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin: 20px; margin-bottom: 20px;">CANCEL</button>
+                        </div>
+                        <div class="col-md-4">&nbsp;</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+        $('#loading').hide();
+
+
+        //$("#searchInput").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#searchTable tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+
+        var table = $("#tbl1").DataTable({
+            "bFilter": false,
+            "bInfo": false,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            select: {
+                selector: 'td:not(:nth-child(2))',
+            }
+        });
+
+        //all checked**********************
+        $('#check_all').click(function () {
+            $('input').prop('checked', this.checked);
+        });
+        //all uncheck
+        $('.uncheckall').click(function () {
+            $('input:checkbox').prop('checked', false);
+            $('input:checkbox').prop('disabled', false);
+        });
+
+        //*********************************
+
+        //****************OPEN / CLOSE
+        $("#sh.ADM").click(function () {
+            $("tr.row.ADM:nth-child(n)").toggle();
+            $("#sh.ADM i").toggleClass('bx-up-arrow-alt');
+        });
+        $("#sh.CDM").click(function () {
+            $("tr.row.CDM:nth-child(n)").toggle();
+            $("#sh.CDM i").toggleClass('bx-up-arrow-alt');
+        });
+        $("#sh.CRM").click(function () {
+            $("tr.row.CRM:nth-child(n)").toggle();
+            $("#sh.CRM i").toggleClass('bx-up-arrow-alt');
+        });
+        $("#sh.LOC").click(function () {
+            $("tr.row.LOC:nth-child(n)").toggle();
+            $("#sh.LOC i").toggleClass('bx-up-arrow-alt');
+            //if ($(this).text().trim() == '') {
+            //    $(this).text('-');
+            //} else {
+            //    $(this).text('+');
+            //}
+            //var x= $(this).text().trim();
+            //plusminus(x);
+        });
+        $("#sh.LRM").click(function () {
+            $("tr.row.LRM:nth-child(n)").toggle();
+            $("#sh.LRM i").toggleClass('bx-up-arrow-alt');
+        });
+        $("#sh.QRP").click(function () {
+            $("tr.row.QRP:nth-child(n)").toggle();
+            $("#sh.QRP i").toggleClass('bx-up-arrow-alt');
+        });
+        $("#sh.RAT").click(function () {
+            $("tr.row.RAT:nth-child(n)").toggle();
+            $("#sh.RAT i").toggleClass('bx-up-arrow-alt');
+        });
+        //*********************************
+
+
+        //****************CHECK All in column
+        //function check all and disable
+        function chkb_chkalldisable(chkClass, chk) {
+            //var checkboxes = $(chkClass).closest('tr').find(':checkbox');
+            //checkboxes.prop('checked', this.checked);
+            $(chkClass).prop('checked', chk);
+            if (chk) {
+                $(chkClass).prop('disabled', true);
+                //checkboxes.prop('disabled', true);
+            } else {
+                $(chkClass).prop('disabled', false);
+                //checkboxes.prop('disabled', false);
+            }
+        }
+        //not use
+        function chkb_chkallrow(chkClass) {
+            var checkboxes = $(chkClass).closest('tr').find(':checkbox');
+            checkboxes.prop('checked', this.checked);
+            if (this.checked) {
+                checkboxes.prop('disabled', true);
+            } else {
+                checkboxes.prop('disabled', false);
+            }
+        }
+
+        $('#ADM.columnIsSelected').click(function () {
+            //$('.ADMIsSelected').prop('checked', this.checked);//example check all
+            chkb_chkalldisable('.ADM.IsSelected', this.checked);
+            //set check all Reports List
+            if ($(this).is(":checked")) {
+                //uncheck
+                $('#ADM.columnList_Role').prop('checked', false);
+                $('#ADM.columnView_Role').prop('checked', false);
+                $('#ADM.columnExport_Role').prop('checked', false);
+                //check
+                $('#ADM.columnList_Role').click();
+                $('#ADM.columnView_Role').click();
+                $('#ADM.columnExport_Role').click();
+                //disable
+                chkb_chkalldisable('#ADM.columnList_Role', this.checked);
+                chkb_chkalldisable('#ADM.columnView_Role', this.checked);
+                chkb_chkalldisable('#ADM.columnExport_Role', this.checked);
+            }
+            else {
+                chkb_chkalldisable('#ADM.columnList_Role', this.checked);
+                chkb_chkalldisable('#ADM.columnView_Role', this.checked);
+                chkb_chkalldisable('#ADM.columnExport_Role', this.checked);
+                chkb_chkalldisable('.ADM.List_Role', this.checked);
+                chkb_chkalldisable('.ADM.View_Role', this.checked);
+                chkb_chkalldisable('.ADM.Export_Role', this.checked);
+            }
+        });
+        $('#ADM.columnList_Role').click(function () {
+            chkb_chkalldisable('.ADM.List_Role', this.checked);
+        });
+        $('#ADM.columnView_Role').click(function () {
+            chkb_chkalldisable('.ADM.View_Role', this.checked);
+        });
+        $('#ADM.columnExport_Role').click(function () {
+            chkb_chkalldisable('.ADM.Export_Role', this.checked);
+        });
+        //CDM
+        $('#CDM.columnIsSelected').click(function () {
+            chkb_chkalldisable('.CDM.IsSelected', this.checked);
+            if ($(this).is(":checked")) {
+                //uncheck
+                $('#CDM.columnList_Role').prop('checked', false);
+                $('#CDM.columnView_Role').prop('checked', false);
+                $('#CDM.columnExport_Role').prop('checked', false);
+                //check
+                $('#CDM.columnList_Role').click();
+                $('#CDM.columnView_Role').click();
+                $('#CDM.columnExport_Role').click();
+                //disable
+                chkb_chkalldisable('#CDM.columnList_Role', this.checked);
+                chkb_chkalldisable('#CDM.columnView_Role', this.checked);
+                chkb_chkalldisable('#CDM.columnExport_Role', this.checked);
+            }
+            else {
+                chkb_chkalldisable('#CDM.columnList_Role', this.checked);
+                chkb_chkalldisable('#CDM.columnView_Role', this.checked);
+                chkb_chkalldisable('#CDM.columnExport_Role', this.checked);
+                chkb_chkalldisable('.CDM.List_Role', this.checked);
+                chkb_chkalldisable('.CDM.View_Role', this.checked);
+                chkb_chkalldisable('.CDM.Export_Role', this.checked);
+            }
+        });
+        $('#CDM.columnList_Role').click(function () {
+            chkb_chkalldisable('.CDM.List_Role', this.checked);
+        });
+        $('#CDM.columnView_Role').click(function () {
+            chkb_chkalldisable('.CDM.View_Role', this.checked);
+        });
+        $('#CDM.columnExport_Role').click(function () {
+            chkb_chkalldisable('.CDM.Export_Role', this.checked);
+        });
+        //CRM
+        $('#CRM.columnIsSelected').click(function () {
+            chkb_chkalldisable('.CRM.IsSelected', this.checked);
+            if ($(this).is(":checked")) {
+                //uncheck
+                $('#CRM.columnList_Role').prop('checked', false);
+                $('#CRM.columnView_Role').prop('checked', false);
+                $('#CRM.columnExport_Role').prop('checked', false);
+                //check
+                $('#CRM.columnList_Role').click();
+                $('#CRM.columnView_Role').click();
+                $('#CRM.columnExport_Role').click();
+                //disable
+                chkb_chkalldisable('#CRM.columnList_Role', this.checked);
+                chkb_chkalldisable('#CRM.columnView_Role', this.checked);
+                chkb_chkalldisable('#CRM.columnExport_Role', this.checked);
+            }
+            else {
+                chkb_chkalldisable('#CRM.columnList_Role', this.checked);
+                chkb_chkalldisable('#CRM.columnView_Role', this.checked);
+                chkb_chkalldisable('#CRM.columnExport_Role', this.checked);
+                chkb_chkalldisable('.CRM.List_Role', this.checked);
+                chkb_chkalldisable('.CRM.View_Role', this.checked);
+                chkb_chkalldisable('.CRM.Export_Role', this.checked);
+            }
+        });
+        $('#CRM.columnList_Role').click(function () {
+            chkb_chkalldisable('.CRM.List_Role', this.checked);
+        });
+        $('#CRM.columnView_Role').click(function () {
+            chkb_chkalldisable('.CRM.View_Role', this.checked);
+        });
+        $('#CRM.columnExport_Role').click(function () {
+            chkb_chkalldisable('.CRM.Export_Role', this.checked);
+        });
+        //LOCATION
+        $('#LOC.columnIsSelected').click(function () {
+            chkb_chkalldisable('.LOC.IsSelected', this.checked);
+            if ($(this).is(":checked")) {
+                //uncheck
+                $('#LOC.columnList_Role').prop('checked', false);
+                $('#LOC.columnView_Role').prop('checked', false);
+                $('#LOC.columnExport_Role').prop('checked', false);
+                //check
+                $('#LOC.columnList_Role').click();
+                $('#LOC.columnView_Role').click();
+                $('#LOC.columnExport_Role').click();
+                //disable
+                chkb_chkalldisable('#LOC.columnList_Role', this.checked);
+                chkb_chkalldisable('#LOC.columnView_Role', this.checked);
+                chkb_chkalldisable('#LOC.columnExport_Role', this.checked);
+            }
+            else {
+                chkb_chkalldisable('#LOC.columnList_Role', this.checked);
+                chkb_chkalldisable('#LOC.columnView_Role', this.checked);
+                chkb_chkalldisable('#LOC.columnExport_Role', this.checked);
+                chkb_chkalldisable('.LOC.List_Role', this.checked);
+                chkb_chkalldisable('.LOC.View_Role', this.checked);
+                chkb_chkalldisable('.LOC.Export_Role', this.checked);
+            }
+        });
+        $('#LOC.columnList_Role').click(function () {
+            chkb_chkalldisable('.LOC.List_Role', this.checked);
+        });
+        $('#LOC.columnView_Role').click(function () {
+            chkb_chkalldisable('.LOC.View_Role', this.checked);
+        });
+        $('#LOC.columnExport_Role').click(function () {
+            chkb_chkalldisable('.LOC.Export_Role', this.checked);
+        });
+        //LRM
+        $('#LRM.columnIsSelected').click(function () {
+            chkb_chkalldisable('.LRM.IsSelected', this.checked);
+            if ($(this).is(":checked")) {
+                //uncheck
+                $('#LRM.columnList_Role').prop('checked', false);
+                $('#LRM.columnView_Role').prop('checked', false);
+                $('#LRM.columnExport_Role').prop('checked', false);
+                //check
+                $('#LRM.columnList_Role').click();
+                $('#LRM.columnView_Role').click();
+                $('#LRM.columnExport_Role').click();
+                //disable
+                chkb_chkalldisable('#LRM.columnList_Role', this.checked);
+                chkb_chkalldisable('#LRM.columnView_Role', this.checked);
+                chkb_chkalldisable('#LRM.columnExport_Role', this.checked);
+            }
+            else {
+                chkb_chkalldisable('#LRM.columnList_Role', this.checked);
+                chkb_chkalldisable('#LRM.columnView_Role', this.checked);
+                chkb_chkalldisable('#LRM.columnExport_Role', this.checked);
+                chkb_chkalldisable('.LRM.List_Role', this.checked);
+                chkb_chkalldisable('.LRM.View_Role', this.checked);
+                chkb_chkalldisable('.LRM.Export_Role', this.checked);
+            }
+        });
+        $('#LRM.columnList_Role').click(function () {
+            chkb_chkalldisable('.LRM.List_Role', this.checked);
+        });
+        $('#LRM.columnView_Role').click(function () {
+            chkb_chkalldisable('.LRM.View_Role', this.checked);
+        });
+        $('#LRM.columnExport_Role').click(function () {
+            chkb_chkalldisable('.LRM.Export_Role', this.checked);
+        });
+        //QRP
+        $('#QRP.columnIsSelected').click(function () {
+            chkb_chkalldisable('.QRP.IsSelected', this.checked);
+            if ($(this).is(":checked")) {
+                //uncheck
+                $('#QRP.columnList_Role').prop('checked', false);
+                $('#QRP.columnView_Role').prop('checked', false);
+                $('#QRP.columnExport_Role').prop('checked', false);
+                //check
+                $('#QRP.columnList_Role').click();
+                $('#QRP.columnView_Role').click();
+                $('#QRP.columnExport_Role').click();
+                //disable
+                chkb_chkalldisable('#QRP.columnList_Role', this.checked);
+                chkb_chkalldisable('#QRP.columnView_Role', this.checked);
+                chkb_chkalldisable('#QRP.columnExport_Role', this.checked);
+            }
+            else {
+                chkb_chkalldisable('#QRP.columnList_Role', this.checked);
+                chkb_chkalldisable('#QRP.columnView_Role', this.checked);
+                chkb_chkalldisable('#QRP.columnExport_Role', this.checked);
+                chkb_chkalldisable('.QRP.List_Role', this.checked);
+                chkb_chkalldisable('.QRP.View_Role', this.checked);
+                chkb_chkalldisable('.QRP.Export_Role', this.checked);
+            }
+        });
+        $('#QRP.columnList_Role').click(function () {
+            chkb_chkalldisable('.QRP.List_Role', this.checked);
+        });
+        $('#QRP.columnView_Role').click(function () {
+            chkb_chkalldisable('.QRP.View_Role', this.checked);
+        });
+        $('#QRP.columnExport_Role').click(function () {
+            chkb_chkalldisable('.QRP.Export_Role', this.checked);
+        });
+        //RATM
+        $('#RAT.columnIsSelected').click(function () {
+            chkb_chkalldisable('.RAT.IsSelected', this.checked);
+            if ($(this).is(":checked")) {
+                //uncheck
+                $('#RAT.columnList_Role').prop('checked', false);
+                $('#RAT.columnView_Role').prop('checked', false);
+                $('#RAT.columnExport_Role').prop('checked', false);
+                //check
+                $('#RAT.columnList_Role').click();
+                $('#RAT.columnView_Role').click();
+                $('#RAT.columnExport_Role').click();
+                //disable
+                chkb_chkalldisable('#RAT.columnList_Role', this.checked);
+                chkb_chkalldisable('#RAT.columnView_Role', this.checked);
+                chkb_chkalldisable('#RAT.columnExport_Role', this.checked);
+            }
+            else {
+                chkb_chkalldisable('#RAT.columnList_Role', this.checked);
+                chkb_chkalldisable('#RAT.columnView_Role', this.checked);
+                chkb_chkalldisable('#RAT.columnExport_Role', this.checked);
+                chkb_chkalldisable('.RAT.List_Role', this.checked);
+                chkb_chkalldisable('.RAT.View_Role', this.checked);
+                chkb_chkalldisable('.RAT.Export_Role', this.checked);
+            }
+        });
+        $('#RAT.columnList_Role').click(function () {
+            chkb_chkalldisable('.RAT.List_Role', this.checked);
+        });
+        $('#RAT.columnView_Role').click(function () {
+            chkb_chkalldisable('.RAT.View_Role', this.checked);
+        });
+        $('#RAT.columnExport_Role').click(function () {
+            chkb_chkalldisable('.RAT.Export_Role', this.checked);
+        });
+        //*********************************
+
+
+        //$('.ADMList_Role').prop('checked', this.checked);
+
+        // Check all columns
+        //$('.check_column').click(function () {
+        //    var index = $(this).closest('th').index();
+        //    var isChecked = $(this).prop('checked');
+        //    $('.check_row').each(function () {
+        //        var checkboxes = $(this).closest('tr').find(':checkbox');
+        //        checkboxes.eq(index).prop('checked', isChecked);
+        //    });
+
+
+        //});
+
+        //****************** Check box in row case
+        $('.check_row').click(function () {
+            var checkboxes = $(this).closest('tr').find(':checkbox');
+            checkboxes.prop('checked', this.checked);
+            if (this.checked) {
+                checkboxes.prop('disabled', true);
+                $(checkboxes[0]).prop('disabled', false);
+            } else {
+                checkboxes.prop('disabled', false);
+            }
+            //checkboxes.prop('disabled', true | false);
+            //***เลือกได้อย่างใด อย่างหนึ่งระหว่าง หัวข้อรายงาน ทุกสาขา กับ เฉพาะสาขา
+            if ($(this).attr("id") == 'ALL') {
+                var checkboxes = $('#IND').closest('tr').find(':checkbox');
+                checkboxes.prop('checked', false);
+                checkboxes.prop('disabled', false);
+            }
+            if ($(this).attr("id") == 'IND') {
+                var checkboxes = $('#ALL').closest('tr').find(':checkbox');
+                checkboxes.prop('checked', false);
+                checkboxes.prop('disabled', false);
+            }
+            //***
+
+            //$('.check_row').prop('disabled', false);
+
+        });
+
+
+        //***********************************
+        //get each role check box for checking full selectors
+        const r01chkbs = document.querySelectorAll('.R01');
+        const r02chkbs = document.querySelectorAll('.R02');
+        const r03chkbs = document.querySelectorAll('.R03');
+        const r04chkbs = document.querySelectorAll('.R04');
+        const r05chkbs = document.querySelectorAll('.R05');
+        const allchkbs = document.querySelectorAll('.ALL');
+        const indchkbs = document.querySelectorAll('.IND');
+        var r1 = 0; var r2 = 0; var r3 = 0; var r4 = 0; var r5 = 0;
+        r01chkbs.forEach(chk => {
+            chk.addEventListener('click', (e) => {
+                if (e.currentTarget.checked == true) {
+                    r1 = r1 + 1;
+                    if (r1 == 6) {
+                        $('#R01.check_row').click();
+                    }
+                }
+            });
+        });
+        r02chkbs.forEach(chk => {
+            chk.addEventListener('click', (e) => {
+                if (e.currentTarget.checked == true) {
+                    r2 = r2 + 1;
+                    if (r2 == 6) {
+                        $('#R02.check_row').click();
+                    }
+                }
+            });
+        });
+        r03chkbs.forEach(chk => {
+            chk.addEventListener('click', (e) => {
+                if (e.currentTarget.checked == true) {
+                    r3 = r3 + 1;
+                    if (r3 == 6) {
+                        $('#R03.check_row').click();
+                    }
+                }
+            });
+        });
+        r04chkbs.forEach(chk => {
+            chk.addEventListener('click', (e) => {
+                if (e.currentTarget.checked == true) {
+                    r4 = r4 + 1;
+                    if (r4 == 6) {
+                        $('#R04.check_row').click();
+                    }
+                }
+            });
+        });
+        r05chkbs.forEach(chk => {
+            chk.addEventListener('click', (e) => {
+                if (e.currentTarget.checked == true) {
+                    r5 = r5 + 1;
+                    if (r5 == 6) {
+                        $('#R05.check_row').click();
+                    }
+                }
+            });
+        });
+        //แต่ละ check box ทุกสาขา และ เฉพาะสาขา
+        var i1 = 0; var i2 = 0;
+        allchkbs.forEach(chk => {
+            chk.addEventListener('click', (e) => {
+                if (e.currentTarget.checked == true) {
+                    i1 = i1 + 1;
+                    var checkboxes = $('#IND').closest('tr').find(':checkbox');
+                    checkboxes.prop('checked', false);
+                    checkboxes.prop('disabled', false);
+                    if (i1 == 3) {
+                        $('#ALL.check_row').click();
+                    }
+                }
+            });
+        });
+        indchkbs.forEach(chk => {
+            chk.addEventListener('click', (e) => {
+                if (e.currentTarget.checked == true) {
+                    i2 = i2 + 1;
+                    var checkboxes = $('#ALL').closest('tr').find(':checkbox');
+                    checkboxes.prop('checked', false);
+                    checkboxes.prop('disabled', false);
+                    if (i2 == 3) {
+                        $('#IND.check_row').click();
+                    }
+                }
+            });
+        });
+        //****************** End of Row Check box
+
+        //Prepare case not use*********************************************
+        var ids = $('input:checkbox:checked').map(function () {
+            return this.id;
+        }).get();
+
+        var list = $("input[name='bla[]']:checked").map(function () {
+            return this.value;
+        }).get();
+
+        $("input[name='[7].List_Role']").each(function (index, obj) {
+            // loop all checked items
+        });
+
+        $("input:checkbox").change(function () {
+        });
+        //$("input[name='[7].List_Role']").prop('checked')
+        //***********************************************************
+        var someObj = {};
+        //someObj.chkGranted = [];//checked
+        //someObj.chkDenied = [];//uncheck
+        $("input:checkbox").change(function () {
+            //var someObj = {};
+            someObj.chkGranted = [];//checked
+            someObj.chkDenied = [];//uncheck
+            //var R1 = []; var R2 = []; var R3 = []; var R4 = []; var R5 = [];
+            //var ALL = []; var IND = []; var ADM = []; var CDM = []; var CRM = []; var LOC = [];
+            //var LRM = []; var QRP = []; var RATM = [];
+            //let results = [];
+
+            $("input:checkbox").each(function () {
+                if ($(this).is(":checked")) {
+                    someObj.chkGranted.push($(this).attr("class"));
+                } else {
+                    someObj.chkDenied.push($(this).attr("class"));
+                }
+            });
+
+
+
+            //alert("GRANTED: " + someObj.fruitsGranted);
+            //alert("DENIED: " + someObj.fruitsDenied);
+        });
+
+
+        $("#btnSave").click(function () {
+            $('#loading').show();
+            var cmd = "Save";
+            if ($('#radio_button').is(':checked')) { alert("it's checked"); }
+            var rn = $('#roleName').val();
+            var chk = $('.role').is(':checked');
+            var _role = $("input[name='_role']:checked").val();//$('.role').val();
+            if (rn == "") {
+                alert("โปรดระบุชื่อ Role");
+                $('#loading').hide();
+                return false;
+            }
+            //else if (chk == false)
+            //{
+            //    alert("โปรดระบุชื่อ Position Role");
+            //}
+            else
+            {
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("NdAddRoleSelected", "Administrator")',
+                data: { cmdButton: cmd, roleName: rn, role: _role, chkGranted: someObj.chkGranted, chkDenied: someObj.chkDenied},
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    $('#loading').hide();
+                    if (data.Result == "Duplicate RoleName") {
+                        alert("Role Name ซ้ำ");
+                    }
+                    else {
+                        location.href = '@Url.Action("NdRoleManagement", "Administrator")';
+                    }
+
+                }
+
+            });
+            }
+
+        });
+
+        $("#btnCancel").click(function () {
+            var cmd = "Cancel";
+           //uncheck
+            //$('#loading').show();
+            var rn = $('#roleName').val();
+            var _role = $("input[name='_role']:checked").val();//$('.role').val();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("NdAddRoleSelected", "Administrator")',
+                data: { cmdButton: cmd, roleName: rn, role: _role, chkGranted: someObj.chkGranted, chkDenied: someObj.chkDenied},
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    location.href = '@Url.Action("NdRoleManagement", "Administrator")';
+                }
+            });
+
+        });
+
+        //4=HQ Admin, 5=Branch Admin, 6=HQ, 2=Branch
+        $('input[name="_role"]').change(function () {
+            switch ($(this).val()) {
+                case "2":
+                case "6":
+                    $('input:checkbox').prop('checked', false);
+                    $('input:checkbox').prop('disabled', false);
+                    $('#IND.check_row').click();
+                    break;
+                case "4":                    
+                case "5":
+                    $('input:checkbox').prop('checked', false);
+                    $('input:checkbox').prop('disabled', false);
+                    $('#R02.check_row').click();
+                    $('#R03.check_row').click();
+                    $('#IND.check_row').click();
+                    break;
+                default:
+                    $('input:checkbox').prop('checked', false);
+                    $('input:checkbox').prop('disabled', false);
+                    break;
+            }
+            //if ($(this).val() === 'yes') {
+            //    $('#myCheckbox').prop('checked', true);
+            //} else {
+            //    $('#myCheckbox').prop('checked', false);
+            //}
+        });
+
+        //****************************************
+
+        //var table2 = $("#tbl2").DataTable({
+        //    "bFilter": false,
+        //    "bInfo": false,
+        //    "paging": false,
+        //    "ordering": false,
+        //    "info": false,
+        //    select: {
+        //        selector: 'td:not(:nth-child(2))',
+        //    }
+        //});
+
+        //$(".btn").click(function () {
+        //    if ($("#collapseme").hasClass("out")) {
+        //        $("#collapseme").addClass("in");
+        //        $("#collapseme").removeClass("out");
+        //    } else {
+        //        $("#collapseme").addClass("out");
+        //        $("#collapseme").removeClass("in");
+        //    }
+        //});
+
+        //$('.collapse').on('show.bs.collapse', function () {
+        //    $(this).parent().removeClass("zeroPadding");
+        //});
+
+        //$('.collapse').on('hide.bs.collapse', function () {
+        //    $(this).parent().addClass("zeroPadding");
+        //});
+        //var table = $("#tbl1").DataTable({
+        //    dom: 't',
+        //    select: {
+        //        selector: 'td:not(:nth-child(2))',
+        //    }
+        //});
+
+        //var table = $('#example2').DataTable({
+        //    "responsive": true,
+        //    dom: 't',
+        //    select: {
+        //        selector: 'td:not(:nth-child(2))',
+        //    }
+        //});
+
+    });
+</script>

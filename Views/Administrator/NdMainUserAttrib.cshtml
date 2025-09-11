@@ -1,0 +1,390 @@
+﻿@model List<GHB_D1.Models.UserAttribModel>
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+
+<link href="~/Scripts/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#select-all').click(function () {
+                var isChecked = $(this).is(':checked');
+                //$('input[type="checkbox"]').each(function () {
+                //    //$(this).prop('checked', isChecked);
+                //    $('.item-checkbox').prop('checked', isChecked);
+                //});
+                $("#searchTable tr:visible .item-checkbox").prop('checked', isChecked);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            //$("#searchInput").on("keyup", function () {
+            //    var value = $(this).val().toLowerCase();
+            //    $("#searchTable tr").filter(function () {
+            //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            //    });
+            //});
+        });
+
+        function cfD() {
+            //var btn = $(this).attr('Value');
+            var data = "";
+            var x = confirm("คุณต้องการลบ Config นี้รึเปล่า")
+            if (x) {
+                return true;
+            } else {
+                data = { cmdButton: "NO" };
+                var url = '@Url.Action("NdUserAttrib", "Administrator")';
+                // method POST -> '$.post()'
+                $.post(url, data, function (result) {
+                    window.location = '@Url.Action("NdMainUserAttrib", "Administrator")';
+                    @*if (result.status == "success") {
+                        window.location = '@Url.Action("NdUserAttrib", "Administrator")';
+                    }*@
+                });
+                return false;
+            }
+        }
+    </script>
+
+}
+<style>
+    /*.navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }*/
+
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .ghbFont-color {
+        color: #ff850c;
+        font-size: 12pt;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+
+    .setButton1 {
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .button[type=submit] {
+        width: 68% !important;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #ff850c !important;
+        border-color: #ff850c !important;
+        width: 68% !important;
+    }
+
+        .btn-primary:hover {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:focus {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:active {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+            .btn-primary:active:hover {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+            .btn-primary:active:active {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+    .btn-ghb-primary {
+        background-color: #ff850c;
+    }
+
+        .btn-ghb-primary:hover, .btn-ghb-primary:focus {
+            background-color: #ffa500;
+        }
+</style>
+@*<div id="loading">
+        <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                        <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">USER ATTRIB</h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <a onclick="history.back()" title="ย้อนกลับ">
+            <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+        </a>
+    </div>*@
+@*<div class="container">
+        <div class="row">
+            <div class="col-sm-1" style="width: 50px; margin-top: 10px; padding-left:1px; padding-right:1px;">
+                <label class="ghbFont-color">ค้นหา:&nbsp;</label>
+            </div>
+            <div class="col-sm-1" style="width:210px;">
+                @Html.TextBox("searchInput", null, new { @class = "form-control rounded-lg", ID = "searchInput", placeholder = "ค้นหา..." })
+            </div>
+        </div>
+    </div>*@
+
+@using (Html.BeginForm("NdUserAttrib", "Administrator", FormMethod.Post))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">Config Parameters</label>
+    </div><div class="setPage ">
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Config Parameters</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1" style=" display: flex; justify-content: flex-end;">
+                    @if (ViewBag.Create_Role == true)
+                    {
+                        <button type="submit" class="btn btn-primary mg" id="create" name="cmdButton" value="Add">สร้าง</button>
+                    }
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12" style=" display: flex; align-items: center; }">
+                <div class="col-md-4" style="display: flex; align-items: center;">
+                    <label class="form-label labelCss" for="searchInput">Key Name</label>&nbsp;
+                    @*<input type="text" class="form-control txtinput" id="usernameInput" style="width:50%;">*@
+                    <input type="text" class="form-control rounded-lg txtinput" id="searchInput" placeholder="Search" name="searchInput" style="width:64%;">
+                </div>
+                <div class="col-md-4" style="display: flex; align-items: center;">
+                    <label class="form-label labelCss" for="searchInputCat">Category</label>&nbsp;
+                    @*<input type="text" class="form-control txtinput" id="usernameInput" style="width:50%;">*@
+                    <input type="text" class="form-control rounded-lg txtinput" id="searchInputCat" placeholder="Category" name="searchInputCat" style="width:64%;">
+                </div>
+                <div class="col-md-4">
+                    <button id="btnSearch" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Search" value="Search" style="padding: 6px 12px; width: 60px;">ค้นหา</button>
+                    <button id="btnClear" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Clear" value="Reset" style=" padding: 6px 12px; width: 73px; border: unset;">เคลียร์ค่า</button>
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div style="padding:0px 18px;">
+                <div class="card-body">
+                    <div class="tableFixHead" style="width: 100%; ">
+                        <table style="width: 100%; border: 1px solid rgb(170, 170, 170); border-radius: 13px; overflow: hidden; border-collapse: separate !important; border-spacing: 0; " class="table table-striped display nowrap">
+                            <thead>
+                                <tr>
+                                    @*<th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"><input type="checkbox" id="select-all" /></th>*@
+                                    @*<th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">NCFGVARIABLEID</th>*@
+                                    @if (ViewBag.Update_Role == true && ViewBag.Delete_Role == true)
+                                    {
+                                        <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Action</th>
+                                    }
+                                    else
+                                    {
+                                        <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"></th>
+                                    }
+                                    <th style="text-align:center;vertical-align:top;" width="20%" class="ghb-background-color">Category</th>
+                                    <th style="text-align:center;vertical-align:top;" width="20%" class="ghb-background-color">Key Name</th>
+                                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Key Value</th>
+                                    <th style="text-align:center;vertical-align:top;" width="40%" class="ghb-background-color">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchTable">
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+
+
+                                    <tr>
+                                        @*<td style="text-align: center;">
+                                                @Html.CheckBoxFor(m => Model[i].IsSelected, new { id = "cbxID", name = "cbxID", @class = "item-checkbox" })
+                                            </td>*@
+                                        @*<td style="text-align: right;">@Html.DisplayFor(m => Model[i].NCFGVARIABLEID)@Html.HiddenFor(m => Model[i].NCFGVARIABLEID)</td>*@
+                                        <td style="text-align: left;display:flex;">
+                                            @if (ViewBag.Update_Role == true)
+                                            {
+                                                <button id="btnEdit" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Edit" value="Edit|@Model[i].NCFGVARIABLEID|@Model[i].SCFGVARIABLE" style="padding: 0; border: none; background: none; outline: unset;"><i class="bx bxs-edit" style="font-size: 18px; color: #ff850c;"></i></button>
+                                            }
+                                            @if (ViewBag.Delete_Role == true)
+                                            {
+                                                <button id="btnDelete" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Delete" value="Delete|@Model[i].NCFGVARIABLEID|@Model[i].SCFGVARIABLE" onclick="cfD()" style="padding: 0; border: none; background: none; outline: unset;"><i class="bx bxs-trash" style="font-size: 18px; color: #ff850c;"></i></button>
+                                            }
+                                        </td>
+                                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].Category)@Html.HiddenFor(m => Model[i].Category)</td>
+                                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].SCFGVARIABLE)@Html.HiddenFor(m => Model[i].SCFGVARIABLE)</td>
+                                        <td style="text-align: center;">@Html.DisplayFor(m => Model[i].SCFGVALUE)</td>
+                                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].SDESCRIPTION)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <button id="btnAdd" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Add" value="Add" style="margin-top:20px;margin-bottom:20px;">ADD</button>
+        <button id="btnDelete" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Delete" value="Delete">DELETE</button>
+        <div class="tableFixHead" style="width: 100%; height: 800px; overflow: scroll;">
+            <table style="font: 300 16px 'Tahoma'; color: black; width: 100%; " class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"><input type="checkbox" id="select-all" /></th>
+                        <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">NCFGVARIABLEID</th>
+                        <th style="text-align:center;vertical-align:top;" width="20%" class="ghb-background-color">SCFGVARIABLE</th>
+                        <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">SCFGVALUE</th>
+                        <th style="text-align:center;vertical-align:top;" width="40%" class="ghb-background-color">SDESCRIPTION</th>
+                        <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">EDIT</th>
+
+                    </tr>
+                </thead>
+                <tbody id="searchTable">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td style="text-align: center;">
+                                @Html.CheckBoxFor(m => Model[i].IsSelected, new { id = "cbxID", name = "cbxID", @class = "item-checkbox" })
+                            </td>
+                            <td style="text-align: right;">@Html.DisplayFor(m => Model[i].NCFGVARIABLEID)@Html.HiddenFor(m => Model[i].NCFGVARIABLEID)</td>
+                            <td style="text-align: left;">@Html.DisplayFor(m => Model[i].SCFGVARIABLE)@Html.HiddenFor(m => Model[i].SCFGVARIABLE)</td>
+                            <td style="text-align: center;">@Html.DisplayFor(m => Model[i].SCFGVALUE)</td>
+                            <td style="text-align: left;">@Html.DisplayFor(m => Model[i].SDESCRIPTION)</td>
+
+                            <td style="text-align: center;">
+
+                                <button id="btnEdit" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Edit" value="Edit|@Model[i].NCFGVARIABLEID|@Model[i].SCFGVARIABLE">EDIT</button>
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+}

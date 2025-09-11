@@ -1,0 +1,508 @@
+﻿@model List<GHB_D1.Models.AudiLogModel>
+
+@{
+    ViewBag.Title = "User Management";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<link href="~/Scripts/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#branchInput1').select2();
+        $('#departInput1').select2();
+        $('#disInput1').select2();
+        $('#USER_LEVEL1').select2();
+
+
+        $('#branchInput2').select2();
+        $('#departInput2').select2();
+        $('#disInput2').select2();
+        $('#USER_LEVEL2').select2();
+
+        $('#workfunction').select2();
+
+        $("#FrDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#ToDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#iconFr").click(function () {
+            $("#FrDate").datepicker("show");
+        });
+
+        $("#iconTo").click(function () {
+            $("#ToDate").datepicker("show");
+        });
+
+        $('#firstInput').on('input', function () {
+            const maxLength = 5;
+            const value = $(this).val();
+
+            // Restrict input to numbers only
+            if (value.length > maxLength) {
+                $(this).val(value.slice(0, maxLength));
+            }
+        });
+    });
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .ghbFont-color {
+        color: #ff850c;
+        font-size: 12pt;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .setButton {
+        display: flex;
+        flex-direction: row;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButton1 {
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButtonFont {
+        color: #fff;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    .button[type=submit] {
+        width: 68% !important;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #ff850c !important;
+        border-color: #ff850c !important;
+        width: 68% !important;
+    }
+
+        .btn-primary:hover {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:focus {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:active {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+            .btn-primary:active:hover {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+            .btn-primary:active:active {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+    .mg {
+        margin: 0px 5px;
+        float: right;
+    }
+
+    .roleSet {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .newNav {
+        background-color: unset !important;
+        background: unset !important;
+        color: #ff850c;
+    }
+
+        .newNav:hover {
+            background-color: unset !important;
+            background: unset !important;
+            color: red;
+        }
+
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    /*hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }*/
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    /*dropdown select*/
+    .select2-container {
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        border: 0px solid #f6f6f6;
+        text-align: left;
+        margin: 5px;
+    }
+
+    .select2-dropdown {
+        margin-top: -8px;
+        margin-left: -5px;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 32px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 31px;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .rightZone {
+        text-align: justify;
+        display: contents;
+    }
+
+    .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        z-index: 3;
+        color: #fff;
+        cursor: default;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+</style>
+
+@using (Html.BeginForm("NdAudiLogSearch", "Administrator", FormMethod.Post, new { audiDetail = Model }))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">Audit Log</label>
+    </div>
+    <div class="setPage ">
+        @*<h2>MenuView</h2>*@
+
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Audit Log</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    @*<button type="submit" class="btn btn-primary mg" id="Detail" name="cmdButton" value="Detail">สร้าง</button>*@
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; ">
+                    <label class="form-label labelCss" for="empcodeInput">ฟังก์ชั่นการใช้งาน</label>
+                    @*<input type="text" class="form-control txtinput" id="workfunction" style="width:50%;">*@
+                    <select name="workfunction" id="workfunction" class="form-control w-100 rounded-lg" style="width: 50%;">
+                        @{
+                            <option value="All">ไม่ระบุ</option>
+                            if (ViewBag.WorkFunction != null && ViewBag.WorkFunction != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.WorkFunction;
+                                string strSel = ViewBag.CurrentWorkFunction;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    @*<label class="form-label labelCss" style="display:none;" for="usernameInput">User Name</label>
+                        <input type="text" class="form-control txtinput" id="usernameInput" style="width: 50%; display: none;">*@
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
+                    <label class="form-label labelCss" style=" margin-right: 7px;">วันที่เริ่มต้น</label>
+                    @*<input type="text" class="form-control" id="departInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("FrDate", ViewBag.CurrentFr as string, new { @class = "form-control rounded-lg", @placeholder = "dd/mm/yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 195px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconFr"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-6" style="display: flex; align-items: center;">
+                    <label class="form-label labelCss" style="margin-right: 5px;">วันที่สิ้นสุด</label>
+                    @*<input type="text" class="form-control" id="disInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("ToDate", ViewBag.CurrentTo as string, new { @class = "form-control rounded-lg", @placeholder = "dd/mm/yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 195px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconTo"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align: end; display: flex; padding: 5px; justify-content: flex-end; ">
+                    <label class="form-label labelCss" for="empcode">รหัสพนักงาน</label>
+                    <input type="number" class="form-control txtinput" id="empcode" name="empcode" value="@ViewBag.EmpCode" style="width: 49%; margin-left: 7px; margin-right: 11px;">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label labelCss" for="nameinput">ชื่อ-นามสกุล</label>
+                    <input type="text" class="form-control txtinput" id="nameinput" name="nameinput" value="@ViewBag.NameInput" style="width:50%;">
+                </div>
+            </div>
+            <div class="col-md-12" style="display:none;">
+                <div class="col-md-6" style="display: flex; justify-content: flex-end;">
+                    <label class="form-label labelCss" for="statusInput" style="margin-right: 5px;">สถานะ</label>
+                    <select id="statusInput" name="statusInput" class="form-control w-100 rounded-lg" style="width:50%;margin:5px;">
+                        <option value="0">All</option>
+                        <option value="1">Active</option>
+                        <option value="2">Not Active</option>
+                    </select>
+                </div>
+                <div class="col-md-6" style=" text-align: end; display: flex; align-items: center;">
+                    @*<label class="form-label labelCss" for="branchInput">สาขา</label>*@
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4" style="display:flex;">
+                        <button id="btnSearch" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Search" style="margin: 20px; margin-bottom: 20px; width: inherit;">ค้นหา</button>
+                        <button id="btnReset" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="reset" value="reset" style="margin: 20px; margin-bottom: 20px; width: inherit; background-color: red;">เคลียร์ค่า</button>
+                    </div>
+                    <div class="col-md-4">&nbsp;</div>
+                </div>
+                <div class="col-md-12" style="display: flex; align-items: center; margin-bottom: -17px; ">
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4" style="display:flex;">
+                        @if (ViewBag.Export_Role == true)
+                        {
+                            <button type="submit" class="btn btn-primary mg" id="exExcel" name="cmdButton" value="ExportExcel" style="margin: 20px; margin-bottom: 20px; width: inherit;">Export Excel</button>
+                            <button type="submit" class="btn btn-primary mg" id="exCsv" name="cmdButton" value="ExportCSV" style="margin: 20px; margin-bottom: 20px; width: inherit;">Export CSV</button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div style="padding:0px 18px;">
+                <div class="card-body">
+                    <table class="table table-striped display nowrap" id="tbl1" style="width: 100%; border: 1px solid rgb(170, 170, 170); border-radius: 13px; overflow: hidden; border-collapse: separate !important; border-spacing: 0; font-size: 12px; ">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">รหัสพนักงาน</th>
+                                <th style="text-align:center;vertical-align:top;" width="15%" class="ghb-background-color">ชื่อ-นามสกุล</th>
+                                <th style="text-align:center;vertical-align:top;" width="15%" class="ghb-background-color">ฟังก์ชั่นการใช้งาน</th>
+                                <th style="text-align:center;vertical-align:top;" width="15%" class="ghb-background-color">รายละเอียด</th>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">วันเดือนปี เวลา</th>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">MAC Address</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchTable">
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                //string complete_name = Model[i].USER_FIRSTNAME != "" ? Model[i].USER_FIRSTNAME : "test";
+                                //string abc = Html.DisplayFor(m => Model[i].USER_FIRSTNAME).ToHtmlString() != "" ? Html.DisplayFor(m => Model[i].USER_FIRSTNAME).ToHtmlString() : "test";
+                                <tr>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].EmpCode)</td>
+                                    <td style="text-align: left;">@Html.DisplayFor(m => Model[i].Username)&nbsp;@Html.DisplayFor(m => Model[i].Username)</td>
+                                    <td style="text-align: center;">@Html.ActionLink((Model[i].WorkFunction != "" ? Model[i].WorkFunction : Model[i].Message), "NdAudiDetails", "Administrator", new { id = Model[i].Audi_Id, cmdButton = "Detail", MAC_Address = Model[i].MAC_Address }, null)@Html.HiddenFor(m => Model[i].WorkFunction)</td>
+                                    <td style="text-align: left;">@Html.DisplayFor(m => Model[i].Details01)</td>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].Created)</td>
+                                    <td style="text-align: left;">@Html.DisplayFor(m => Model[i].MAC_Address)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12"></div>
+        </div>
+    </div>
+
+}
+<script>
+    $(function () {
+        //$('#loading').hide();
+        //$("#btnSave").click(function () {
+        //    $('#loading').show();
+        //});
+
+        //$("#searchInput").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#searchTable tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+
+
+
+        $("#tbl1").DataTable({
+            "responsive": true, "lengthChange": true, "autoWidth": false, searching: false,
+            //"pageLength": 50,
+
+            "select": {
+                selector: 'td:not(:nth-child(2))',
+            },
+            order: [[5, 'desc']]
+        });
+
+        //var table = $('#example').DataTable({
+        //    dom: 't',
+        //    select: {
+        //        selector: 'td:not(:nth-child(2))',
+        //    }
+        //});
+
+    });
+</script>

@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <style>
+        .navbar-inverse {
+            background-color: #ff850c;
+            border-color: #ff850c;
+            min-height: 65px;
+            position:relative;
+        }
+
+            .navbar-inverse .navbar-brand {
+                color: #ffffff;
+            }
+
+            .navbar-inverse .navbar-nav > li > a {
+                color: #ffffff;
+            }
+
+        .logo-header {
+            position: relative;
+            z-index: 1000;
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+            .logo-header .logo-main {
+                width: 96px;
+                padding: 5px 0;
+                /*margin-left: 164%;*/
+            }
+
+        .logo-ghb-img {
+            vertical-align: middle;
+            width: 114%;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            -webkit-transition: color ease-in-out .2s;
+            -o-transition: color ease-in-out .2s;
+            transition: color ease-in-out .2s;
+        }
+
+        .sub_li_a {
+            font-size: 14px !important;
+            margin-left: 10px;
+        }
+
+        .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: "Glyphicons Halflings";
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .vertical-align-middle {
+            vertical-align: middle;
+        }
+
+        .form-control {
+            width: initial !important;
+        }
+    </style>
+
+ 
+</head>
+<body>
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <!-- humberger menu -->
+            @*<div class="mnu-btn nav-menu">
+                <span class="icw-bar bar-top"></span>
+                <span class="icw-bar bar-middle"></span>
+                <span class="icw-bar bar-bottom"></span>
+            </div>*@
+            <!-- humberger menu -->
+            <!--<div class="navbar-header" style="display:none;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Menu", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+
+
+            </div>-->
+            <div class="navbar-collapse collapse" style="text-align:center;">
+                @*<ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Menu", "Home")</li>                      
+                    </ul>*@
+                <div class="logo-header">
+                    <a href=""><img src="~/images/logo.png" alt="GHBank" class="logo-main"></a>
+                </div>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+        <!-- Sidenav -->
+        <nav class="pushy pushy-left pushy-open-left" data-focus="#first-link">
+            <div class="site-nav-inner">
+                <div class="navmain-group">
+                    <div class="site-nav-head">
+                        <div class="logo-pushy">
+                            @*<img src="https://www.ghbank.co.th/assets/img/logo-ghb.png">*@
+                            <img src="~/images/logo-ghb.png" alt="GHBank" class="logo-ghb-img">
+                        </div>
+                    </div>
+                    <div class="navlist-primary">
+                        <ul>
+                            <!-- <li><a href="https://www.ghbank.co.th/">หน้าแรก</a></li> -->
+                            <li class="active">
+                                <a href="#rdmSubmenu" data-toggle="collapse" aria-expanded="false">RDM</a>
+                                <ul class="collapse list-unstyled" id="rdmSubmenu">
+                                    <li class="sub_li_a"><a href="#">CRM1001</a></li>
+                                    <li class="sub_li_a"><a href="#">CRM100 on Demand</a></li>
+                                    <li class="sub_li_a"><a href="#">CRM1002</a></li>
+                                </ul>
+                            </li>
+                            <li class="active">
+                                <a href="#cdmSubmenu" data-toggle="collapse" aria-expanded="false">CDM</a>
+                                <ul class="collapse list-unstyled" id="cdmSubmenu">
+                                    <li class="sub_li_a"><a href="#">CDM1001</a></li>
+                                    <li class="sub_li_a"><a href="#">CDM1002</a></li>
+                                    <li class="sub_li_a"><a href="#">CRD1005</a></li>
+                                </ul>
+                            </li>
+                            <li class="active">
+                                <a href="#ratmSubmenu" data-toggle="collapse" aria-expanded="false">RATM</a>
+                                <ul class="collapse list-unstyled" id="ratmSubmenu">
+                                    <li class="sub_li_a"><a href="#">RATM1001</a></li>
+                                    <li class="sub_li_a"><a href="#">RATM1003</a></li>
+                                    <li class="sub_li_a"><a href="#">RATM1005</a></li>
+                                </ul>
+                            </li>
+                            <li class="active">
+                                <a href="@Url.Action("Index", "ADMReport")">ADM</a>
+                                @*<ul class="collapse list-unstyled" id="admSubmenu">
+                                    <li class="sub_li_a"><a href="@Url.Action("Index", "ADMReport")">ADM</a></li>                                    
+                                    <li class="sub_li_a"><a href="#">ADM1001_on_Demand</a></li>
+                                    <li class="sub_li_a"><a href="#">ADM1005</a></li>
+                                </ul>*@
+                            </li>
+                            <li class="active">
+                                <a href="#ppdSubmenu" data-toggle="collapse" aria-expanded="false">PPD</a>
+                                @*<ul class="collapse list-unstyled" id="ppdSubmenu">
+                                    <li class="sub_li_a"><a href="#">PPD1501</a></li>
+                                    <li class="sub_li_a"><a href="#">PPD1502</a></li>
+                                    <li class="sub_li_a"><a href="#">PPD1503</a></li>
+                                </ul>*@
+                            </li>
+                            <li class="active">
+                                <a href="#crmSubmenu" data-toggle="collapse" aria-expanded="false">CRM</a>
+                                @*<ul class="collapse list-unstyled" id="crmSubmenu">
+                                    <li class="sub_li_a"><a href="#">CRM1001</a></li>
+                                    <li class="sub_li_a"><a href="#">CRM1001_on_Demand</a></li>
+                                    <li class="sub_li_a"><a href="#">CRM1002</a></li>
+                                </ul>*@
+                            </li>
+                            <li class="active">
+                                <a href="#lrmSubmenu" data-toggle="collapse" aria-expanded="false">LRM</a>
+                                @*<ul class="collapse list-unstyled" id="lrmSubmenu">
+                                    <li class="sub_li_a"><a href="#">LRM1001</a></li>
+                                    <li class="sub_li_a"><a href="#">LRM1001_on_Demand</a></li>
+                                    <li class="sub_li_a"><a href="#">LRM1005</a></li>
+                                </ul>*@
+                            </li>
+                            <li class="active">
+                                <a href="#qrpSubmenu" data-toggle="collapse" aria-expanded="false">QRP</a>
+                                @*<ul class="collapse list-unstyled" id="qrpSubmenu">
+                                    <li class="sub_li_a"><a href="#">QRP1001</a></li>
+                                    <li class="sub_li_a"><a href="#">QRP7001</a></li>
+                                </ul>*@
+                            </li>
+                        </ul>
+                    </div>
+                    @*<div class="navlist">
+                        <ul>
+                            <li><a href="https://www.ghbank.co.th/contact/branch">ค้นหาสาขา</a></li>
+                        </ul>
+                    </div>*@
+                </div>
+            </div>
+        </nav>
+        <!-- Sidenav -->
+    </div>
+    <div class="container body-content">
+        
+        @RenderBody()
+
+        <!--<footer>
+        <p>&copy; @DateTime.Now.Year - D1-GHB project-->
+        @*My ASP.NET Application*@
+        <!--</p>
+    </footer>-->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });</script>
+</body>
+</html>

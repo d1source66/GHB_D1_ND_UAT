@@ -1,0 +1,417 @@
+19/06/2025 11:44:24.724 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 11:44:24.725 : ID_BRANCH : line 75 049
+19/06/2025 11:44:24.726 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 11:44:24.726 : USER_LOGIN : line 79 admin
+19/06/2025 11:44:24.726 : USER_ID : line 81 48
+19/06/2025 11:44:24.728 : FullName : line 83 Admin D1
+19/06/2025 11:44:24.729 : USER_LEVEL : line 885 1
+19/06/2025 11:44:24.777 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 11:44:24.826 : call function: _accService.CheckUser2 
+19/06/2025 11:44:25.149 :  UserSessionManager --> HandleUserSession : line 28 48
+19/06/2025 11:44:25.150 :  UserSessionManager --> HandleUserSession : line 29 djlqsvpyidqfvx2tbjrprnlm
+19/06/2025 11:44:25.185 :  UserSessionManager --> ExecuteNonQuery : line 42 48
+19/06/2025 11:44:25.187 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 djlqsvpyidqfvx2tbjrprnlm
+19/06/2025 11:44:25.188 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 11:44:25
+19/06/2025 11:44:25.226 : First Time Login
+19/06/2025 11:44:25.228 : Login : Go to Index/Administrator
+19/06/2025 11:44:25.298 : Begin : Index/Administrator
+19/06/2025 11:44:25.550 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 11:44:25.551 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 11:44:25.553 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 11:44:25.613 : Begin : Index/Administrator - GetUser()
+19/06/2025 11:44:25.668 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 11:45:48.428 : GenReport : 15/12/2023
+19/06/2025 11:58:59.037 : GenReport : 15/12/2023
+19/06/2025 13:22:41.844 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:22:41.848 : ID_BRANCH : line 75 049
+19/06/2025 13:22:41.852 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 13:22:41.855 : USER_LOGIN : line 79 admin
+19/06/2025 13:22:41.857 : USER_ID : line 81 48
+19/06/2025 13:22:41.859 : FullName : line 83 Admin D1
+19/06/2025 13:22:41.861 : USER_LEVEL : line 885 1
+19/06/2025 13:22:41.923 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:22:41.984 : call function: _accService.CheckUser2 
+19/06/2025 13:22:42.261 :  UserSessionManager --> HandleUserSession : line 28 48
+19/06/2025 13:22:42.262 :  UserSessionManager --> HandleUserSession : line 29 jkqhx4pbtpyk312srcvtjyo5
+19/06/2025 13:22:42.313 :  UserSessionManager --> ExecuteNonQuery : line 42 48
+19/06/2025 13:22:42.316 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 jkqhx4pbtpyk312srcvtjyo5
+19/06/2025 13:22:42.317 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 13:22:42
+19/06/2025 13:22:42.380 : First Time Login
+19/06/2025 13:22:42.382 : Login : Go to Index/Administrator
+19/06/2025 13:22:42.489 : Begin : Index/Administrator
+19/06/2025 13:22:42.828 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 13:22:42.829 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 13:22:42.831 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 13:22:42.877 : Begin : Index/Administrator - GetUser()
+19/06/2025 13:22:42.960 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 13:23:23.192 : GenReport : 15/12/2023
+19/06/2025 13:29:44.064 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:29:44.067 : ID_BRANCH : line 75 049
+19/06/2025 13:29:44.068 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 13:29:44.069 : USER_LOGIN : line 79 admin
+19/06/2025 13:29:44.069 : USER_ID : line 81 48
+19/06/2025 13:29:44.071 : FullName : line 83 Admin D1
+19/06/2025 13:29:44.072 : USER_LEVEL : line 885 1
+19/06/2025 13:29:44.135 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:29:44.186 : call function: _accService.CheckUser2 
+19/06/2025 13:29:44.470 : Login : Go to Index/Administrator
+19/06/2025 13:29:44.572 : Begin : Index/Administrator
+19/06/2025 13:29:44.930 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 13:29:44.933 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 13:29:44.935 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 13:29:44.990 : Begin : Index/Administrator - GetUser()
+19/06/2025 13:29:45.063 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 13:30:16.449 : GenReport : 15/12/2023
+19/06/2025 13:35:40.532 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:35:40.533 : ID_BRANCH : line 75 049
+19/06/2025 13:35:40.535 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 13:35:40.537 : USER_LOGIN : line 79 admin
+19/06/2025 13:35:40.539 : USER_ID : line 81 48
+19/06/2025 13:35:40.540 : FullName : line 83 Admin D1
+19/06/2025 13:35:40.542 : USER_LEVEL : line 885 1
+19/06/2025 13:35:40.607 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:35:40.681 : call function: _accService.CheckUser2 
+19/06/2025 13:35:41.105 :  UserSessionManager --> HandleUserSession : line 28 48
+19/06/2025 13:35:41.107 :  UserSessionManager --> HandleUserSession : line 29 5nhqzgu4oyhn0jhk1qlfqonc
+19/06/2025 13:35:41.190 :  UserSessionManager --> ExecuteNonQuery : line 42 48
+19/06/2025 13:35:41.192 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 5nhqzgu4oyhn0jhk1qlfqonc
+19/06/2025 13:35:41.195 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 13:35:41
+19/06/2025 13:35:41.247 : First Time Login
+19/06/2025 13:35:41.249 : Login : Go to Index/Administrator
+19/06/2025 13:35:41.358 : Begin : Index/Administrator
+19/06/2025 13:35:41.692 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 13:35:41.695 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 13:35:41.696 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 13:35:41.746 : Begin : Index/Administrator - GetUser()
+19/06/2025 13:35:41.867 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 13:36:50.462 : GenReport : 15/12/2023
+19/06/2025 13:49:11.330 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:49:11.332 : ID_BRANCH : line 75 049
+19/06/2025 13:49:11.337 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 13:49:11.337 : USER_LOGIN : line 79 admin
+19/06/2025 13:49:11.337 : USER_ID : line 81 48
+19/06/2025 13:49:11.337 : FullName : line 83 Admin D1
+19/06/2025 13:49:11.346 : USER_LEVEL : line 885 1
+19/06/2025 13:49:11.402 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 13:49:11.455 : call function: _accService.CheckUser2 
+19/06/2025 13:49:11.782 :  UserSessionManager --> HandleUserSession : line 28 48
+19/06/2025 13:49:11.786 :  UserSessionManager --> HandleUserSession : line 29 qbrr2m5itj1cmkc2yckktkkv
+19/06/2025 13:49:11.837 :  UserSessionManager --> ExecuteNonQuery : line 42 48
+19/06/2025 13:49:11.841 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 qbrr2m5itj1cmkc2yckktkkv
+19/06/2025 13:49:11.841 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 13:49:11
+19/06/2025 13:49:11.895 : First Time Login
+19/06/2025 13:49:11.896 : Login : Go to Index/Administrator
+19/06/2025 13:49:11.966 : Begin : Index/Administrator
+19/06/2025 13:49:12.315 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 13:49:12.331 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 13:49:12.334 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 13:49:12.383 : Begin : Index/Administrator - GetUser()
+19/06/2025 13:49:12.483 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 13:50:03.106 : GenReport : 15/12/2023
+19/06/2025 14:01:41.425 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:01:41.427 : ID_BRANCH : line 75 049
+19/06/2025 14:01:41.427 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 14:01:41.428 : USER_LOGIN : line 79 admin
+19/06/2025 14:01:41.430 : USER_ID : line 81 48
+19/06/2025 14:01:41.432 : FullName : line 83 Admin D1
+19/06/2025 14:01:41.433 : USER_LEVEL : line 885 1
+19/06/2025 14:01:41.498 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:01:41.548 : call function: _accService.CheckUser2 
+19/06/2025 14:01:41.894 : Login Duplicate worning
+19/06/2025 14:02:06.303 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:02:06.312 : ID_BRANCH : line 75 00100
+19/06/2025 14:02:06.314 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 14:02:06.318 : USER_LOGIN : line 79 admin2
+19/06/2025 14:02:06.321 : USER_ID : line 81 62
+19/06/2025 14:02:06.324 : FullName : line 83 admin2 d1_admin2
+19/06/2025 14:02:06.325 : USER_LEVEL : line 885 1
+19/06/2025 14:02:06.389 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:02:06.406 : call function: _accService.CheckUser2 
+19/06/2025 14:02:06.674 : Login Duplicate worning
+19/06/2025 14:02:34.278 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:02:34.278 : ID_BRANCH : line 75 049
+19/06/2025 14:02:34.278 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 14:02:34.278 : USER_LOGIN : line 79 admin
+19/06/2025 14:02:34.278 : USER_ID : line 81 48
+19/06/2025 14:02:34.278 : FullName : line 83 Admin D1
+19/06/2025 14:02:34.278 : USER_LEVEL : line 885 1
+19/06/2025 14:02:34.344 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:02:34.376 : call function: _accService.CheckUser2 
+19/06/2025 14:02:34.636 : Login Duplicate worning
+19/06/2025 14:03:01.429 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:03:01.433 : ID_BRANCH : line 75 049
+19/06/2025 14:03:01.436 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 14:03:01.439 : USER_LOGIN : line 79 admin
+19/06/2025 14:03:01.441 : USER_ID : line 81 48
+19/06/2025 14:03:01.443 : FullName : line 83 Admin D1
+19/06/2025 14:03:01.446 : USER_LEVEL : line 885 1
+19/06/2025 14:03:01.502 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:03:01.524 : call function: _accService.CheckUser2 
+19/06/2025 14:03:01.802 : Login Duplicate worning
+19/06/2025 14:03:11.952 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:03:12.002 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:03:12.004 : call function: _accService.CheckUser2 
+19/06/2025 14:03:12.006 : Login failed!
+19/06/2025 14:03:12.007 : NCFGVARIABLEID : line 956 0
+19/06/2025 14:03:12.058 : dt : line 958 
+19/06/2025 14:03:12.060 : dt.Rows[0]['SCFGVALUE'] : line 961 5
+19/06/2025 14:03:26.599 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:03:26.601 : ID_BRANCH : line 75 049
+19/06/2025 14:03:26.603 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 14:03:26.604 : USER_LOGIN : line 79 admin
+19/06/2025 14:03:26.604 : USER_ID : line 81 48
+19/06/2025 14:03:26.606 : FullName : line 83 Admin D1
+19/06/2025 14:03:26.607 : USER_LEVEL : line 885 1
+19/06/2025 14:03:26.666 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:03:26.684 : call function: _accService.CheckUser2 
+19/06/2025 14:03:26.937 : Login Duplicate worning
+19/06/2025 14:04:18.053 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:04:18.056 : ID_BRANCH : line 75 049
+19/06/2025 14:04:18.058 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 14:04:18.059 : USER_LOGIN : line 79 admin
+19/06/2025 14:04:18.061 : USER_ID : line 81 48
+19/06/2025 14:04:18.062 : FullName : line 83 Admin D1
+19/06/2025 14:04:18.063 : USER_LEVEL : line 885 1
+19/06/2025 14:04:18.120 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:04:18.143 : call function: _accService.CheckUser2 
+19/06/2025 14:04:18.423 :  UserSessionManager --> HandleUserSession : line 28 48
+19/06/2025 14:04:18.424 :  UserSessionManager --> HandleUserSession : line 29 twffklsnsebvpjqk5vxdjik0
+19/06/2025 14:04:18.472 :  UserSessionManager --> ExecuteNonQuery : line 42 48
+19/06/2025 14:04:18.474 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 twffklsnsebvpjqk5vxdjik0
+19/06/2025 14:04:18.476 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 14:04:18
+19/06/2025 14:04:18.556 : Login Duplicate and rotate
+19/06/2025 14:04:18.558 : Login : Go to Index/Administrator
+19/06/2025 14:04:18.634 : Begin : Index/Administrator
+19/06/2025 14:04:18.943 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 14:04:18.946 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 14:04:18.949 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 14:04:18.999 : Begin : Index/Administrator - GetUser()
+19/06/2025 14:04:19.066 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 14:04:46.407 : GenReport : 15/12/2023
+19/06/2025 14:19:46.731 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:19:46.735 : ID_BRANCH : line 75 049
+19/06/2025 14:19:46.737 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 14:19:46.740 : USER_LOGIN : line 79 admin
+19/06/2025 14:19:46.743 : USER_ID : line 81 48
+19/06/2025 14:19:46.746 : FullName : line 83 Admin D1
+19/06/2025 14:19:46.750 : USER_LEVEL : line 885 1
+19/06/2025 14:19:46.820 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:19:46.988 : call function: _accService.CheckUser2 
+19/06/2025 14:19:47.241 : Login Duplicate worning
+19/06/2025 14:20:06.752 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:20:06.753 : ID_BRANCH : line 75 00100
+19/06/2025 14:20:06.755 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 14:20:06.756 : USER_LOGIN : line 79 admin2
+19/06/2025 14:20:06.757 : USER_ID : line 81 62
+19/06/2025 14:20:06.759 : FullName : line 83 admin2 d1_admin2
+19/06/2025 14:20:06.760 : USER_LEVEL : line 885 1
+19/06/2025 14:20:06.835 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:20:06.901 : call function: _accService.CheckUser2 
+19/06/2025 14:20:07.271 :  UserSessionManager --> HandleUserSession : line 28 62
+19/06/2025 14:20:07.274 :  UserSessionManager --> HandleUserSession : line 29 3xc2xypxx1jff4s3zz15udci
+19/06/2025 14:20:07.323 :  UserSessionManager --> ExecuteNonQuery : line 42 62
+19/06/2025 14:20:07.324 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 3xc2xypxx1jff4s3zz15udci
+19/06/2025 14:20:07.326 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 14:20:07
+19/06/2025 14:20:07.376 : Login Duplicate and rotate
+19/06/2025 14:20:07.378 : Login : Go to Index/Administrator
+19/06/2025 14:20:07.437 : Begin : Index/Administrator
+19/06/2025 14:20:07.753 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 14:20:07.755 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 14:20:07.758 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 14:20:07.806 : Begin : Index/Administrator - GetUser()
+19/06/2025 14:20:07.877 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 14:21:09.263 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:21:09.266 : ID_BRANCH : line 75 00100
+19/06/2025 14:21:09.270 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 14:21:09.273 : USER_LOGIN : line 79 admin2
+19/06/2025 14:21:09.275 : USER_ID : line 81 62
+19/06/2025 14:21:09.279 : FullName : line 83 admin2 d1_admin2
+19/06/2025 14:21:09.281 : USER_LEVEL : line 885 1
+19/06/2025 14:21:09.402 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:21:09.562 : call function: _accService.CheckUser2 
+19/06/2025 14:21:09.912 : Login Duplicate worning
+19/06/2025 14:21:27.732 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:21:27.734 : ID_BRANCH : line 75 00100
+19/06/2025 14:21:27.736 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 14:21:27.737 : USER_LOGIN : line 79 admin2
+19/06/2025 14:21:27.739 : USER_ID : line 81 62
+19/06/2025 14:21:27.741 : FullName : line 83 admin2 d1_admin2
+19/06/2025 14:21:27.744 : USER_LEVEL : line 885 1
+19/06/2025 14:21:27.801 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:21:27.838 : call function: _accService.CheckUser2 
+19/06/2025 14:21:28.152 :  UserSessionManager --> HandleUserSession : line 28 62
+19/06/2025 14:21:28.156 :  UserSessionManager --> HandleUserSession : line 29 3xc2xypxx1jff4s3zz15udci
+19/06/2025 14:21:28.202 :  UserSessionManager --> ExecuteNonQuery : line 42 62
+19/06/2025 14:21:28.205 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 3xc2xypxx1jff4s3zz15udci
+19/06/2025 14:21:28.209 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 14:21:28
+19/06/2025 14:21:28.284 : Login Duplicate and rotate
+19/06/2025 14:21:28.288 : Login : Go to Index/Administrator
+19/06/2025 14:21:28.359 : Begin : Index/Administrator
+19/06/2025 14:21:28.678 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 14:21:28.682 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 14:21:28.684 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 14:21:28.737 : Begin : Index/Administrator - GetUser()
+19/06/2025 14:21:28.801 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 14:21:59.390 : GenReport : 15/12/2023
+19/06/2025 14:22:34.466 : Begin Logout 
+19/06/2025 14:22:34.597 : ASP.NET_SessionId expires : 6/19/2024 2:22:34 PM
+19/06/2025 14:22:34.600 : ASP.NET_SessionId Value : 
+19/06/2025 14:22:34.602 : Go to Login page 
+19/06/2025 14:43:37.706 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:43:37.715 : ID_BRANCH : line 75 00100
+19/06/2025 14:43:37.715 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 14:43:37.719 : USER_LOGIN : line 79 admin2
+19/06/2025 14:43:37.721 : USER_ID : line 81 62
+19/06/2025 14:43:37.723 : FullName : line 83 admin2 d1_admin2
+19/06/2025 14:43:37.725 : USER_LEVEL : line 885 1
+19/06/2025 14:43:37.774 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:43:37.809 : call function: _accService.CheckUser2 
+19/06/2025 14:43:38.089 : Login Duplicate worning
+19/06/2025 14:43:50.834 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:43:50.849 : ID_BRANCH : line 75 00100
+19/06/2025 14:43:50.849 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 14:43:50.852 : USER_LOGIN : line 79 admin2
+19/06/2025 14:43:50.853 : USER_ID : line 81 62
+19/06/2025 14:43:50.853 : FullName : line 83 admin2 d1_admin2
+19/06/2025 14:43:50.853 : USER_LEVEL : line 885 1
+19/06/2025 14:43:50.913 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:43:50.918 : call function: _accService.CheckUser2 
+19/06/2025 14:43:51.201 :  UserSessionManager --> HandleUserSession : line 28 62
+19/06/2025 14:43:51.203 :  UserSessionManager --> HandleUserSession : line 29 hbjdn4ev1kr11jcsv3apr43o
+19/06/2025 14:43:51.254 :  UserSessionManager --> ExecuteNonQuery : line 42 62
+19/06/2025 14:43:51.268 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 hbjdn4ev1kr11jcsv3apr43o
+19/06/2025 14:43:51.268 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 14:43:51
+19/06/2025 14:43:51.371 : Login Duplicate and rotate
+19/06/2025 14:43:51.371 : Login : Go to Index/Administrator
+19/06/2025 14:43:51.435 : Begin : Index/Administrator
+19/06/2025 14:43:51.830 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 14:43:51.834 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 14:43:51.834 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 14:43:51.882 : Begin : Index/Administrator - GetUser()
+19/06/2025 14:43:51.968 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 14:44:21.554 : GenReport : 15/12/2023
+19/06/2025 14:47:19.888 : Begin Logout 
+19/06/2025 14:47:19.997 : ASP.NET_SessionId expires : 6/19/2024 2:47:19 PM
+19/06/2025 14:47:20.005 : ASP.NET_SessionId Value : 
+19/06/2025 14:47:20.007 : Go to Login page 
+19/06/2025 14:51:39.907 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:51:39.912 : ID_BRANCH : line 75 00100
+19/06/2025 14:51:39.912 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 14:51:39.912 : USER_LOGIN : line 79 admin2
+19/06/2025 14:51:39.912 : USER_ID : line 81 62
+19/06/2025 14:51:39.915 : FullName : line 83 admin2 d1_admin2
+19/06/2025 14:51:39.916 : USER_LEVEL : line 885 1
+19/06/2025 14:51:39.962 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 14:51:40.001 : call function: _accService.CheckUser2 
+19/06/2025 14:51:40.241 :  UserSessionManager --> HandleUserSession : line 28 62
+19/06/2025 14:51:40.243 :  UserSessionManager --> HandleUserSession : line 29 aafltecfkygtlinfj1mhxlfl
+19/06/2025 14:51:40.276 :  UserSessionManager --> ExecuteNonQuery : line 42 62
+19/06/2025 14:51:40.276 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 aafltecfkygtlinfj1mhxlfl
+19/06/2025 14:51:40.284 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 14:51:40
+19/06/2025 14:51:40.324 : First Time Login
+19/06/2025 14:51:40.324 : Login : Go to Index/Administrator
+19/06/2025 14:51:40.393 : Begin : Index/Administrator
+19/06/2025 14:51:40.657 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 14:51:40.660 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 14:51:40.660 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 14:51:40.710 : Begin : Index/Administrator - GetUser()
+19/06/2025 14:51:40.774 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 14:52:52.848 : GenReport : 15/12/2023
+19/06/2025 15:43:48.024 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:43:48.025 : ID_BRANCH : line 75 049
+19/06/2025 15:43:48.026 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 15:43:48.027 : USER_LOGIN : line 79 admin
+19/06/2025 15:43:48.028 : USER_ID : line 81 48
+19/06/2025 15:43:48.030 : FullName : line 83 Admin D1
+19/06/2025 15:43:48.031 : USER_LEVEL : line 885 1
+19/06/2025 15:43:48.083 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:43:48.125 : call function: _accService.CheckUser2 
+19/06/2025 15:43:48.361 : Login Duplicate worning
+19/06/2025 15:43:52.040 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:43:52.041 : ID_BRANCH : line 75 049
+19/06/2025 15:43:52.043 : BRANCH_NAME : line 77 สำนักงานใหญ่
+19/06/2025 15:43:52.044 : USER_LOGIN : line 79 admin
+19/06/2025 15:43:52.046 : USER_ID : line 81 48
+19/06/2025 15:43:52.047 : FullName : line 83 Admin D1
+19/06/2025 15:43:52.049 : USER_LEVEL : line 885 1
+19/06/2025 15:43:52.107 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:43:52.117 : call function: _accService.CheckUser2 
+19/06/2025 15:43:52.339 :  UserSessionManager --> HandleUserSession : line 28 48
+19/06/2025 15:43:52.341 :  UserSessionManager --> HandleUserSession : line 29 aafltecfkygtlinfj1mhxlfl
+19/06/2025 15:43:52.389 :  UserSessionManager --> ExecuteNonQuery : line 42 48
+19/06/2025 15:43:52.392 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 aafltecfkygtlinfj1mhxlfl
+19/06/2025 15:43:52.394 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 15:43:52
+19/06/2025 15:43:52.460 : Login Duplicate and rotate
+19/06/2025 15:43:52.462 : Login : Go to Index/Administrator
+19/06/2025 15:43:52.531 : Begin : Index/Administrator
+19/06/2025 15:43:52.862 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 15:43:52.865 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 15:43:52.869 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 15:43:52.919 : Begin : Index/Administrator - GetUser()
+19/06/2025 15:43:52.985 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 15:44:58.550 : Begin Logout 
+19/06/2025 15:44:58.675 : ASP.NET_SessionId expires : 6/19/2024 3:44:58 PM
+19/06/2025 15:44:58.678 : ASP.NET_SessionId Value : 
+19/06/2025 15:44:58.680 : Go to Login page 
+19/06/2025 15:45:37.325 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:45:37.327 : ID_BRANCH : line 75 00100
+19/06/2025 15:45:37.329 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 15:45:37.331 : USER_LOGIN : line 79 admin2
+19/06/2025 15:45:37.333 : USER_ID : line 81 62
+19/06/2025 15:45:37.335 : FullName : line 83 admin2 d1_admin2
+19/06/2025 15:45:37.337 : USER_LEVEL : line 885 1
+19/06/2025 15:45:37.388 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:45:37.404 : call function: _accService.CheckUser2 
+19/06/2025 15:45:37.631 : Login Duplicate worning
+19/06/2025 15:45:41.404 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:45:41.406 : ID_BRANCH : line 75 00100
+19/06/2025 15:45:41.408 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 15:45:41.410 : USER_LOGIN : line 79 admin2
+19/06/2025 15:45:41.411 : USER_ID : line 81 62
+19/06/2025 15:45:41.412 : FullName : line 83 admin2 d1_admin2
+19/06/2025 15:45:41.414 : USER_LEVEL : line 885 1
+19/06/2025 15:45:41.469 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:45:41.472 : call function: _accService.CheckUser2 
+19/06/2025 15:45:41.709 :  UserSessionManager --> HandleUserSession : line 28 62
+19/06/2025 15:45:41.711 :  UserSessionManager --> HandleUserSession : line 29 vzq1hwv00q1yzwhskq5gsb3t
+19/06/2025 15:45:41.782 :  UserSessionManager --> ExecuteNonQuery : line 42 62
+19/06/2025 15:45:41.785 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 vzq1hwv00q1yzwhskq5gsb3t
+19/06/2025 15:45:41.787 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 15:45:41
+19/06/2025 15:45:41.840 : Login Duplicate and rotate
+19/06/2025 15:45:41.842 : Login : Go to Index/Administrator
+19/06/2025 15:45:41.894 : Begin : Index/Administrator
+19/06/2025 15:45:42.213 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 15:45:42.216 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 15:45:42.219 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 15:45:42.283 : Begin : Index/Administrator - GetUser()
+19/06/2025 15:45:42.356 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 15:53:25.135 : Begin Logout 
+19/06/2025 15:53:25.271 : ASP.NET_SessionId expires : 6/19/2024 3:53:25 PM
+19/06/2025 15:53:25.273 : ASP.NET_SessionId Value : 
+19/06/2025 15:53:25.276 : Go to Login page 
+19/06/2025 15:54:16.667 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:54:16.670 : ID_BRANCH : line 75 00100
+19/06/2025 15:54:16.672 : BRANCH_NAME : line 77 สาขาหลัก
+19/06/2025 15:54:16.674 : USER_LOGIN : line 79 admin2
+19/06/2025 15:54:16.675 : USER_ID : line 81 62
+19/06/2025 15:54:16.677 : FullName : line 83 admin2 d1_admin2
+19/06/2025 15:54:16.678 : USER_LEVEL : line 885 1
+19/06/2025 15:54:16.734 : command.ExecuteReader() : line 69 System.Data.SqlClient.SqlDataReader
+19/06/2025 15:54:16.737 : call function: _accService.CheckUser2 
+19/06/2025 15:54:17.037 :  UserSessionManager --> HandleUserSession : line 28 62
+19/06/2025 15:54:17.042 :  UserSessionManager --> HandleUserSession : line 29 faydft4kys3n3vtfgytwhpbx
+19/06/2025 15:54:17.085 :  UserSessionManager --> ExecuteNonQuery : line 42 62
+19/06/2025 15:54:17.088 :  UserSessionManager --> INSERT INTO UserSessions | SessionId : line 48 faydft4kys3n3vtfgytwhpbx
+19/06/2025 15:54:17.093 :  UserSessionManager --> ExecuteNonQuery  : line 42 DateTime 2025-06-19 15:54:17
+19/06/2025 15:54:17.148 : First Time Login
+19/06/2025 15:54:17.152 : Login : Go to Index/Administrator
+19/06/2025 15:54:17.229 : Begin : Index/Administrator
+19/06/2025 15:54:17.514 : Begin : Index/Administrator - Session['Level'']
+19/06/2025 15:54:17.515 : Begin : Index/Administrator - Session['GroupReport'']
+19/06/2025 15:54:17.518 : Begin : Index/Administrator - Session['AudiLog'']
+19/06/2025 15:54:17.565 : Begin : Index/Administrator - GetUser()
+19/06/2025 15:54:17.619 : Begin : Index/Administrator - Default page list count = 6
+19/06/2025 16:12:41.760 : Begin Logout 
+19/06/2025 16:12:42.117 : ASP.NET_SessionId expires : 6/19/2024 4:12:42 PM
+19/06/2025 16:12:42.131 : ASP.NET_SessionId Value : 
+19/06/2025 16:12:42.133 : Go to Login page 

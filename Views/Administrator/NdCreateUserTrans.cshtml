@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "Add User LDAP";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+@*<script src="~/Scripts/check-password-strength@2.0.10-umd.js"></script>*@
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('div.nav_link.submenu_item').addClass('show_submenu');
+        //$('#loading').hide();
+        $("#btnSave").click(function () {
+            //$('#loading').show();
+        });
+        $("#btnVerifyUser").click(function () {
+            //$('#loading').show();
+        });
+
+        $('#USER_EMP_CODE').on('input', function () {
+            const maxLength = 5;
+            const value = $(this).val();
+
+            // Restrict input to numbers only
+            if (value.length > maxLength) {
+                $(this).val(value.slice(0, maxLength));
+            }
+        });
+
+    });
+</script>
+
+
+@*@if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+                $(function () {
+                    alert("@ViewBag.Message");
+                });
+        </script>
+    }*@
+
+<style>
+
+
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .removeBullet ul {
+        list-style-type: none;
+    }
+</style>
+@*<div id="loading">
+        <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+    </div>*@
+@*<div class="row">
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                        <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">ADD USER LDAP</h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>*@
+@*<div class="row">
+        <a onclick="history.back()" title="ย้อนกลับ">
+            <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+        </a>
+    </div>*@
+@using (Html.BeginForm("NdCreateUserTrasnLdap", "Administrator", FormMethod.Post, new { autocomplete = "off", @style = "padding-bottom: 24%;" }))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <a name="" class="setNavFont headPath" href="@Url.Action("NdUserTransfer","Administrator")"><i class="fa fa-home fa-color-orange"></i> User Transfer </a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont"> Create User </label>
+    </div>
+    <div class="setPage ">
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Create User Transfer</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12">
+                <div class="col-md-2"></div>
+                <div class="col-md-8" style="display: flex;  margin-left: 24px;">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger removeBullet loginWrong validfont", style = "" })
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-6" style="display: flex; justify-content: flex-end;">
+                    <label class="form-label labelCss" for="USER_EMP_CODE">รหัสพนักงาน*</label>&nbsp;
+                    @*<input type="text" class="form-control txtinput" id="usernameInput" style="width:50%;">*@
+                    <input type="number" class="form-control rounded-lg" id="USER_EMP_CODE" placeholder="Employee code" name="USER_EMP_CODE" value="@ViewBag.USER_EMP_CODE">
+                </div>
+                <div class="col-md-6">
+                    <button id="btnVerifyUser" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Verify User" value="VerifyUser" style="padding: 6px 12px; width: 15%;">ค้นหา</button>
+                    <button id="btnClear" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Verify User" value="Reset" style="border: unset; padding: 6px 12px; width: 15%;">เคลียร์ค่า</button>
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+    </div>
+
+
+}

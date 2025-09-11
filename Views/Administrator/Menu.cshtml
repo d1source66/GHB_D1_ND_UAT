@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+
+@*@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/bootstrap.css")*@
+@*<link rel="stylesheet" href='~/Content/style' media="screen" />*@
+<style>
+    html {
+        /*background-color: white !important;*/
+    }
+
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+        position: relative;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            /*color: #ffffff;*/
+        }
+
+    .logo-header {
+        position: relative;
+        z-index: 1000;
+        display: inline-block;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+        .logo-header .logo-main {
+            width: 96px;
+            padding: 5px 0;
+            /*margin-left: 164%;*/
+        }
+
+    .logo-ghb-img {
+        vertical-align: middle;
+        width: 114%;
+    }
+
+    hr {
+        border-top: 1px solid #ff850c;
+        border-width: 5px;
+    }
+
+    .navlist-primary li {
+        display: block;
+        font-size: 18px;
+        padding: 10px 0;
+        font-family: 'db_heaventbold';
+        border-bottom: 0px !important;
+    }
+
+    .navlist-primary-border {
+        border-bottom: 1px solid #ff850c !important;
+    }
+</style>
+<div class="row" style="margin-top:-24px;">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;"> GHB </h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;"> Administrator </h5>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<hr />
+<div class="navlist-primary">
+    <ul>
+        @if (ViewBag.UserAttribCount > 0 && ViewBag.Level != "5")
+        {
+            <li class="active">
+                <H5>USER</H5>
+                <div class="navlist-primary-border" style="display:flow-root;">
+                    @if (ViewBag.Level != "4")
+                    {
+                        <div class="col-lg-12">
+                            <a name="titlereport" href="@Url.Action("MainUserAttrib","Administrator")">-&nbsp;Configuration&nbsp;Web &nbsp;App</a>
+                        </div>
+                    
+                    <div class="col-lg-12">
+                        <a name="titlereport" href="@Url.Action("MainRole", "Administrator")">-&nbsp;User&nbsp;Role</a>
+                    </div>
+                    }
+                    @if (ViewBag.UserAttribCount > 0 && ViewBag.RoleCount > 0)
+                    {
+                        <div class="col-lg-12">
+                            <a name="titlereport" href="@Url.Action("MainUser", "Administrator")">-&nbsp;User&nbsp;Profile</a>
+                        </div>
+                    }
+                    <div class="col-lg-12">&nbsp;</div>
+                </div>
+            </li>
+        }
+
+        @if (ViewBag.GroupReportCount > 0 && ViewBag.Level != "5")
+        {
+            <li class="active">
+                <H5>REPORT</H5>
+                <div class="navlist-primary-border" style="display:flow-root;">
+                    <div class="col-lg-12">
+                        <a name="titlereport" href="@Url.Action("GroupReport","Administrator")">-&nbsp;Create&nbsp;Group&nbsp;Report</a>
+                    </div>
+                    <div class="col-lg-12">
+                        <a name="titlereport" href="@Url.Action("GroupDetailReport", "Administrator")">-&nbsp;Group&nbsp;Detail&nbsp;Report</a>
+                    </div>
+                    <div class="col-lg-12">&nbsp;</div>
+                </div>
+            </li>
+        }
+
+        @if (ViewBag.Level != "5")
+        {
+            <li class="active">
+                <H5>BRANCH</H5>
+                <div class="navlist-primary-border" style="display:flow-root;">
+                    <div class="col-lg-12">
+                        <a name="titlereport" href="@Url.Action("Branch", "Administrator")">-&nbsp;Create&nbsp;Branch</a>
+                    </div>
+                    <div class="col-lg-12">&nbsp;</div>
+                </div>
+            </li>
+        }
+
+        @if (ViewBag.UserAttribCount > 0 && ViewBag.RoleCount > 0 && ViewBag.UserCount > 0 && ViewBag.GroupReportCount > 0
+            && ViewBag.GroupDetailReportCount > 0 && ViewBag.BranchCount > 0)
+        {
+            @*<li class="active">
+                <a name="titlereport" href="@Url.Action("MainMapUserReport", "Administrator")">4.&nbsp;Map&nbsp;User&nbsp;Report</a>
+
+            </li>*@
+            <li class="active">
+                @if (ViewBag.MapBranchReportCount > 0)
+                {
+                    <H5>MAPPING</H5>
+                    <div class="navlist-primary-border" style="display:flow-root;">
+                        @if (ViewBag.Level != "5")
+                        {
+                            <div class="col-lg-12">
+                                <a name="titlereport" href="@Url.Action("MainMapBranchReport", "Administrator")">-&nbsp;Map&nbsp;Branch&nbsp;Report</a>
+                            </div>
+                        }
+                        <div class="col-lg-12">
+                            <a name="titlereport" href="@Url.Action("MainMapUserBranch", "Administrator")">-&nbsp;Map&nbsp;User&nbsp;Branch</a>
+                        </div>
+                        <div class="col-lg-12">&nbsp;</div>
+                    </div>
+                }
+            </li>
+
+        }
+    </ul>
+
+
+</div>

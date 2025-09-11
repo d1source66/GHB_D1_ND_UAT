@@ -1,0 +1,669 @@
+﻿@model List<GHB_D1.Models.UserModels>
+
+@{
+    ViewBag.Title = "User Management";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<link href="~/Scripts/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#branchInput').select2();
+        $('#departInput').select2();
+        $('#disInput').select2();
+        $('#statusInput').select2();
+        $('div.nav_link.submenu_item').addClass('show_submenu');
+        $('#empcodeInput').on('input', function () {
+            const maxLength = 5;
+            const value = $(this).val();
+
+            // Restrict input to numbers only
+            if (value.length > maxLength) {
+                $(this).val(value.slice(0, maxLength));
+            }
+        });
+
+    });
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:focus, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .setButton {
+        display: flex;
+        flex-direction: row;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButton1 {
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButtonFont {
+        color: #fff;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    .button[type=submit] {
+        width: 68% !important;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #ff850c !important;
+        border-color: #ff850c !important;
+        width: 68% !important;
+    }
+
+        .btn-primary:hover {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:focus {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:active {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+            .btn-primary:active:hover {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+            .btn-primary:active:active {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+    .mg {
+        margin: 0px 5px;
+        float: right;
+    }
+
+    .roleSet {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    /*.newNav {
+        background-color: unset !important;
+        background: unset !important;
+        color: #ff850c;
+    }
+
+        .newNav:hover {
+            background-color: unset !important;
+            background: unset !important;
+            color: red;
+        }
+
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }*/
+
+    /*.lbcolor {
+        color: orange;
+    }*/
+
+    /*hr {
+        border-top: 1px solid orange !important;
+    }*/
+
+    /*#loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }*/
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    /*#branchInput {
+        background-color: #f6f6f6;
+        border: none;
+        color: #0d0d0d;
+        padding: 8px 8px;
+        text-align: left;
+        text-decoration: none;
+        display: inline-block;
+        margin: 5px;
+        width: 100%;
+        border: 2px solid #f6f6f6;
+        -webkit-transition: all .2sease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        transition: all .2sease-in-out;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+    }*/
+
+    /*dropdown select*/
+    .select2-container {
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        border: 0px solid #f6f6f6;
+        text-align: left;
+        margin: 5px;
+    }
+
+    .select2-dropdown {
+        margin-top: -8px;
+        margin-left: -5px;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 32px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 31px;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+
+    .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        z-index: 3;
+        color: #fff;
+        cursor: default;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    #tbl1_wrapper {
+        font-size: 9px;
+    }
+
+    /*for open and close row*/
+    td.details-control {
+        /*background: url('../') center center;*/
+        background: url('../../images/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        /*background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;*/
+        background: url('../../images/details_open.png') no-repeat center center;
+    }
+</style>
+
+@using (Html.BeginForm("NdUserManage", "Administrator", FormMethod.Post))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">User Management </label>
+    </div><div class="setPage ">
+        @*<h2>MenuView</h2>*@
+
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">User Management</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    @if (ViewBag.Create_Role == true)
+                    {
+                        <button type="submit" class="btn btn-primary mg" id="create" name="cmdButton" value="AddUserLDAP">สร้าง</button>
+                    }
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align:end;">
+                    <label class="form-label labelCss" for="usernameInput">User Name</label>
+                    <input type="text" class="form-control txtinput" id="usernameInput" name="usernameInput" style="width:50%;" value="@ViewBag.usernameInput">
+                    @*@Html.TextBox("usernameInput", ViewBag.usernameInput as string, new { @class = "form-control txtinput", maxlength = "30", @style = "width:50%;" })*@
+                </div>
+                <div class="col-md-6" style="display: flex; align-items: center;">
+                    <label class="form-label labelCss" for="empcodeInput" style=" margin-right: 8px;">รหัสพนักงาน</label>
+                    <input type="number" class="form-control txtinput" id="empcodeInput" name="empcodeInput" style="width:50%;" value="@ViewBag.empcodeInput">
+                    @*@Html.TextBox("empcodeInput", ViewBag.empcodeInput as string, new { @class = "form-control txtinput", maxlength = "5", @style = "width:50%;", type = "number" })*@
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align:end;">
+                    <label class="form-label labelCss" for="firstInput">ชื่อ</label>
+                    <input type="text" class="form-control txtinput" id="firstInput" name="firstInput" style="width:50%;" value="@ViewBag.firstInput">
+                    @*@Html.TextBox("firstNameInput", ViewBag.firstNameInput as string, new { @class = "form-control txtinput", maxlength = "30", @style = "width:50%;" })*@
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label labelCss" for="lastInput">นามสกุล</label>
+                    <input type="text" class="form-control txtinput" id="lastInput" name="lastInput" style="width:50%;" value="@ViewBag.lastInput">
+                    @*@Html.TextBox("lastNameInput", ViewBag.lastNameInput as string, new { @class = "form-control txtinput", maxlength = "30", @style = "width:50%;" })*@
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; }">
+                    <label class="form-label labelCss" for="departInput">ฝ่ายงาน</label>
+                    @*<input type="text" class="form-control" id="departInput" style="width:50%;">*@
+                    <select name="departInput" id="departInput" class="form-control w-100 rounded-lg" style="width: 50%;">
+                        @{
+                            <option value="All">ไม่ระบุ</option>
+                            if (ViewBag.SystemDepartment != null && ViewBag.SystemDepartment != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.SystemDepartment;
+                                string strSel = ViewBag.CurrentDepartment;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6" style="display: flex; align-items: center;">
+                    <label class="form-label labelCss" for="disInput" style="margin-right: 5px;">เขต</label>
+                    @*<input type="text" class="form-control" id="disInput" style="width:50%;">*@
+                    <select name="disInput" id="disInput" class="form-control w-100 rounded-lg" style="width: 50%;">
+                        @{
+                            <option value="All">ไม่ระบุ</option>
+                            if (ViewBag.SystemHub != null && ViewBag.SystemHub != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.SystemHub;
+                                string strSel = ViewBag.CurrentDistrict;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style=" text-align: end; display: flex; justify-content: flex-end; align-items: center;">
+                    <label class="form-label labelCss" for="branchInput">สาขา</label>
+                    @*<input type="text" class="form-control" id="branchInput" style="width:50%;">*@
+                    <select name="branchInput" id="branchInput" class="form-control w-100 rounded-lg" style="width: 50%;">
+                        @{
+                            <option value="All">ไม่ระบุ</option>
+                            if (ViewBag.SystemBranch != null && ViewBag.SystemBranch != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.SystemBranch;
+                                string strSel = ViewBag.CurrentBranch;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6" style=" display: flex; align-items: center;">
+                    <label class="form-label labelCss" for="statusInput" style="margin-right: 5px;">สถานะ</label>
+                    @*<input type="text" class="form-control" id="statusInput" style="width:50%;">*@
+                    @*<select id="statusInput" name="statusInput" class="form-control w-100 rounded-lg" style="width:50%;margin:5px;">
+                            <option value="0">All</option>
+                            <option value="1">Active</option>
+                            <option value="2">Not Active</option>
+                        </select>*@
+                    <select name="statusInput" id="statusInput" class="form-control w-100 rounded-lg" style="width: 50%;">
+                        @{
+                            <option value="All">All</option>
+                            if (ViewBag.StatusDDL != null && ViewBag.StatusDDL != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.StatusDDL;
+                                string strSel = ViewBag.CurrentStatusDDL;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4" style="display:flex;">
+                        <button id="btnSearch" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Search" value="Search" style="margin: 20px; margin-bottom: 20px; width: inherit;">ค้นหา</button>
+                        <button id="btnReset" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="reset" value="reset" style="margin: 20px; margin-bottom: 20px; width: inherit;">เคลียร์ค่า</button>
+                    </div>
+                    <div class="col-md-4">&nbsp;</div>
+                </div>
+                <div class="col-md-12" style="display: flex; align-items: center; margin-bottom: -17px; ">
+                    <div class="col-md-4">จำนวนรายการค้นหา @Model.Count รายการ</div>
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4" style="display:flex;">
+                        @if (ViewBag.Export_Role == true)
+                        {
+                            <button type="submit" class="btn btn-primary mg" id="exExcel" style="margin: 20px; margin-bottom: 20px; width: inherit;" name="cmdButton" value="ExportFile">Export Excel</button>
+                            <button type="submit" class="btn btn-primary mg" id="exCsv" style="margin: 20px; margin-bottom: 20px; width: inherit;" name="cmdButton" value="ExportCSV">Export CSV</button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div style="padding:0px 8px;">
+                <div class="card-body">
+                    <table class="table table-striped display nowrap" id="tbl1" style="border: 1px solid rgb(170, 170, 170); border-radius: 13px; overflow: hidden; width: 100%; ">
+                        <thead>
+                            <tr>
+                                @*<th style="text-align:center;vertical-align:top;" width="10px" class="ghb-background-color"><input type="checkbox" id="select-all" /></th>
+                                    <th style="text-align:center;vertical-align:top;" width="20px" class="ghb-background-color">ลำดับ</th>*@
+                                @*<th class="ghb-background-color"></th>*@
+                                @if (ViewBag.Update_Role == true)
+                                {
+                                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">EDIT</th>
+                                }
+                                else
+                                {
+                                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"></th>
+                                }
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">Username</th>
+                                <th style="text-align:center;vertical-align:top;" width="5%" class="ghb-background-color">รหัสพนักงาน</th>
+                                <th style="text-align:center;vertical-align:top;" width="15%" class="ghb-background-color">Role</th>
+                                <th style="text-align:center;vertical-align:top;" width="15%" class="ghb-background-color">ชื่อ</th>
+                                <th style="text-align:center;vertical-align:top;" width="15%" class="ghb-background-color">นามสกุล</th>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">สาขา</th>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">เขต</th>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ฝ่ายงาน</th>
+                                @*<th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">บัญชีถูกlock</th>*@
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">สถานะ</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="searchTable">
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    @*<td style="text-align: center;">
+                                            @Html.CheckBoxFor(m => Model[i].IsSelected, new { @class = "selectItem" })
+                                        </td>
+                                        <td style="text-align: right;">@Html.DisplayFor(m => Model[i].USER_ID)@Html.HiddenFor(m => Model[i].USER_ID)</td>*@
+                                    @*<td class="details-control"></td>*@
+                                    <td style="text-align: center;">
+                                        @if (ViewBag.Update_Role == true)
+                                        {
+                                            <button id="btnEdit" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Edit" value="Edit|@Model[i].USER_ID" style="padding: 0; border: none; background: none; outline: unset; width: auto;"><i class="bx bxs-edit" style="font-size: 18px; color: #ff850c;"></i></button>
+                                            @*<a href="@Url.Action("NdUserManage", "Administrator", new { id = @Model[i].USER_ID })" name="cmdButton" style="cursor: pointer;text-decoration:none;">
+                                                    <span class="" style="position: relative; font-size: 22px; min-width: 33px;">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </span>
+                                                </a>*@
+                                        }
+                                    </td>
+                                    <td style="text-align: left;">@Html.DisplayFor(m => Model[i].USER_LOGIN)</td>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].USER_EMP_CODE)</td>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].User_Role_Level)</td>
+                                    <td style="text-align: left;">@Html.DisplayFor(m => Model[i].USER_FIRSTNAME)</td>
+                                    <td style="text-align: left;">@Html.DisplayFor(m => Model[i].USER_LASTNAME)</td>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].SOL_NAME)</td>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].Hub_Name)</td>
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].Dept_Name)</td>
+                                    @*<td style="text-align: center;">@Html.DisplayFor(m => Model[i].USER_LOCK)</td>*@
+                                    <td style="text-align: center;">@Html.DisplayFor(m => Model[i].IS_ACTIVE)</td>
+
+                                    @Html.HiddenFor(m => Model[i].USER_ID)
+                                    @Html.HiddenFor(m => Model[i].USER_LOGIN)
+                                    @Html.HiddenFor(m => Model[i].USER_LEVEL)
+                                    @Html.HiddenFor(m => Model[i].User_Role_Level)
+                                    @Html.HiddenFor(m => Model[i].IS_ACTIVE)
+                                    @Html.HiddenFor(m => Model[i].User_Branch)
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script>
+    $(function () {
+        //$('#loading').hide();
+        //$("#btnSave").click(function () {
+        //    $('#loading').show();
+        //});
+
+        //$("#searchInput").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#searchTable tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+
+        //DataTable
+        var data = [
+            { key1: 'value1', key2: 'value2', key3: 'value3' },
+            { key1: 'value1', key2: 'value2' }
+        ];
+        function format(index) {
+            var json_data = data[parseInt(index)];
+            var op = '';
+            $.each(json_data, function (key, value) {
+                op += '<div>' + key + ': ' + value + '</div>';
+            });
+            return op;
+        }
+
+
+        //Old type 20250219
+        var table = $("#tbl1").DataTable({
+            "responsive": true, "lengthChange": true, "autoWidth": false, searching: false,
+            select: {
+                selector: 'td:not(:nth-child(2))',
+            }
+
+        });
+
+        // Add event listener for opening and closing details
+        //$('#tbl1').on('click', 'td.details-control', function () {
+        //    var tr = $(this).closest('tr');
+        //    var row = table.row(tr);
+
+        //    if (row.child.isShown()) {
+        //        // This row is already open - close it
+        //        row.child.hide();
+        //        tr.removeClass('shown');
+        //    } else {
+        //        // Open this row
+        //        row.child(format($('#tbl1 td.details-control').index($(this)))).show();
+        //        tr.addClass('shown');
+        //    }
+        //});
+
+
+        @*$("#btnReset").click(function (e) {
+            e.preventDefault();
+
+            //clear text
+            $("#usernameInput").val("");
+            $("#empcodeInput").val("");
+            $("#firstInput").val("");
+            $("#lastInput").val("");
+
+            //Clear Select
+            $("#departInput").val("All").trigger("change");
+            $("#branchInput").val("All").trigger("change");
+            $("#disInput").val("All").trigger("change");
+            $("#statusInput").val("1").trigger("change");
+
+            var _cmdbutton = "reset"
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("NdUserManage", "Administrator")',// beforeSend: function (xhr) { waitingDialog.show('กำลังประมวลผล'); },
+                data: { cmdButton: _cmdbutton},
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    console.log("finish");
+                    var myJsonString = JSON.stringify(data);
+                    //$("#tbl1").DataTable({ destroy: true })
+                    table.ajax.url(myJsonString).load();
+
+                }
+            });
+
+        });*@
+    });
+
+</script>

@@ -1,0 +1,237 @@
+﻿@model List<GHB_D1.Models.UserModels>
+@{
+    ViewBag.Title = "AddMapUserBranch";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#ID_BRANCH').select2();
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+        });
+
+
+    });
+
+</script>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#select-all').click(function () {
+                var isChecked = $(this).is(':checked');
+                $('input[type="checkbox"]').each(function () {
+                    $(this).prop('checked', isChecked);
+                });
+            });
+        });
+    </script>
+    <script>
+        function submitForm() {
+            $('#FormAddMapUserBranch').submit();
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#searchTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+<div class="row">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">ADD MAP USER BRANCH</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <a onclick="history.back()" title="ย้อนกลับ">
+        <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+    </a>
+</div>
+@using (Html.BeginForm("AddMapUserBranch", "Administrator", FormMethod.Post, new { id = "FormAddMapUserBranch" }))
+{
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label class="ghbFont-color">สาขา&nbsp;</label>&nbsp;&nbsp;
+
+
+                <select name="ID_BRANCH" id="ID_BRANCH" class="form-control w-100 rounded-lg">
+                    @{
+                        <option value="All">โปรดเลือก</option>
+                        if (ViewBag.CurrentBranchList != "" && ViewBag.CurrentBranchList != "All")
+                        {
+                            char[] _spl = new char[] { '|' };
+                            char[] _spf = new char[] { ',' };
+                            string[] _arrLine = null;
+                            string[] _arrField = null;
+                            string Tmpstr = ViewBag.CurrentBranchList;
+                            string strSel = ViewBag.CurrentBranch;
+                            _arrLine = Tmpstr.Split(_spl);
+                            foreach (string str in _arrLine)
+                            {
+                                _arrField = str.Split(_spf);
+                                if (strSel == _arrField[0].ToString())
+                                {
+                                    <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                                else
+                                {
+                                    <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label class="ghbFont-color">ค้นหาผู้ใช้&nbsp;</label>
+                @Html.TextBox("searchInput", null, new { @class = "form-control rounded-lg", ID = "searchInput", placeholder = "ค้นหาผู้ใช้..." })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label class="ghbFont-color">ผู้ใช้&nbsp;</label>
+
+                <div class="tableFixHead" style="overflow: scroll; width: 800px; height: 400px; margin-top: 1px;">
+                    <table style="font: 300 16px 'Tahoma'; color: black; width: auto; " class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="ghb-background-color">
+                                    <input type="checkbox" id="select-all" />
+                                </th>
+                                <th class="ghb-background-color">ลำดับ</th>
+                                <th class="ghb-background-color">ผู้ใช้</th>
+                                <th class="ghb-background-color">ชื่อ</th>
+                                <th class="ghb-background-color">นามสกุล</th>
+                                <th class="ghb-background-color">ฝ่าย</th>
+                                <th class="ghb-background-color">ตำแหน่ง</th>
+                                <th class="ghb-background-color">ระดับ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchTable">
+                            @if (Model != null)
+                            {
+                                for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.CheckBoxFor(m => Model[i].IsSelected)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model[i].USER_ID)
+                                            @Html.HiddenFor(m => Model[i].USER_ID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model[i].USER_LOGIN)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model[i].USER_FIRSTNAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model[i].USER_LASTNAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model[i].USER_DEPARTMENT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model[i].USER_POSITION)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model[i].USER_LEVEL)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;margin-bottom:20px;">SAVE</button>
+                <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px; margin-bottom: 20px;">CANCEL</button>
+            </div>
+        </div>
+
+    </div>
+
+}
+

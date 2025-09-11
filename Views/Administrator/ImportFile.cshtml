@@ -1,0 +1,82 @@
+﻿@model GHB_D1.Models.UploadViewModel
+@{
+    ViewBag.Title = "Upload File";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+<script type="text/javascript">
+    $(function () {
+        $('#loading').hide();
+        $("#btnUploadFile").click(function () {
+            $('#loading').show();
+        });
+    });
+</script>
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+@using (Html.BeginForm("ImportFile", "Administrator", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="row" style="margin-bottom:5px;">
+            <div class="col-sm-5">
+                <label class="ghbFont-color" for="file">Select CSV file:</label>
+                @Html.TextBoxFor(m => m.File, new { type = "file", @class = "form-control rounded-lg" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <button type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" title="Upload" id="btnUploadFile" name="cmdButton" value="UploadFile">Upload</button>&nbsp;
+                <button type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" title="Cancel" id="btnCancel" name="cmdButton" value="Cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+}

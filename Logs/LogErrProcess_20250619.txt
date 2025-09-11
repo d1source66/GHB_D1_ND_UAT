@@ -1,0 +1,225 @@
+19/06/2025 11:44:44.646 : HomeController.cs : Index begin
+19/06/2025 11:44:44.647 : Menu Nav Begin 'Home Page'
+19/06/2025 11:44:44.648 : HomeController.cs : Session and get param begin
+19/06/2025 11:44:44.650 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 11:44:44.651 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 11:44:44.707 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:44:44.708 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:44:44.709 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:44:44.709 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:44:44.710 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:44:44.713 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:44:44.714 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:44:44.773 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 11:44:44.847 : HomeController.cs : AudiLog begin
+19/06/2025 11:44:44.898 : HomeController.cs : Go to Main Report
+19/06/2025 11:58:31.232 : HomeController.cs : Index begin
+19/06/2025 11:58:31.232 : Menu Nav Begin 'Home Page'
+19/06/2025 11:58:31.233 : HomeController.cs : Session and get param begin
+19/06/2025 11:58:31.233 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 11:58:31.234 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 11:58:31.288 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:58:31.289 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:58:31.289 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:58:31.289 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:58:31.290 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:58:31.290 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:58:31.290 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 11:58:31.376 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 11:58:31.588 : HomeController.cs : AudiLog begin
+19/06/2025 11:58:31.632 : HomeController.cs : Go to Main Report
+19/06/2025 13:22:53.565 : HomeController.cs : Index begin
+19/06/2025 13:22:53.566 : Menu Nav Begin 'Home Page'
+19/06/2025 13:22:53.567 : HomeController.cs : Session and get param begin
+19/06/2025 13:22:53.568 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 13:22:53.570 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 13:22:53.641 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:22:53.642 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:22:53.643 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:22:53.643 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:22:53.644 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:22:53.644 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:22:53.645 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:22:53.710 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 13:22:53.796 : HomeController.cs : AudiLog begin
+19/06/2025 13:22:53.844 : HomeController.cs : Go to Main Report
+19/06/2025 13:29:48.987 : HomeController.cs : Index begin
+19/06/2025 13:29:48.989 : Menu Nav Begin 'Home Page'
+19/06/2025 13:29:48.991 : HomeController.cs : Session and get param begin
+19/06/2025 13:29:48.992 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 13:29:48.993 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 13:29:49.064 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:29:49.065 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:29:49.067 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:29:49.068 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:29:49.069 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:29:49.070 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:29:49.071 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:29:49.140 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 13:29:49.239 : HomeController.cs : AudiLog begin
+19/06/2025 13:29:49.315 : HomeController.cs : Go to Main Report
+19/06/2025 13:35:44.908 : HomeController.cs : Index begin
+19/06/2025 13:35:44.909 : Menu Nav Begin 'Home Page'
+19/06/2025 13:35:44.910 : HomeController.cs : Session and get param begin
+19/06/2025 13:35:44.911 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 13:35:44.912 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 13:35:44.982 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:35:44.983 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:35:44.984 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:35:44.984 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:35:44.985 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:35:44.987 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:35:44.987 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:35:45.217 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 13:35:46.015 : HomeController.cs : AudiLog begin
+19/06/2025 13:35:46.091 : HomeController.cs : Go to Main Report
+19/06/2025 13:49:15.955 : HomeController.cs : Index begin
+19/06/2025 13:49:15.956 : Menu Nav Begin 'Home Page'
+19/06/2025 13:49:15.957 : HomeController.cs : Session and get param begin
+19/06/2025 13:49:15.959 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 13:49:15.960 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 13:49:16.027 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:49:16.028 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:49:16.028 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:49:16.028 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:49:16.028 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:49:16.028 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:49:16.028 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 13:49:16.110 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 13:49:16.239 : HomeController.cs : AudiLog begin
+19/06/2025 13:49:16.291 : HomeController.cs : Go to Main Report
+19/06/2025 14:04:22.368 : HomeController.cs : Index begin
+19/06/2025 14:04:22.369 : Menu Nav Begin 'Home Page'
+19/06/2025 14:04:22.369 : HomeController.cs : Session and get param begin
+19/06/2025 14:04:22.370 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 14:04:22.370 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 14:04:22.435 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:04:22.437 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:04:22.437 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:04:22.437 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:04:22.438 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:04:22.440 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:04:22.440 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:04:22.505 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 14:04:22.582 : HomeController.cs : AudiLog begin
+19/06/2025 14:04:22.639 : HomeController.cs : Go to Main Report
+19/06/2025 14:21:32.086 : HomeController.cs : Index begin
+19/06/2025 14:21:32.087 : Menu Nav Begin 'Home Page'
+19/06/2025 14:21:32.088 : HomeController.cs : Session and get param begin
+19/06/2025 14:21:32.088 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 14:21:32.089 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 14:21:32.151 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:21:32.152 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:21:32.153 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:21:32.154 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:21:32.155 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:21:32.155 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:21:32.156 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:21:32.223 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 14:21:32.315 : HomeController.cs : AudiLog begin
+19/06/2025 14:21:32.412 : HomeController.cs : Go to Main Report
+19/06/2025 14:43:53.996 : HomeController.cs : Index begin
+19/06/2025 14:43:53.998 : Menu Nav Begin 'Home Page'
+19/06/2025 14:43:53.998 : HomeController.cs : Session and get param begin
+19/06/2025 14:43:54.000 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 14:43:54.001 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 14:43:54.056 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:43:54.057 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:43:54.058 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:43:54.058 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:43:54.059 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:43:54.060 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:43:54.060 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:43:54.121 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 14:43:54.187 : HomeController.cs : AudiLog begin
+19/06/2025 14:43:54.232 : HomeController.cs : Go to Main Report
+19/06/2025 14:51:55.170 : HomeController.cs : Index begin
+19/06/2025 14:51:55.184 : Menu Nav Begin 'Home Page'
+19/06/2025 14:51:55.185 : HomeController.cs : Session and get param begin
+19/06/2025 14:51:55.185 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 14:51:55.189 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 14:51:55.253 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:51:55.253 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:51:55.253 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:51:55.253 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:51:55.253 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:51:55.253 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:51:55.253 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 14:51:55.318 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 14:51:55.405 : HomeController.cs : AudiLog begin
+19/06/2025 14:51:55.451 : HomeController.cs : Go to Main Report
+19/06/2025 15:43:56.337 : HomeController.cs : Index begin
+19/06/2025 15:43:56.337 : Menu Nav Begin 'Home Page'
+19/06/2025 15:43:56.339 : HomeController.cs : Session and get param begin
+19/06/2025 15:43:56.340 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 15:43:56.342 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 15:43:56.420 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:43:56.421 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:43:56.423 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:43:56.424 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:43:56.424 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:43:56.425 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:43:56.425 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:43:56.481 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 15:43:56.540 : HomeController.cs : AudiLog begin
+19/06/2025 15:43:56.577 : HomeController.cs : Go to Main Report
+19/06/2025 15:45:44.300 : HomeController.cs : Index begin
+19/06/2025 15:45:44.301 : Menu Nav Begin 'Home Page'
+19/06/2025 15:45:44.302 : HomeController.cs : Session and get param begin
+19/06/2025 15:45:44.302 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 15:45:44.304 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 15:45:44.365 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:45:44.366 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:45:44.366 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:45:44.367 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:45:44.367 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:45:44.370 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:45:44.370 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:45:44.431 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 15:45:44.490 : HomeController.cs : AudiLog begin
+19/06/2025 15:45:44.532 : HomeController.cs : Go to Main Report
+19/06/2025 15:53:19.223 : HomeController.cs : Index begin
+19/06/2025 15:53:19.224 : Menu Nav Begin 'Home Page'
+19/06/2025 15:53:19.225 : HomeController.cs : Session and get param begin
+19/06/2025 15:53:19.225 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 15:53:19.225 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 15:53:19.280 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:53:19.281 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:53:19.281 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:53:19.282 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:53:19.282 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:53:19.282 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:53:19.284 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:53:19.350 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 15:53:19.436 : HomeController.cs : AudiLog begin
+19/06/2025 15:53:19.474 : HomeController.cs : Go to Main Report
+19/06/2025 15:54:19.339 : HomeController.cs : Index begin
+19/06/2025 15:54:19.340 : Menu Nav Begin 'Home Page'
+19/06/2025 15:54:19.342 : HomeController.cs : Session and get param begin
+19/06/2025 15:54:19.343 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 15:54:19.343 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 15:54:19.395 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:19.396 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:19.396 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:19.397 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:19.398 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:19.398 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:19.399 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:19.458 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 15:54:19.549 : HomeController.cs : AudiLog begin
+19/06/2025 15:54:19.608 : HomeController.cs : Go to Main Report
+19/06/2025 15:54:25.112 : HomeController.cs : Index begin
+19/06/2025 15:54:25.113 : Menu Nav Begin 'Home Page'
+19/06/2025 15:54:25.114 : HomeController.cs : Session and get param begin
+19/06/2025 15:54:25.114 : HomeController.cs : AuthorizeUserReport2ND begin
+19/06/2025 15:54:25.114 : AccountService : AuthorizeUserReport2ND begin
+19/06/2025 15:54:25.169 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:25.169 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:25.170 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:25.170 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:25.170 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:25.171 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:25.171 : AccountService : AMS_SP_GET_GROUP_REPORT_ND begin7
+19/06/2025 15:54:25.234 : HomeController.cs : GetNewDesignRole1 begin
+19/06/2025 15:54:25.296 : HomeController.cs : AudiLog begin
+19/06/2025 15:54:25.357 : HomeController.cs : Go to Main Report

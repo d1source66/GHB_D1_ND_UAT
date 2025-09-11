@@ -1,0 +1,306 @@
+﻿@model GHB_D1.Models.ReportViewModel
+@{
+    ViewBag.Title = "AddMapUserReport";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#ID_USER').select2();
+        $('#GROUP_NO').select2();
+        $('#REPORT_NO').select2();
+        $('#slt_BRANCH').select2();
+        GetBranch();
+        $('#ID_USER').change(function () {
+            
+            GetBranch();
+        });
+        $('#slt_BRANCH').change(function () {
+            var v = $(this).val();
+            $('#ID_BRANCH').val(v);
+        });
+
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+        });
+
+    });
+
+    function GetBranch() {
+            
+        var selectedOption = $('#ID_USER').val();
+            //alert("Selected option: " + selectedOption);
+            $.ajax({
+                url: '@Url.Action("GetBranchByUserID", "Administrator")',
+                type: 'POST',
+                data: { UserID: selectedOption },
+                success: function (response) {
+                    //alert(response);
+                    if (response != "") {
+                        $('#ID_BRANCH').val(response);
+                        $('#slt_BRANCH').val(response).trigger('change');
+
+                        $('#slt_BRANCH').prop('disabled', true);
+
+                    } else {
+                        $('#slt_BRANCH').prop('disabled', false);
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error occurred while processing the request.');
+                }
+            });
+
+    }
+
+    </script>
+    
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+        </script>
+    }
+
+    <style>
+        .navbar-inverse {
+            background-color: #ff850c;
+            border-color: #ff850c;
+            min-height: 65px;
+        }
+
+            .navbar-inverse .navbar-brand {
+                color: #ffffff;
+            }
+
+            .navbar-inverse .navbar-nav > li > a {
+                color: #ffffff;
+            }
+
+        .lbcolor {
+            color: orange;
+        }
+
+        hr {
+            border-top: 1px solid orange !important;
+        }
+
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+        }
+
+        #loading-image {
+            z-index: 100;
+        }
+    </style>
+    <div id="loading">
+        <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                        <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">ADD MAP USER REPORT</h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("AddMapUserReport", "Administrator", FormMethod.Post, new { id = "FormAddMapUserReport" }))
+    {
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <label class="ghbFont-color">รหัสผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+
+
+                    <select name="ID_USER" id="ID_USER" class="form-control w-100 rounded-lg">
+                        @{
+                            <option value="All">โปรดเลือก</option>
+                            if (ViewBag.CurrentUserList != "" && ViewBag.CurrentUserList != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.CurrentUserList;
+                                string strSel = ViewBag.CurrentUser;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <label class="ghbFont-color">รหัสสาขา&nbsp;</label>&nbsp;&nbsp;
+
+                    @Html.Hidden("ID_BRANCH")
+                    <select name="slt_BRANCH" id="slt_BRANCH" class="form-control w-100 rounded-lg">
+                        @{
+                            <option value="All">โปรดเลือก</option>
+                            if (ViewBag.CurrentBranchList != "" && ViewBag.CurrentBranchList != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.CurrentBranchList;
+                                string strSel = ViewBag.CurrentBranch;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <label class="ghbFont-color">รหัสกลุ่ม&nbsp;</label>&nbsp;&nbsp;
+
+                    <select name="GROUP_NO" id="GROUP_NO" class="form-control w-100 rounded-lg" onchange="submitForm()">
+                        @{
+                            <option value="All">โปรดเลือก</option>
+                            if (ViewBag.CurrentGroupReportList != "" && ViewBag.CurrentGroupReportList != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.CurrentGroupReportList;
+                                string strSel = ViewBag.CurrentGroupReport;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <label class="ghbFont-color">รายงาน&nbsp;</label>
+
+                    <div class="tableFixHead" style="overflow: scroll; width: 500px; height: 360px; margin-top: 1px;">
+                        <table style="font: 300 16px 'Tahoma'; color: black; width: auto; " class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="ghb-background-color">
+                                        <input type="checkbox" id="select-all" />
+                                    </th>
+                                    <th class="ghb-background-color">ReportNo</th>
+                                    <th class="ghb-background-color">ReportName</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Reports != null)
+                                {
+                                    for (int i = 0; i < Model.Reports.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.CheckBoxFor(m => m.Reports[i].IsSelected)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(m => m.Reports[i].REPORT_NO)
+                                                @Html.HiddenFor(m => m.Reports[i].REPORT_NO)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(m => m.Reports[i].REPORT_NAME)
+                                                @Html.HiddenFor(m => m.Reports[i].REPORT_NAME)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    @section Scripts {
+                        <script>
+                            $(document).ready(function () {
+                                $('#select-all').click(function () {
+                                    var isChecked = $(this).is(':checked');
+                                    $('input[type="checkbox"]').each(function () {
+                                        $(this).prop('checked', isChecked);
+                                    });
+                                });
+                            });
+                        </script>
+                        <script>
+                            function submitForm() {
+                                $('#FormAddMapUserReport').submit();
+                            }
+                        </script>
+                    }
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;margin-bottom:20px;">SAVE</button>
+                    <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px; margin-bottom: 20px;">CANCEL</button>
+                </div>
+            </div>
+
+        </div>
+
+    }
+

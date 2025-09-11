@@ -1,0 +1,82 @@
+﻿@model  GHB_D1.Models.MenuViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/bootstrap.css")
+@*<link rel="stylesheet" href='~/Content/style' media="screen" />*@
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+        position: relative;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .logo-header {
+        position: relative;
+        z-index: 1000;
+        display: inline-block;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+        .logo-header .logo-main {
+            width: 96px;
+            padding: 5px 0;
+            /*margin-left: 164%;*/
+        }
+
+    .logo-ghb-img {
+        vertical-align: middle;
+        width: 114%;
+    }
+
+    hr {
+        border-top: 1px solid #ff850c;
+        border-width: 5px;
+    }
+</style>
+<div class="form-row">
+
+    <div class="col-6">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;"> GHB ALL </h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">     REPORTS </h5>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr />
+
+<div class="navlist-primary">
+
+    @if (Model != null)
+    {
+        string groupName = "";
+        foreach (var m in Model._groupReportVMList)
+        {
+            groupName = @m.GROUP_NAME + "Report";
+            <ul>
+                <li class="active">
+                    <a name="titlereport" href="@Url.Action("Index", @groupName, new {px = Model.BRANCH_ID,py = Model.USER_ID, pz = @m.GROUP_NAME})">@Html.DisplayFor(d => m.GROUP_NAME)</a>
+                   
+                </li>
+            </ul>
+        }
+    }
+
+</div>
