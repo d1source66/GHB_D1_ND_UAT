@@ -1,0 +1,90 @@
+note: 2-Jun-2026
+- modify AMS.[dbo].[AMS_SP_GET_GROUP_REPORT_ND] => for menu only active
+	Add : AND Is_Active = 1
+	
+- update field Is_Active = 0 from command below -> for menu QRP in-active (not use)
+	[AMS].[dbo].[TBL_ROLE_MANAGEMENT] 
+	UPDATE [dbo].[TBL_ROLE_MANAGEMENT]
+	SET [Is_Active] = 0
+	  ,[Remark] = 'remove menu QRP'
+	WHERE Group_Report = 'QRP'
+	
+- In-active of the invalid module_name
+	update [dbo].[TBL_ROLE_MANAGEMENT] set Is_Active = 0 where Module_Name = 'CDM9000_M_TOTAL_B001_EXCE'
+	
+- no .rpt file of this report
+	update [dbo].[TBL_ROLE_MANAGEMENT] set Is_Active = 0 where Module_Name = 'RATM9000_M_TOTAL_B001'
+
+- update module name from command below -> for report name which correct in the file name.
+	UPDATE [dbo].[TBL_ROLE_MANAGEMENT]
+	   set Module_Name = REPLACE(module_name,'TYPE15','TYPE_15')
+	 where Module_Name like '%TYPE15%'
+	 
+- modify AMS.[dbo].[AMS_SP_MAIN_GetGroupDetailReport_add_branch_v2] -> for get report name with active only.
+	Add : AND Is_Active = 1
+	
+- Rename *TYPE15*.rpt to *TYPE_15*.rpt in the folder {web_Progject}\ReportFiles\*.rpt
+	-> report name must be the same in *.rpt file, in the database, and result file name (ex. *.pdf, *.txt, *.xls)
+	
+--- new menu SETTLE
+- add data to table
+	USE [AMS]
+GO
+
+INSERT INTO [dbo].[TBL_ROLE_MANAGEMENT]
+           ([Role_Name]
+           ,[Position_Role]
+           ,[Module_No]
+           ,[Module_Name]
+           ,[Group_No]
+           ,[Group_Module]
+           ,[Group_Report]
+           ,[RoleReport_Name]
+           ,[List_Role]
+           ,[Create_Role]
+           ,[View_Role]
+           ,[Update_Role]
+           ,[Delete_Role]
+           ,[Export_Role]
+           ,[Is_Active]
+           ,[Create_Date]
+           ,[Update_Date]
+           ,[Remark])
+     select [Role_Name]
+           ,[Position_Role]
+           ,[Module_No]
+           ,[Module_Name]
+           ,[Group_No]
+           ,[Group_Module]
+           ,'SETTLE'
+           ,[RoleReport_Name]
+           ,[List_Role]
+           ,[Create_Role]
+           ,[View_Role]
+           ,[Update_Role]
+           ,[Delete_Role]
+           ,[Export_Role]
+           ,[Is_Active]
+           ,[Create_Date]
+           ,[Update_Date]
+           ,[Remark]
+     from [dbo].[TBL_ROLE_MANAGEMENT]
+     where Group_Report = 'QRP' and Role_Name = 'superadmin'
+GO
+- modify data to [dbo].[TBL_ROLE_MANAGEMENT] from data below
+ID_ROLE,Role_Name,Position_Role,Module_No,Module_Name,Group_No,Group_Module,Group_Report,RoleReport_Name,List_Role,Create_Role,View_Role,Update_Role,Delete_Role,Export_Role,Is_Active,Create_Date,Update_Date,Remark
+4315,superadmin,,6.8,SETTLE,6.80,6.80000,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.383,2025-06-04 23:25:42.383,remove menu QRP
+4316,superadmin,,6.8.1,AcqGHB_,6.80,6.80001,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.403,2025-06-04 23:25:42.403,remove menu QRP
+4317,superadmin,,6.8.2,CtlAcqGHB_,6.80,6.80002,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.417,2025-06-04 23:25:42.417,remove menu QRP
+4318,superadmin,,6.8.3,CtlIssGHB_,6.80,6.80003,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.453,2025-06-04 23:25:42.453,remove menu QRP
+4319,superadmin,,6.8.4,GHB_GLFile_,6.80,6.80004,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.463,2025-06-04 23:25:42.463,remove menu QRP
+4320,superadmin,,6.8.5,IssGHB_,6.80,6.80005,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.480,2025-06-04 23:25:42.480,remove menu QRP
+
+- add data below into the table [AMS].[dbo].[TBL_ROLE_MODULE_MASTER] 
+ID,Module_No,Group_Module,Module_Name,Description,Create_Date,Update_Date,List_Role,Create_Role,View_Role,Update_Role,Delete_Role,Export_Role,Group_Report,Group_No
+198,6.8,6.80000,SETTLE,Settle group,2025-02-21 21:22:07.703,2025-02-21 21:22:07.703,NULL,NULL,NULL,NULL,NULL,NULL,SETTLE,6.80
+199,6.8.1,6.80001,AcqGHB_,Item in settle group,2025-02-21 21:22:07.703,2025-02-21 21:22:07.703,NULL,NULL,NULL,NULL,NULL,NULL,SETTLE,6.80
+200,6.8.2,6.80002,CtlAcqGHB_,Item in settle group,2025-02-21 21:22:07.703,2025-02-21 21:22:07.703,NULL,NULL,NULL,NULL,NULL,NULL,SETTLE,6.80
+201,6.8.3,6.80003,CtlIssGHB_,Item in settle group,2025-02-21 21:22:07.703,2025-02-21 21:22:07.703,NULL,NULL,NULL,NULL,NULL,NULL,SETTLE,6.80
+202,6.8.4,6.80004,GHB_GLFile_,Item in settle group,2025-02-21 21:22:07.703,2025-02-21 21:22:07.703,NULL,NULL,NULL,NULL,NULL,NULL,SETTLE,6.80
+203,6.8.5,6.80005,IssGHB_,Item in settle group,2025-02-21 21:22:07.703,2025-02-21 21:22:07.703,NULL,NULL,NULL,NULL,NULL,NULL,SETTLE,6.80

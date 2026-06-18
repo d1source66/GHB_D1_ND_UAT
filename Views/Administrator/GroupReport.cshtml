@@ -1,0 +1,173 @@
+﻿@model List<GHB_D1.Models.GroupReportModel>
+@{
+    ViewBag.Title = "Group Report";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#select-all').click(function () {
+                var isChecked = $(this).is(':checked');
+                //$('input[type="checkbox"]').each(function () {
+                //    $(this).prop('checked', isChecked);
+                //});
+                $("#searchTable tr:visible .selectItem").prop('checked', isChecked);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#searchTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#loading').hide();
+            $("#btnDelete").click(function () {
+
+                if (Confirm()) {
+                    $('#loading').show();
+                } else {
+                    return false;
+                }
+
+            });
+        });
+        function Confirm() {
+            return confirm('คุณต้องการลบรายการนี้ ?');
+        }
+    </script>
+}
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+<div class="row">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">GROUP REPORT</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <a onclick="history.back()" title="ย้อนกลับ">
+        <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+    </a>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1" style="width: 50px; margin-top: 10px; padding-left:1px; padding-right:1px;">
+            <label class="ghbFont-color">ค้นหา:&nbsp;</label>
+        </div>
+        <div class="col-sm-1" style="width:210px;">
+            @Html.TextBox("searchInput", null, new { @class = "form-control rounded-lg", ID = "searchInput", placeholder = "ค้นหา..." })
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("GroupReport", "Administrator", FormMethod.Post))
+{
+    <button id="btnAdd" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Add" value="Add" style="margin-top:20px;margin-bottom:20px;">ADD</button>
+    <button id="btnDelete" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Delete" value="Delete" onclick="">DELETE</button>
+    <div class="tableFixHead" style="width: 100%; height: 800px; overflow: scroll;">
+        <table style="font: 300 16px 'Tahoma'; color: black; width: auto; " class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"><input type="checkbox" id="select-all" /></th>
+                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ลำดับ</th>
+                    <th style="text-align:center;vertical-align:top;" width="20%" class="ghb-background-color">รหัสกลุ่ม</th>
+                    <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อกลุ่ม</th>
+                    <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">สถานะ</th>
+                    <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">Created</th>
+                    <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">Updated</th>
+                    <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">EDIT</th>
+
+                </tr>
+            </thead>
+            <tbody id="searchTable">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td style="text-align: center;">
+                            @Html.CheckBoxFor(m => Model[i].IsSelected, new { @class= "selectItem" })
+
+                        </td>
+                        <td style="text-align: right;">@Html.DisplayFor(m => Model[i].ID)@Html.HiddenFor(m => Model[i].ID)</td>
+                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].GroupCode)</td>
+                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].GroupName)</td>
+                        <td style="text-align: center;">@Html.DisplayFor(m => Model[i].Active)</td>
+                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].Created)</td>
+                        <td style="text-align: left;">@Html.DisplayFor(m => Model[i].Updated)</td>
+                        <td style="text-align: center;">
+
+                            <button id="btnEdit" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Edit" value="Edit|@Model[i].ID">EDIT</button>
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+}

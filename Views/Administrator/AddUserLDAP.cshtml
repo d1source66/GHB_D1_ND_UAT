@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "Add User LDAP";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<script src="~/Scripts/check-password-strength@2.0.10-umd.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+        });
+        $("#btnVerifyUser").click(function () {
+            $('#loading').show();
+        });
+
+        $('#USER_EMP_CODE').on('input', function () {
+            const maxLength = 5;
+            const value = $(this).val();
+
+            // Restrict input to numbers only
+            if (value.length > maxLength) {
+                $(this).val(value.slice(0, maxLength));
+            }
+        });
+
+    });
+
+
+
+
+</script>
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    .chkbox_css {
+        display: inline;
+        margin-top: 0px !important;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+
+    .removeBullet ul {
+        list-style-type: none;
+    }
+
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+<div class="row">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">ADD USER LDAP</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <a onclick="history.back()" title="ย้อนกลับ">
+        <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+    </a>
+</div>
+@using (Html.BeginForm("AddUserLDAPAd1", "Administrator", FormMethod.Post, new {  autocomplete = "off" }))
+{
+
+<div class="container">
+    <div class="row">
+        <input type="hidden" name="USER_LOGIN" id="USER_LOGIN" value="@ViewBag.USER_LOGIN" />
+        <div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger validatUser removeBullet loginWrong ", @style = "font-size: 16px; margin-left: -26px;" })
+        </div>
+        <div class="col-md-3">
+            <label class="ghbFont-color">รหัสพนักงาน&nbsp;</label>&nbsp;&nbsp;
+            @*@Html.TextBox("USER_LOGIN", ViewBag.USER_LOGIN as string, new
+                {
+                    @class = "form-control rounded-lg",
+                    maxlength = "50", @readonly = "readonly"})*@
+            <input type="number" class="form-control rounded-lg" id="USER_EMP_CODE" name="USER_EMP_CODE" value="@ViewBag.USER_EMP_CODE">
+        </div>
+        <div class="col-md-3">
+            <div class="ghbFont-color">&nbsp;</div>
+            <div>
+                <button id="btnVerifyUser" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Verify User" value="VerifyUser" style="margin-top: 6px;">Verify&nbsp;User</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label class="ghbFont-color">ชื่อ&nbsp;</label>&nbsp;&nbsp;
+            @*@Html.TextBox("USER_FIRSTNAME", ViewBag.USER_FIRSTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })*@
+            <input type="text" class="form-control rounded-lg" id="USER_FIRSTNAME" name="USER_FIRSTNAME" value="@ViewBag.USER_FIRSTNAME" readonly>
+        </div>
+        <div class="col-md-3">
+            <label class="ghbFont-color">สกุล&nbsp;</label>&nbsp;&nbsp;
+            @*@Html.TextBox("USER_LASTNAME", ViewBag.USER_LASTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })*@
+            <input type="text" class="form-control rounded-lg" id="USER_LASTNAME" name="USER_LASTNAME" value="@ViewBag.USER_LASTNAME" readonly>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+
+            <label class="ghbFont-color">email&nbsp;</label>&nbsp;&nbsp;
+            @*@Html.TextBox("USER_EMAIL", ViewBag.USER_EMAIL as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })*@
+            <input type="text" class="form-control rounded-lg" id="USER_EMAIL" name="USER_EMAIL" value="@ViewBag.USER_EMAIL" readonly>
+        </div>
+        <div class="col-md-3">
+            <label class="ghbFont-color">ระดับ&nbsp;</label>&nbsp;&nbsp;
+            <select name="USER_LEVEL" id="USER_LEVEL" class="form-control w-100 rounded-lg">
+                @{
+                    <option value="0">โปรดเลือก</option>
+                    if (ViewBag.CurrentRoleList != "")
+                    {
+                        char[] _spl = new char[] { '|' };
+                        char[] _spf = new char[] { ',' };
+                        string[] _arrLine = null;
+                        string[] _arrField = null;
+                        string Tmpstr = ViewBag.CurrentRoleList;
+                        string strSel = Convert.ToString(ViewBag.USER_LEVEL);
+                        _arrLine = Tmpstr.Split(_spl);
+                        foreach (string str in _arrLine)
+                        {
+                            _arrField = str.Split(_spf);
+                            if (strSel == _arrField[0].ToString())
+                            {
+                                <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                            }
+                            else
+                            {
+                                <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                            }
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label class="ghbFont-color">Branch&nbsp;</label>&nbsp;&nbsp;
+            <input type="text" class="form-control rounded-lg" id="SOL_CODE" name="SOL_CODE" value="@ViewBag.SOL_CODE" readonly>
+        </div>
+        <div class="col-md-3">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            @if (ViewBag.Flag == true)
+            {
+                <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;">SAVE</button>
+            }
+            else
+            {
+                <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;" disabled>SAVE</button>
+            }
+            <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px;">CANCEL</button>
+        </div>
+    </div>
+</div>
+}

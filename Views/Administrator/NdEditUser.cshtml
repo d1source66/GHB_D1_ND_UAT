@@ -1,0 +1,624 @@
+﻿
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+@*<script src="~/Scripts/check-password-strength@2.0.10-umd.js"></script>*@
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('div.nav_link.submenu_item').addClass('show_submenu');
+        document.getElementById("USER_PASSWORD").onkeyup = function () { FunctionPassStrength() };
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+
+            var item = document.getElementById('isactive');
+            var chk = false;
+            if (item.checked) {
+                chk = true;
+            }
+            document.getElementById('isChecked').value = chk;
+
+            var userFlag = '@ViewBag.USER_FLAG'.toUpperCase();
+            if ("TRUE" == userFlag) {
+                document.getElementById('_userFlag').value = true;
+            }
+            else {
+                document.getElementById('_userFlag').value = false;
+            }
+        });
+    });
+    function FunctionPassStrength() {
+        let str = "Strength Password : ";
+        let val = document.getElementById("USER_PASSWORD");
+
+        const PasswordStrength = checkPasswordStrength.passwordStrength(val.value).value; // 'Weak'
+
+        if (val.value.length < 6) {
+            document.getElementById("check_password").innerHTML = "";
+            document.getElementById("check_password").innerHTML = "<b style='color:red'>Enter a password of <span style='font-size:35px'>more than 6 characters</span></b>";
+            document.getElementById("btnSave").disabled = true;
+
+        }
+        else {
+            if (PasswordStrength === "Weak") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:red'>" + str + "<span style='font-size:35px'>Weak</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+            else if (PasswordStrength === "Medium") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:orange'>" + str + "<span style='font-size:35px'>Medium</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+            else if (PasswordStrength === "Strong") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:green'>" + str + "<span style='font-size:35px'>Strong</span></b>";
+                document.getElementById("btnSave").disabled = false;
+
+            }
+            else {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:red'>" + str + "<span style='font-size:35px'>Weak</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+
+        }
+
+    }
+
+</script>
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .disabled {
+        pointer-events: none; /* No cursor */
+        background-color: #eee; /* Gray background */
+    }
+
+    /*.navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    .chkbox_css {
+        display: inline;
+        margin-top: 0px !important;
+    }*/
+
+    /*hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }*/
+
+    /***************************/
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+
+    .inputWD {
+        min-width: -webkit-fill-available;
+        opacity: 0.4 !important;
+    }
+
+    .inputWD1 {
+        opacity: 0.4 !important;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    ul {
+        list-style-type: none !important;
+    }
+</style>
+@*<div id="loading">
+        <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                        <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">EDIT USER</h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <a onclick="history.back()" title="ย้อนกลับ">
+            <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+        </a>
+    </div>*@
+
+
+@using (Html.BeginForm("NdEditUser", "Administrator", FormMethod.Post))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <a name="" class="setNavFont headPath" href="@Url.Action("NdUserManagement","Administrator")"><i class="fa fa-home fa-color-orange"></i>User Management </a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont"> Modify User  </label>
+    </div>
+    @Html.Hidden("ID", ViewBag.ID as string)
+    <div class="setPage ">
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Modify User</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss"></label>
+                </div>
+                <div class="col-md-9">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger validatUser removeBullet loginWrong ", @style = "font-size: 16px; margin-left: -16px; list-style-type: none;margin-top: 8px;    margin-bottom: -14px; " })
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_EMP_CODE">รหัสพนักงาน</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="USER_EMP_CODE" placeholder="รหัสพนักงาน" name="USER_EMP_CODE" value="@ViewBag.USER_EMP_CODE" disabled>
+                    <input type="hidden" id="USER_EMP_CODE" name="USER_EMP_CODE" value="@ViewBag.USER_EMP_CODE" />
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_LOGIN">User Name</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="USER_LOGIN" placeholder="User name" name="USER_LOGIN" value="@ViewBag.USER_LOGIN" disabled>
+                    <input type="hidden" id="USER_LOGIN" name="USER_LOGIN" value="@ViewBag.USER_LOGIN" />
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_FIRSTNAME">ชื่อ</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD1" id="USER_FIRSTNAME" placeholder="ชื่อ" name="USER_FIRSTNAME" value="@ViewBag.USER_FIRSTNAME" disabled>
+                    <input type="hidden" id="USER_FIRSTNAME" name="USER_FIRSTNAME" value="@ViewBag.USER_FIRSTNAME" />
+                </div>
+                <div class="col-md-1" style="text-align: right; display: flex;">
+                    <label class="form-label labelCss" for="USER_LASTNAME">นามสกุล</label>
+                </div>
+                <div class="col-md-4" style=" padding: 0px 0px 0px 4px;">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD1" id="USER_LASTNAME" placeholder="นามสกุล" name="USER_LASTNAME" value="@ViewBag.USER_LASTNAME" disabled>
+                    <input type="hidden" id="USER_LASTNAME" name="USER_LASTNAME" value="@ViewBag.USER_LASTNAME" />
+                </div>
+                <div class="col-md-1">&nbsp;</div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="SOL_NAME">สาขา<span style="color:red;">*</span></label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="SOL_NAME" placeholder="สาขา" name="SOL_NAME" value="@ViewBag.SOL_NAME" disabled>
+                    <input type="hidden" id="SOL_NAME" name="SOL_NAME" value="@ViewBag.SOL_NAME" />
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="HUB_NAME">เขต</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="HUB_NAME" placeholder="เขต" name="HUB_NAME" value="@ViewBag.HUB_NAME" disabled>
+                    <input type="hidden" id="HUB_NAME" name="HUB_NAME" value="@ViewBag.HUB_NAME" />
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="DEPT_NAME">ฝ่ายงาน</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="DEPT_NAME" placeholder="ฝ่ายงาน" name="DEPT_NAME" value="@ViewBag.DEPT_NAME" disabled>
+                    <input type="hidden" id="DEPT_NAME" name="DEPT_NAME" value="@ViewBag.DEPT_NAME" />
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_EMAIL">E-mail</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="USER_EMAIL" placeholder="E-mail" name="USER_EMAIL" value="@ViewBag.USER_EMAIL" disabled>
+                    <input type="hidden" id="USER_EMAIL" name="USER_EMAIL" value="@ViewBag.USER_EMAIL" />
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_LOGIN">Role<span style="color:red;">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    @*<input type="text" class="form-control rounded-lg txtinput" id="USER_LOGIN" placeholder="Name" name="USER_LOGIN" value="@ViewBag.USER_LOGIN">*@
+                    <select name="Role_Name" id="Role_Name" class="form-control" style=" margin-left: 5px;">
+                        @{
+                            <option value="0">โปรดเลือก</option>
+                            if (ViewBag.RoleList != "")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.RoleList;//ViewBag.CurrentRole;
+                                string strSel = ViewBag.CurrentRole;//Convert.ToString(ViewBag.USER_LEVEL);
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                    <select name="USER_LEVEL" id="USER_LEVEL" class="form-control" style=" margin-left: 5px; display:none;">
+                        @{
+                            <option value="0">โปรดเลือก</option>
+                            if (ViewBag.CurrentRoleList != "")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.CurrentRoleList;
+                                string strSel = Convert.ToString(ViewBag.USER_LEVEL);
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1" style="text-align: right; display: flex;">
+                    <label class="form-label labelCss" for="USER_LOGIN">สถานะ</label>
+                </div>
+                <div class="col-md-4" style=" padding: 0px 0px 0px 4px;">
+                    @*<input type="text" class="form-control rounded-lg txtinput" id="USER_LOGIN" placeholder="Surname" name="USER_LOGIN" value="@ViewBag.USER_LOGIN">*@
+                    @*<select id="statusInput" name="statusInput" class="form-control w-100 rounded-lg" style="margin:5px;">
+                            <option value="0">All</option>
+                            <option value="1">Active</option>
+                            <option value="2">Not Active</option>
+                        </select>*@
+                    <select name="statusInput" id="statusInput" class="form-control w-100 rounded-lg" style="width: 50%;">
+                        @{
+                            <option value="All">All</option>
+                            if (ViewBag.StatusDDL != null && ViewBag.StatusDDL != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.StatusDDL;
+                                string strSel = ViewBag.CurrentStatusDDL;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">&nbsp;</div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="Remark">Remark</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput" id="Remark" placeholder="Remark" name="Remark" value="@ViewBag.Remark" style="min-width: -webkit-fill-available;">
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style=" display: flex; justify-content: flex-end;">
+                    <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px; width: 19%;">SAVE</button>
+                </div>
+                <div class="col-md-6" style=" display: flex; justify-content: flex-start;">
+                    <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px;width:19%;">CANCEL</button>
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            @*************************old**************************************@
+            <div class="container" style="display:none;">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="ghbFont-color">ชื่อผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+                        @if (ViewBag.USER_FLAG == true)
+                        {
+                            @Html.TextBox("USER_LOGIN", ViewBag.USER_LOGIN as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.TextBox("USER_LOGIN", ViewBag.USER_LOGIN as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <label class="ghbFont-color">รหัสผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+                        @if (ViewBag.USER_FLAG == true)
+                        {
+                            @Html.Password("USER_PASSWORD", ViewBag.USER_PASSWORD as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.Password("USER_PASSWORD", ViewBag.USER_PASSWORD as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <div id="check_password"></div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="ghbFont-color">ชื่อ&nbsp;</label>&nbsp;&nbsp;
+                        @if (ViewBag.USER_FLAG == true)
+                        {
+                            @Html.TextBox("USER_FIRSTNAME", ViewBag.USER_FIRSTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.TextBox("USER_FIRSTNAME", ViewBag.USER_FIRSTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <label class="ghbFont-color">สกุล&nbsp;</label>&nbsp;&nbsp;
+                        @if (ViewBag.USER_FLAG == true)
+                        {
+                            @Html.TextBox("USER_LASTNAME", ViewBag.USER_LASTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.TextBox("USER_LASTNAME", ViewBag.USER_LASTNAME as string, new { @class = "form-control rounded-lg", maxlength = "150", @readonly = "readonly" })
+                        }
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <label class="ghbFont-color">email&nbsp;</label>&nbsp;&nbsp;
+                        @if (ViewBag.USER_FLAG == true)
+                        {
+                            @Html.TextBox("USER_EMAIL", ViewBag.USER_EMAIL as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.TextBox("USER_EMAIL", ViewBag.USER_EMAIL as string, new { @class = "form-control rounded-lg", maxlength = "50", @readonly = "readonly" })
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <label class="ghbFont-color">ระดับ&nbsp;</label>&nbsp;&nbsp;
+
+                        <select name="USER_LEVEL" id="USER_LEVEL" class="form-control w-100 rounded-lg ">
+                            @{
+                                <option value="0">โปรดเลือก</option>
+                                if (ViewBag.CurrentRoleList != "")
+                                {
+                                    char[] _spl = new char[] { '|' };
+                                    char[] _spf = new char[] { ',' };
+                                    string[] _arrLine = null;
+                                    string[] _arrField = null;
+                                    string Tmpstr = ViewBag.CurrentRoleList;
+                                    string strSel = Convert.ToString(ViewBag.USER_LEVEL);
+                                    _arrLine = Tmpstr.Split(_spl);
+                                    foreach (string str in _arrLine)
+                                    {
+                                        _arrField = str.Split(_spf);
+                                        if (strSel == _arrField[0].ToString())
+                                        {
+                                            <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                        }
+                                    }
+                                }
+
+
+
+
+                            }
+                        </select>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="ghbFont-color">ล็อกบัญชีผู้ใช้&nbsp;</label>&nbsp;&nbsp;
+
+                        <select name="USER_LOCK" id="USER_LOCK" class="form-control w-100 rounded-lg ">
+                            @{
+                                <option value="0">โปรดเลือก</option>
+                                if (ViewBag.CurrentLockAccountList != "")
+                                {
+                                    char[] _spl = new char[] { '|' };
+                                    char[] _spf = new char[] { ',' };
+                                    string[] _arrLine = null;
+                                    string[] _arrField = null;
+                                    string Tmpstr = ViewBag.CurrentLockAccountList;
+                                    int strSel = Convert.ToInt32(ViewBag.USER_LOCK);
+                                    _arrLine = Tmpstr.Split(_spl);
+                                    foreach (string str in _arrLine)
+                                    {
+                                        _arrField = str.Split(_spf);
+                                        if (strSel == Convert.ToInt32(_arrField[0]))
+                                        {
+                                            <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                        }
+                                    }
+                                }
+
+
+
+
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="ghbFont-color">สถานะ&nbsp;</label>&nbsp;&nbsp;
+                        <br />
+                        <input type="checkbox" id="isactive" name="isactive" checked="@ViewBag.IS_ACTIVE" class="form-control">
+                        <input type="hidden" id="isChecked" name="isChecked" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;">SAVE</button>
+                        <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px;">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

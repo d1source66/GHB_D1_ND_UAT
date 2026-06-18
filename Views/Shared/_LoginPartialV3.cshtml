@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+<ul class="nav navbar-nav navbar-right" style="margin-top: 20px;margin-left:10px;float: left !important;">
+    @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+    @if (Session["Fullname"] != null)
+    {      
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+
+            </div>
+            <li class="navbar-right nav-item">
+                @*<i class="fa fa-user-circle-o  fa-color-white"> @Session["Fullname"].ToString()  </i>
+                <i class="fa fa-sign-out fa-color-white"></i>*@
+                @Html.ActionLink("Log out", "Logout", "Account", null, new { @class = "dropdown-item nav-link logout" })
+            </li>
+        </div>
+    }
+    else
+    {
+        <li><i class="fa fa-sign-out fa-color-white"></i> @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "logout" })</li>
+    }
+
+</ul>
+
+
+
+
+
+}

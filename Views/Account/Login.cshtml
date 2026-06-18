@@ -1,0 +1,334 @@
+﻿@using GHB_D1.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+@*@Styles.Render("~/Content/css")*@
+<link href="~/Content/mmdb.css" rel="stylesheet" />
+<style>
+    body {
+        background: #ff850c;
+        background: -webkit-linear-gradient(#FFD20B, #ff850c, #ff850c);
+        background: linear-gradient(#FFD20B, #ff850c, #ff850c);
+    }
+
+    html {
+        background-color: unset;
+    }
+
+    .loginFont {
+        font-size: 20pt;
+        font-family: "DBHeaventt-Light";
+    }
+
+    .loginWrong {
+        font-size: 14pt;
+        font-family: "DBHeaventt-Light";
+        /*float: left;
+        margin-left: 22px;*/
+    }
+
+    input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=tel]:focus {
+        color: #ff850c;
+        background-color: #fff;
+        border-bottom: 0px solid #ff850c;
+    }
+
+    @@font-face {
+        font-family: 'DBHeaventt-Light';
+        /*src: url('../ghbrpt/fonts/DBHeaventt-Light.ttf') format('truetype');*/
+        /*src: url('~/fonts/DBHeaventt-Light.ttf') format('truetype');*/
+        src: url('../DBHeaventt-Light.ttf') format('truetype');
+    }
+
+    .center {
+        margin: auto;
+        padding: 30% 0px 0px 0px;
+    }
+
+    .removeBullet ul {
+        list-style-type: none;
+    }
+
+    .validatUser {
+        font-size: 16px;
+        /*float: left;
+        margin-left: 44px;*/
+        margin-bottom: -14px;
+    }
+
+    .validatPassowrd {
+        font-size: 16px;
+        /*float: left;
+        margin-left: 44px;*/
+    }
+
+    .form-control:focus {
+        border-color: #ff850c !important;
+    }
+
+    .validfont {
+        font-size: 16px;
+    }
+
+    .btnCancel {
+        border: none;
+        color: #fff;
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        text-transform: uppercase;
+        background-color: #ff850c;
+    }
+
+    .glyphicon2 {
+        position: absolute;
+        top: 48%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #808080;
+        right: 8%;
+        display: inline;
+    }
+
+    #wrap {
+        min-height: 100%;
+    }
+
+    #main {
+        overflow: auto;
+        padding-bottom: initial; /* this needs to be bigger than footer height*/
+    }
+
+    #footerLogin {
+        position: relative;
+        margin-top: 2%; /* negative value of footer height */
+        /*height: 150px;
+        clear: both;
+        padding-top: 8%;
+        min-height: 100%;*/
+    }
+
+    .form-label1 {
+        position: absolute;
+        top: 0;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        left: 0.75rem;
+        padding-top: 0.37rem;
+        pointer-events: none;
+        transform-origin: 0 0;
+        transition: all 0.2s ease-out;
+        color: var(--mdb-form-control-label-color);
+        margin-bottom: 0;
+    }
+
+    .getLeft {
+        margin-left: 4px!important;
+    }
+    /*input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=tel]:focus {
+        color: #ff850c;
+        background-color: #fff;
+        border-bottom: 2px solid #ff850c;
+    }*/
+</style>
+@*<div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-8 text-left">
+            <h2 class="ghbFont-color" style="margin-top: 50px;">@ViewBag.Title.</h2>
+        </div>
+    </div>*@
+<ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<div class="row center-block">
+    @*<div class="col-md-3">&nbsp;</div>*@
+    <div class="col-md-12" style="text-align: -webkit-center;">
+        <div class="col-sm-3">&nbsp;</div>
+        <div class="col-sm-6">
+            <div class="wrapper fadeInDown center">
+                <div id="formContent" class="loginFont">
+                    <!-- Tabs Titles -->
+                    <!-- Icon -->
+                    <div class="fadeIn first">
+                        <img src="~/images/logo-ghb.png" class="login-banner" id="GHB-logo-sign" alt="GHB-logo-sign">
+                    </div>
+                    @*<div><span class="ghbFont-color" style="font-size:22px;">เข้าระบบ</span></div>*@
+                    <section id="loginForm">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(m => m.Username, new { @class = "col-md-2 ghbFont-color" })*@
+                                <div style="height:10px;"></div>
+                                <div class="col-md-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger removeBullet loginWrong validfont", style = "margin-left: -44px;" })
+                                </div>
+                                <div class="col-md-12">
+                                    @*@Html.TextBoxFor(m => m.Username, new { placeholder = "Username*", @class = "form-control ghbFont-color", Style = "font-size:18px;", autocomplete = "off" })*@
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="form-outline" data-mdb-input-init>
+                                            @Html.TextBoxFor(m => m.Username, new { placeholder = "", @class = "form-control ", Style = "font-size:18px;", autocomplete = "off" })
+                                            <label class="form-label getLeft" for="Username" style="font-size: 20px;opacity:0.5;">&nbsp;Username</label>
+                                        </div>
+                                        <div style="height:18px;">
+                                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger validatUser", Style = "display:block;" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 ghbFont-color" })*@
+                                <div class="col-md-12">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="form-outline" data-mdb-input-init>
+                                            @Html.PasswordFor(m => m.Password, new { placeholder = "", @class = "form-control", Style = "font-size:18px;", autocomplete = "off" })
+                                            <label class="form-label getLeft" for="Password" style="font-size: 20px; opacity: 0.5;">&nbsp;Password*</label>
+                                            <span class="glyphicon glyphicon-eye-close glyphicon2" onclick="togglePassword()"></span>
+                                        </div>
+                                        <div style="height:18px;">
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger validatPassowrd", Style = "display:block;" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none;">
+                                <div class="col-md-12">
+                                    <select id="system" name="system" class="form-control ghbFont-color" style="font-size: 18px; display: inline; margin-bottom: 15px;">
+                                        <option value="0">โปรดเลือกระบบ</option>
+                                        <option value="1">GHB</option>
+                                        <option value="2" selected="selected">LOCAL</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+
+                                    @if (ViewBag.ShowPopup == true)
+                                    {
+                                        @*<input type="submit" id="logagain" name="logagain" value="OK" class="btn btn-ghb-primary fadeIn fifth" style="background-color: #ff850c;" />*@
+                                        <div class="col-md-1">&nbsp;</div>
+                                        <div class="col-md-5">
+                                            <button id="btnSave" type="submit" class="btn btn-ghb-primary" style="font-size: 16px; background-color: #ff850c;" data-toggle="tooltip" name="cmdButton" title="Save" value="Yes">YES</button>
+                                        </div>
+                                        <div class="col-md-5">
+                                            @*<button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px;">NO</button>*@
+                                            @Html.ActionLink("NO", "Login", "Account", routeValues: null, htmlAttributes: new { id = "btnCancel", style = "font-size:16px; background-color: #ff850c;", @class = "btn btn-ghb-primary btnCancel" })
+                                        </div>
+                                        <div class="col-md-1">&nbsp;</div>
+                                    }
+                                    else
+                                    {
+                                        <div style="margin-top:-14px;">
+                                            @*@Html.ActionLink("ลืมรหัสผ่าน", "ForgotPassword", routeValues: null, htmlAttributes: new { id = "registerLink", style = "float:left;font-size:18px;margin-left:40px;text-decoration: none; color: #ff850c;" })*@
+                                            @*<a href="#" id="forget-password" style="font-size:18px;margin-left:40px;" class="forget-password-btn">ลืมรหัสผ่าน</a>*@
+                                            @*<a href="#" id="register-btn" style="font-size: 18px; margin-right: 40px;" class="register-btn">ลงทะเบียน</a><br>*@
+                                        </div>
+                                        <div class="col-md-12">
+                                            @*<div class="col-md-6">
+                                                    @Html.ActionLink("ลงทะเบียน(บัญชีทั่วไป)", "Register2", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", style = "font-size:16px;text-decoration: none; color: #ff850c;" })
+                                                </div>
+                                                <div class="col-md-12">
+                                                    @Html.ActionLink("ลงทะเบียน(บัญชีLdap)", "AddUserLDAP2", "Account", routeValues: null, htmlAttributes: new { id = "registerLdap", style = "font-size:16px;text-decoration: none; color: #ff850c;" })
+                                                </div>*@
+                                        </div>
+                                        <input type="submit" id="sublogin" name="sublogin" value="Sing in [ SIT ]" class="btn btn-ghb-primary  fifth" style="background-color: #ff850c; margin-top: 4px;text-transform:initial;font-size:18px;" />
+                                    }
+                                </div>
+                            </div>
+                            <br />
+                        }
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">&nbsp;</div>
+    </div>
+    @*<div class="col-md-3">&nbsp;asdfasdf</div>*@
+    <div class="col-md-12">
+        <div id="wrap">
+            <div id="main" class="container clear-top">
+                <p>&nbsp;</p>
+            </div>
+        </div>
+        <section id="footerLogin">
+            @Html.Partial("footer", new footerDetails { ftDetails = ViewBag.ftDetails })
+        </section>
+    </div>
+</div>
+<script src="~/Scripts/mdb.umd.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#sublogin").prop('disabled', true);
+        $("#sublogin").css('background-color', '#808080');//#ff850c
+        $("#btnSave").click(function () {
+            //$('#loading').show();
+        });
+
+        $("#btnCancel").click(function () {
+            //$('#loading').show();
+        });
+
+        // Function to check input and enable/disable button
+        function toggleButton() {
+            if ($("#Username").val() === "" && $("#Password").val() === "") {
+                // If input is empty, disable the button
+                $("#sublogin").prop('disabled', true);
+                $("#sublogin").css('background-color', '#D3D3D3');
+            } else {
+                // If input is not empty, enable the button
+                $("#sublogin").prop('disabled', false);
+                $("#sublogin").css('background-color', '#ff850c');
+            }
+        }
+
+        // Trigger the function on input change
+        $("#Username").on('input', function () {
+            toggleButton();
+        });
+        $("#Password").on('input', function () {
+            toggleButton();
+        });
+
+        // Initial check to handle case if input is already filled
+        toggleButton();
+
+    });
+
+    function togglePassword() {
+        const icon = document.querySelector('[class*=glyphicon-eye]');
+        if (icon.classList.contains('glyphicon-eye-close'))
+            icon.classList.replace('glyphicon-eye-close', 'glyphicon-eye-open');
+        else icon.classList.replace('glyphicon-eye-open', 'glyphicon-eye-close');
+
+        const input = document.querySelector('#Password');
+        if (input.type === 'password') input.type = 'text';
+        else input.type = 'password';
+    }
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "GHB Reports";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jqueryui")*@
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+</head>
+<body>
+    <div class="container body-content">
+
+        @RenderBody()
+
+        <!--<footer>
+        <p>&copy; @DateTime.Now.Year - D1-GHB project-->
+        @*My ASP.NET Application*@
+        <!--</p>
+        </footer>-->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+﻿@model GHB_D1.Models.RDMViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+
+<!-- Bootstrap -->
+@*@Styles.Render("~/Content/css")*@
+@Styles.Render("~/Content/bootstrap.css")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+
+
+@*<script type="text/javascript">
+        $(function () {
+            $('#SelectedDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd/mm/yyyy",
+                language: "tr"
+            });
+        });
+    </script>
+
+    <script>
+        $().ready(function () {
+            $("#SelectedDate").change(function () {
+                let d = $(this).val();
+                var b = $("#SelectedDate").val();
+                $("#displayDate").text(d)
+                $("#msg").hide();
+            })
+        })
+
+
+
+    </script>*@
+
+
+<script>
+    $().ready(function () {
+        $("#T_DATE").change(function () {
+            let d = $(this).val();
+            var b = $("#T_DATE").val();
+            $("#displayDate").text(d);
+            $("#T_DATE").val(d);
+            $("#msg").hide();
+        })
+        //$('#sandbox-container input').datepicker({
+        //    autoclose: true,
+        //    showWeek: true,
+        //    showOtherMonths: true,
+        //    todayHighlight: true,
+        //    language: 'th-th',
+        //    format: "dd/mm/yyyy",
+        //    endDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+        //    setDate: new Date(new Date().setDate(new Date().getDate() - 1))
+        //});
+
+
+        //$("#sandbox-container input").change(function () {
+        //    let d = $(this).val();
+        //    var b = $("#sandbox-container").val();
+        //    $("#displayDate").text(d);
+        //    $("#T_DATE").val(d);
+        //    $("#msg").hide();
+        //})
+    })
+</script>
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid #ff850c;
+        border-width: 5px;
+    }
+</style>
+@using (Html.BeginForm("GenReport", "RDMReport", FormMethod.Post, new { autocomplete = "off" }))
+{
+    <div class="row" style="margin-top: 70px;">
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-4">
+            <h2 class="header-topic" style="color: orange; margin-bottom: 0px;"> @Model.TITLE_REPORT </h2>
+            <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">     REPORTS </h5>
+        </div>
+        <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1 text-right mg-top-10">
+            <label class="ghbFont-color lbtext">วันที่&nbsp;</label>
+        </div>
+        <div class="col-xs-9 col-sm-4 col-md-2 col-lg-2">
+            <input type="text" name="T_DATE" id="T_DATE" class="form-control rounded-lg lbtext" value="@Model.T_DATE" placeholder="dd/mm/yyyy" />
+        </div>
+        @*<div class="col-xs-9 col-sm-4 col-md-2 col-lg-2" id="sandbox-container">
+                <input type="text" class="form-control rounded-lg lbtext" value="@Model.T_DATE" />
+            </div>*@
+        <div class="col-xs-3 col-sm-1 col-md-2 col-lg-1 text-right mg-top-10">
+            <label class="ghbFont-color lbtext">ค้นหา&nbsp;</label>
+        </div>
+        <div class="col-xs-9 col-sm-4 col-md-3 col-lg-2">
+            @Html.TextBoxFor(x => x.SEARCH_KEY, new { @class = "form-control lbtext", @style = "width:15rem;" })
+        </div>
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-left mg-top-10">
+            <button id="btnSeach" type="submit" class="btn btn-ghb-primary btn-mg" data-titlereport="@Model.TITLE_REPORT" data-toggle="tooltip" name="cmdButton" title="ค้นหา" value="Search" style="margin-top: 30px; width: 5rem;"> <i class="fa fa-search  fa-color-white"></i>  </button>
+        </div>
+    </div>
+
+    <a onclick="history.back()">
+        <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;"></i>
+    </a>
+
+    <hr />
+
+    @*<div class="form-row" style="margin-top: 70px;">
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-4">
+                <h2 class="header-topic" style="color: orange; margin-bottom: 0px;"> @Model.TITLE_REPORT </h2>
+                <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">     REPORTS </h5>
+            </div>
+            <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1 text-right mg-top-10">
+                <label class="ghbFont-color lbtext">วันที่&nbsp;</label>
+            </div>
+            <div class="col-xs-9 col-sm-4 col-md-2 col-lg-2">
+                @Html.TextBox("T_Date", ViewBag.T_Date as string, new { @id = "SelectedDate", @class = "form-control rounded-lg lbtext", @placeholder = "dd-mm-yyyy", @indexer = "-1" })
+            </div>
+            <div class="col-xs-3 col-sm-1 col-md-2 col-lg-1 text-right mg-top-10">
+                <label class="ghbFont-color lbtext">ค้นหา&nbsp;</label>
+            </div>
+            <div class="col-xs-9 col-sm-4 col-md-3 col-lg-2">
+                @Html.TextBoxFor(x => x.SEARCH_KEY, new { @class = "form-control lbtext", @style = "width:15rem;" })
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-left mg-top-10">
+                <button id="btnSeach" type="submit" class="btn btn-ghb-primary btn-mg" data-titlereport="@Model.TITLE_REPORT" data-toggle="tooltip" name="cmdButton" title="ค้นหา" value="Search" style="margin-top: 30px; width: 5rem;"> <i class="fa fa-search  fa-color-white"></i>  </button>
+            </div>
+        </div>
+
+        <hr />*@
+
+
+    <div class="form-row text-right">
+        <div class="col-12">
+            <label class="ghbFont-color" style="font-size: smaller;">  กรองตาม </label>
+            <label style="font-size: 11px;" id="displayDate">  @Html.DisplayTextFor(x => x.DISPLAY_FILTER) </label>
+            <label style="font-size: 11px;">  @Html.DisplayTextFor(x => x.SEARCH_KEY)   </label>
+        </div>
+    </div>
+
+    if (Model.MESSAGE != null && Model.MESSAGE != "")
+    {
+        <div class="form-row" id="msg">
+            <div class="alert alert-danger show" role="alert">
+                <strong>แจ้งเตือน</strong> @Model.MESSAGE
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+
+    <div class="form-row">
+        <div class="col-12">
+            <div class="tableFixHead" style="width: 100%; height: 600px;">
+                <table style="font: 300 16px 'Tahoma'; color: black; width: auto; " class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ลำดับ</th>
+                            <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อรายงาน</th>
+                            @if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                            {
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> PDF Download </th>
+                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> EXCEL Download </th>
+                            }
+                            <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> TEXT Download </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.GroupDetailReport)
+                        {
+                            var idBtnPDF = "btn_" + @item.REPORT_NAME + "_PDF_" + item.ID;
+                            var idBtnEXCEL = "btn_" + @item.REPORT_NAME + "_EXCEL_" + item.ID;
+                            var idBtnTEXT = "btn_" + @item.REPORT_NAME + "_TEXT_" + item.ID;
+                            <tr>
+                                <td style="text-align: right;">@item.ID</td>
+                                <td style="text-align: left;">@item.REPORT_NAME</td>
+                                @if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                                {
+                                    <td style="text-align: center;">
+                                        <button id="btnADMPDF" type="submit" class="btn-ghb-pdf-export" data-toggle="tooltip" name="cmdButton" title="Export PDF File" value="@item.REPORT_NAME|1"></button>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <button id="btnADMXLS" type="submit" class="btn-ghb-excel-export" data-toggle="tooltip" name="cmdButton" title="Export Excel File" value="@item.REPORT_NAME|2"></button>
+                                    </td>
+                                }
+
+                                <td style="text-align: center;">
+                                    <button id="btnADMTXT" type="submit" class="btn-ghb-text-export" data-toggle="tooltip" name="cmdButton" title="Export Text File" value="@item.REPORT_NAME|3"></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(x => x.TITLE_REPORT)
+    @Html.HiddenFor(x => x.BRANCH_ID)
+    @Html.HiddenFor(x => x.USER_ID)
+    @Html.HiddenFor(x => x.T_DATE)
+}
+
+
+
+
+

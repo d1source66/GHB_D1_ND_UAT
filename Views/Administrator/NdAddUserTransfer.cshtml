@@ -1,0 +1,898 @@
+﻿@model GHB_D1.Models.UserTransferScheduleModel
+
+@{
+    ViewBag.Title = "User Management";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<link href="~/Scripts/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#branchInput1').select2();
+        $('#departInput1').select2();
+        $('#disInput1').select2();
+        $('#USER_LEVEL1').select2();
+        $('#Role_Name1').select2();
+
+        $('#branchInput2').select2();
+        $('#departInput2').select2();
+        $('#disInput2').select2();
+        $('#USER_LEVEL2').select2();
+        $('#USER_LEVEL1').select2();
+        $('#Role_Name2').select2();
+
+        $("#FrDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#ToDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#SchDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#iconFr").click(function () {
+            $("#FrDate").datepicker("show");
+        });
+
+        $("#iconTo").click(function () {
+            $("#ToDate").datepicker("show");
+        });
+
+        $("#iconSch").click(function () {
+            $("#SchDate").datepicker("show");
+        });
+
+    });
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .setButton {
+        display: flex;
+        flex-direction: row;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButton1 {
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+    }
+
+    .setButtonFont {
+        color: #fff;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    .button[type=submit] {
+        width: 68% !important;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #ff850c !important;
+        border-color: #ff850c !important;
+        width: 68% !important;
+    }
+
+        .btn-primary:hover {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:focus {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+        .btn-primary:active {
+            color: #fff !important;
+            background-color: #ff850c !important;
+            border-color: #ff850c !important;
+            width: 68% !important;
+        }
+
+            .btn-primary:active:hover {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+            .btn-primary:active:active {
+                color: #fff !important;
+                background-color: #ff850c !important;
+                border-color: #ff850c !important;
+                width: 68% !important;
+            }
+
+    .mg {
+        margin: 0px 5px;
+        float: right;
+    }
+
+    .roleSet {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .newNav {
+        background-color: unset !important;
+        background: unset !important;
+        color: #ff850c;
+    }
+
+        .newNav:hover {
+            background-color: unset !important;
+            background: unset !important;
+            color: red;
+        }
+
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    /*hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }*/
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    /*dropdown select*/
+    .select2-container {
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        border: 0px solid #f6f6f6;
+        text-align: left;
+        margin: 5px;
+    }
+
+    .select2-dropdown {
+        margin-top: -8px;
+        margin-left: -5px;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 32px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 31px;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .rightZone {
+        text-align: justify;
+        display: contents;
+    }
+
+    .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        z-index: 3;
+        color: #fff;
+        cursor: default;
+        background-color: #ff850c;
+        border-color: #ff850c;
+    }
+
+    .radioPad {
+        display: flex;
+        align-items: flex-start;
+        font-size: 16px;
+        color: #ff850c;
+    }
+
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #eee;
+        opacity: 0.6;
+    }
+</style>
+
+@using (Html.BeginForm("NdUserTrans", "Administrator", FormMethod.Post))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <a name="" class="setNavFont headPath" href="@Url.Action("NdUserTransfer","Administrator")"><i class="fa fa-home fa-color-orange"></i>User Transfer</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">Create User Transfer</label>
+    </div>
+    <div class="setPage ">
+        @*<h2>MenuView</h2>*@
+
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Create User Transfer Schedule</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    @*<button type="submit" class="btn btn-primary mg" id="create" name="cmdButton" value="AddUserTransfer">สร้าง</button>*@
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger removeBullet loginWrong validfont", style = "margin-left: -44px;" })
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style=" display: flex; justify-content: flex-end; align-items: center; padding: 3px 22px;">
+                    <label class="form-label labelCss" for="empcodeInput" style="margin-right: 8px;">รหัสพนักงาน</label>
+                    @*<input type="number" class="form-control txtinput" id="empcodeInput" style="width: 48%; margin-left: 7px; margin-right: 15px;">*@
+                    @Html.TextBoxFor(m => m.emp_code, new { placeholder = "รหัสพนักงาน", @class = "form-control rounded-lg txtinput", @style = "width:51%;", maxlength = "100", type = "number" })
+                </div>
+                <div class="col-md-6">
+                    @*<label class="form-label labelCss" style="display:none;" for="usernameInput">User Name</label>
+                        <input type="text" class="form-control txtinput" id="usernameInput" style="width: 50%; display: none;">*@
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align:end;">
+                    <label class="form-label labelCss" for="firstInput">ชื่อ</label>
+                    @*<input type="text" class="form-control txtinput" id="firstInput" style="width:50%;">*@
+                    @Html.TextBoxFor(m => m.fname, new { placeholder = "ชื่อ", @class = "form-control rounded-lg txtinput", @style = "width:50%;", maxlength = "100" })
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label labelCss" for="lastInput">นามสกุล</label>
+                    @*<input type="text" class="form-control txtinput" id="lastInput" style="width:50%;">*@
+                    @Html.TextBoxFor(m => m.lname, new { placeholder = "นามสกุล", @class = "form-control rounded-lg txtinput", @style = "width:50%;", maxlength = "100" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="display: flex; justify-content: flex-end; align-items: center; padding: 5px;">
+                    <label class="form-label labelCss" for="statusInput" style="margin-right: 5px;">สถานะ</label>
+                    @*<select id="statusInput" name="statusInput" class="form-control w-100 rounded-lg" style="width:50%;margin:5px;">
+                            <option value="0">All</option>
+                            <option value="1">Active</option>
+                            <option value="2">Not Active</option>
+                        </select>*@
+                    <select name="statusInput" id="statusInput" class="form-control w-100 rounded-lg txtinput" style="width: 49%; margin-right: 12px;">
+                        @{
+                            <option value="All">All</option>
+                            if (ViewBag.StatusDDL != null && ViewBag.StatusDDL != "All")
+                            {
+                                char[] _spl = new char[] { '|' };
+                                char[] _spf = new char[] { ',' };
+                                string[] _arrLine = null;
+                                string[] _arrField = null;
+                                string Tmpstr = ViewBag.StatusDDL;
+                                string strSel = ViewBag.CurrentStatusDDL;
+                                _arrLine = Tmpstr.Split(_spl);
+                                foreach (string str in _arrLine)
+                                {
+                                    _arrField = str.Split(_spf);
+                                    if (strSel == _arrField[0].ToString())
+                                    {
+                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6" style=" text-align: end; display: flex; align-items: center;">
+                    @*<label class="form-label labelCss" for="branchInput">สาขา</label>*@
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
+                    <label class="form-label labelCss" style="margin-right: 5px;">Schedule Date</label>
+                    @*<input type="text" class="form-control txtinput" id="firstInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("SchDate", ViewBag.CurrentFr as string, new { @class = "form-control rounded-lg", @placeholder = "dd/mm/yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 195px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconSch"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-6" style=" text-align: end; display: flex; align-items: center;">
+                    @*<label class="form-label labelCss" for="branchInput">สาขา</label>*@
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
+                    <label class="form-label labelCss" style=" margin-right: 7px;">Start Date</label>
+                    @*<input type="text" class="form-control" id="departInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("FrDate", ViewBag.CurrentFr as string, new { @class = "form-control rounded-lg", @placeholder = "dd/mm/yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 195px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconFr"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-6" style="display: flex; align-items: center;">
+                    <label class="form-label labelCss" style="margin-right: 5px;">End Date</label>
+                    @*<input type="text" class="form-control" id="disInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("ToDate", ViewBag.CurrentTo as string, new { @class = "form-control rounded-lg", @placeholder = "dd/mm/yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 195px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconTo"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-md-12">&nbsp;</div>*@
+            <div class="col-md-12">
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-10" style="display: flex; align-items: center; margin-left: -38px; padding: 6px; ">
+                    <div class="radioPad">Type&nbsp;&nbsp;</div>
+                    @if (ViewBag.TransferStatus != null)
+                    {
+                        char[] _spl = new char[] { '|' };
+                        char[] _spf = new char[] { ',' };
+                        string[] _arrLine = null;
+                        string[] _arrField = null;
+                        string Tmpstr = ViewBag.TransferStatus;
+                        string strSel = ViewBag.TransferSeleted;
+                        _arrLine = Tmpstr.Split(_spl);
+                        foreach (string str in _arrLine)
+                        {
+                            _arrField = str.Split(_spf);
+                            if (strSel == _arrField[0].ToString())
+                            {
+                                <div class="radioPad">
+                                    <input type="radio" name="_trans" class="trans" value="@(_arrField[0].ToString())" checked>@(_arrField[1].ToString())&nbsp;&nbsp;
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="radioPad">
+                                    <input type="radio" name="_trans" class="trans" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())&nbsp;&nbsp;
+                                </div>
+                            }
+                        }
+                    }
+
+                </div>
+            </div>
+
+            <div class="col-md-12" style="display: flex; justify-content: space-around;">
+                <div class="col-md-1"></div>
+                <div class="col-md-9">
+                    <table style="width: 100%; background-color: gainsboro;">
+                        <tr style="height:30px;">
+                            <th style="text-align: center; background-color: #aaa; color: white; font-weight: 200;">ข้อมูลก่อนการเปลี่ยนแปลง</th>
+                            <th style="text-align: center; background-color: #aaa; color: white; font-weight: 200;">ข้อมูลการเปลี่ยนแปลง</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-end; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="branchInput1">สาขา</label>
+                                    @*<input type="text" class="form-control" id="branchInput" style="width:50%;">*@
+                                    <select name="branchInput1" id="branchInput1" class="form-control w-100 rounded-lg" style="width: 77%;  }">
+                                        @{
+                                            <option value="All">โปรดเลือก</option>
+                                            if (ViewBag.SystemBranch != "" && ViewBag.SystemBranch != "All")
+                                            {
+                                                char[] _spl = new char[] { '|' };
+                                                char[] _spf = new char[] { ',' };
+                                                string[] _arrLine = null;
+                                                string[] _arrField = null;
+                                                string Tmpstr = ViewBag.SystemBranch;
+                                                string strSel = ViewBag.CurrentBranch;
+                                                _arrLine = Tmpstr.Split(_spl);
+                                                foreach (string str in _arrLine)
+                                                {
+                                                    _arrField = str.Split(_spf);
+                                                    if (strSel == _arrField[0].ToString())
+                                                    {
+                                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                    <input type="hidden" id="branchInput1" name="branchInput1" value="@ViewBag.CurrentBranch"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-start; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="branchInput2">สาขา</label>
+                                    @*<input type="text" class="form-control" id="branchInput" style="width:50%;">*@
+                                    <select name="branchInput2" id="branchInput2" class="form-control w-100 rounded-lg" style="width: 77%; }">
+                                        @{
+                                            <option value="All">โปรดเลือก</option>
+                                            if (ViewBag.SystemBranch != "" && ViewBag.SystemBranch != "All")
+                                            {
+                                                char[] _spl = new char[] { '|' };
+                                                char[] _spf = new char[] { ',' };
+                                                string[] _arrLine = null;
+                                                string[] _arrField = null;
+                                                string Tmpstr = ViewBag.SystemBranch;
+                                                string strSel = ViewBag.CurrentBranch2;
+                                                _arrLine = Tmpstr.Split(_spl);
+                                                foreach (string str in _arrLine)
+                                                {
+                                                    _arrField = str.Split(_spf);
+                                                    if (strSel == _arrField[0].ToString())
+                                                    {
+                                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-end; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="disInputx1">เขต</label>
+                                    <input type="text" class="form-control txtinput" id="disInputx1" name="disInputx1" value="@ViewBag.disInputx1">
+                                    <input type="hidden" id="disInputx1" name="disInputx1" value="@ViewBag.disInputx1"/>
+                                    <input type="hidden" id="disInputx1_code" name="disInputx1_code" value="@ViewBag.disInputx1_code" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-end; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="disInputx2">เขต</label>
+                                    <input type="text" class="form-control txtinput" id="disInputx2" name="disInputx2">
+                                    <input type="hidden" id="disInputx2" name="disInputx2" />
+                                    <input type="hidden" id="disInputx2_code" name="disInputx2_code" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-end; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="departInputx1">ฝ่ายงาน</label>
+                                    <input type="text" class="form-control txtinput" id="departInputx1" name="departInputx1" value="@ViewBag.departInputx1">
+                                    <input type="hidden" id="departInputx1" name="departInputx1" value="@ViewBag.departInputx1" />
+                                    <input type="hidden" id="departInputx1_code" name="departInputx1_code"  value="@ViewBag.departInputx1_code"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-start; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="departInputx2">ฝ่ายงาน</label>
+                                    <input type="text" class="form-control txtinput" id="departInputx2" name="departInputx2">
+                                    <input type="hidden" id="departInputx2" name="departInputx2" />
+                                    <input type="hidden" id="departInputx2_code" name="departInputx2_code" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-end; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="Role_Name1">Role</label>
+                                    @*<input type="text" class="form-control" id="branchInput" style="width:50%;">*@
+                                    <select name="Role_Name1" id="Role_Name1" class="form-control txtinput" style=" margin: 5px; width: 77%;">
+                                        @{
+                                            <option value="0">โปรดเลือก</option>
+                                            if (ViewBag.RoleList != "")
+                                            {
+                                                char[] _spl = new char[] { '|' };
+                                                char[] _spf = new char[] { ',' };
+                                                string[] _arrLine = null;
+                                                string[] _arrField = null;
+                                                string Tmpstr = ViewBag.RoleList;//ViewBag.CurrentRole;
+                                                string strSel = ViewBag.CurrentRole;//Convert.ToString(ViewBag.USER_LEVEL);
+                                                _arrLine = Tmpstr.Split(_spl);
+                                                foreach (string str in _arrLine)
+                                                {
+                                                    _arrField = str.Split(_spf);
+                                                    if (strSel == _arrField[0].ToString())
+                                                    {
+                                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                    <div style="display:none;">
+                                        <select name="USER_LEVEL1" id="USER_LEVEL1" class="form-control" style="width: 77%;">
+                                            @{
+                                                <option value="0">โปรดเลือก</option>
+                                                if (ViewBag.CurrentRoleList != "")
+                                                {
+                                                    char[] _spl = new char[] { '|' };
+                                                    char[] _spf = new char[] { ',' };
+                                                    string[] _arrLine = null;
+                                                    string[] _arrField = null;
+                                                    string Tmpstr = ViewBag.CurrentRoleList;
+                                                    string strSel = Convert.ToString(ViewBag.USER_LEVEL);
+                                                    _arrLine = Tmpstr.Split(_spl);
+                                                    foreach (string str in _arrLine)
+                                                    {
+                                                        _arrField = str.Split(_spf);
+                                                        if (strSel == _arrField[0].ToString())
+                                                        {
+                                                            <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-12" style=" text-align: end; display: flex; justify-content: flex-end; align-items: center; width: -webkit-fill-available;">
+                                    <label class="form-label labelCss" for="Role_Name2">Role</label>
+                                    @*<input type="text" class="form-control" id="branchInput" style="width:50%;">*@
+                                    <select name="Role_Name2" id="Role_Name2" class="form-control txtinput" style=" margin: 5px; width:77%;">
+                                        @{
+                                            <option value="0">โปรดเลือก</option>
+                                            if (ViewBag.RoleList != "")
+                                            {
+                                                char[] _spl = new char[] { '|' };
+                                                char[] _spf = new char[] { ',' };
+                                                string[] _arrLine = null;
+                                                string[] _arrField = null;
+                                                string Tmpstr = ViewBag.RoleList;//ViewBag.CurrentRole;
+                                                string strSel = ViewBag.CurrentRole2;//Convert.ToString(ViewBag.USER_LEVEL);
+                                                _arrLine = Tmpstr.Split(_spl);
+                                                foreach (string str in _arrLine)
+                                                {
+                                                    _arrField = str.Split(_spf);
+                                                    if (strSel == _arrField[0].ToString())
+                                                    {
+                                                        <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </select>                                    
+                                    <div style="display:none;">
+                                        <select name="USER_LEVEL2" id="USER_LEVEL2" class="form-control" style="width: 77%;">
+                                            @{
+                                                <option value="0">โปรดเลือก</option>
+                                                if (ViewBag.CurrentRoleList != "")
+                                                {
+                                                    char[] _spl = new char[] { '|' };
+                                                    char[] _spf = new char[] { ',' };
+                                                    string[] _arrLine = null;
+                                                    string[] _arrField = null;
+                                                    string Tmpstr = ViewBag.CurrentRoleList;
+                                                    string strSel = Convert.ToString(ViewBag.USER_LEVEL);
+                                                    _arrLine = Tmpstr.Split(_spl);
+                                                    foreach (string str in _arrLine)
+                                                    {
+                                                        _arrField = str.Split(_spf);
+                                                        if (strSel == _arrField[0].ToString())
+                                                        {
+                                                            <option selected="selected" value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@(_arrField[0].ToString())">@(_arrField[1].ToString())</option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    </table>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+
+            <div class="col-md-12"></div>
+            <div class="col-md-12"></div>
+            <div class="col-md-12"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4"><button id="btnReset" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="reset" value="reset" style="margin: 20px; margin-bottom: 20px; width: inherit; background-color: red;display:none;">Cancel</button></div>
+                    <div class="col-md-4" style="display:flex;">
+                        <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin: 20px; margin-bottom: 20px; width: inherit;">Save</button>
+                        <button id="btnReset" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="reset" value="reset" style="margin: 20px; margin-bottom: 20px; width: inherit; background-color: red;">Cancel</button>
+                    </div>
+                    <div class="col-md-4">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script>
+    $(function () {
+        //$('#loading').hide();
+        $("#btnSave").click(function () {
+            //$('#loading').show();
+            var sch = $("#SchDate").val();
+            var frd = $("#FrDate").val();
+            var tod = $("#ToDate").val();
+            if (sch == "") {
+                alert("โปรดเลือก Schedule Date");
+                return false;
+            } else if (frd == "") {
+                alert("โปรดเลือก Start Date");
+                return false;
+            } else if (tod == "") {
+                alert("โปรดเลือก End Date");
+                return false;
+            }
+        });
+
+        $("#branchInput1").prop("disabled", true);
+        $("#disInputx1").prop("disabled", true);
+        $("#departInputx1").prop("disabled", true);
+        $("#Role_Name1").prop("disabled", true);
+
+        $('input[name="_trans"]').change(function () {
+            switch ($(this).val()) {
+                case "1"://ย้ายสาขา
+                    $("#branchInput2").prop("disabled", false);
+                    $("#disInputx2").prop("disabled", false);
+                    $("#departInputx2").prop("disabled", false);
+
+                    $("#Role_Name2").prop("disabled", true);
+                    break;
+                case "2"://ย้าย role
+                    $("#branchInput2").prop("disabled", true);
+                    $("#disInputx2").prop("disabled", true);
+                    $("#departInputx2").prop("disabled", true);
+
+                    $("#Role_Name2").prop("disabled", false);
+                    break;
+                case "3"://ย้ายสาขา ย้าย role
+                    $("#Role_Name2").prop("disabled", false);
+                    $("#disInputx2").prop("disabled", false);
+                    $("#departInputx2").prop("disabled", false);
+
+                    $("#branchInput2").prop("disabled", false);
+                    break;
+                default:
+                    break;
+            }
+        });
+        //$("#searchInput").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#searchTable tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+        $('#emp_code').on('input', function () {
+            const maxLength = 5;
+            const value = $(this).val();
+
+            // Restrict input to numbers only
+            if (value.length > maxLength) {
+                $(this).val(value.slice(0, maxLength));
+            }
+        });
+
+
+        $("#tbl1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false, searching: false,
+            select: {
+                selector: 'td:not(:nth-child(2))',
+            }
+        });
+
+       $('#branchInput1').on('select2:select', function (e) {
+            var slt2 = $('#branchInput1').val();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("NdGetBrandRelation", "Administrator")',
+                data: { brandcode: slt2},
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    $("#disInputx1").attr("value", data.hub_name);
+                    $("#disInputx1_code").attr("value", data.hub_code);
+                    $("#departInputx1").attr("value", data.department_name);
+                    $("#departInputx1_code").attr("value", data.department_code);
+                }
+            });
+        });
+
+        $('#branchInput2').on('select2:select', function (e) {
+            var slt2 = $('#branchInput2').val();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("NdGetBrandRelation", "Administrator")',// beforeSend: function (xhr) { waitingDialog.show('กำลังประมวลผล'); },
+                data: { brandcode: slt2},
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    $("#disInputx2").attr("value", data.hub_name);
+                    $("#disInputx2_code").attr("value", data.hub_code);
+                    $("#departInputx2").attr("value", data.department_name);
+                    $("#departInputx2_code").attr("value", data.department_code);
+                    //$('#menulist').css("display", "none");
+                    //$('#menulist1 tbody').find("tr:gt(0)").remove();
+                    //var selectedIds;
+                    //var row;
+                    //$.each(data.admin_menulst, function () {
+                        //row += "<tr><td>" + this.MenuID + "</td></tr>";
+                        //var chk = this.IsSelect == true ? 'checked' : ''
+                        //row += "<tr><td><input type='checkbox' " + chk +" /></td > <td>" + this.MenuName + "</td></tr > "
+                    //});
+                    //$('#menulist1 tbody').append(row);
+                }
+            });
+        });
+
+
+        $("#btnReset").click(function (e) {
+            e.preventDefault();
+
+            //Clear text
+            $("#empcodeInput").val("");
+            $("#firstInput").val("");
+            $("#lastInput").val("");
+
+            //Clear Date
+            $("#SchDate").val("");
+            $("#FrDate").val("");
+            $("#ToDate").val("");
+
+            //Clear Select
+            $("#disInputx1").attr("value", "");
+            $("#departInputx1").attr("value", "");
+            $("#disInputx2").attr("value", "");
+            $("#departInputx2").attr("value", "");
+            $("#USER_LEVEL1").attr("value", "");
+            $("#USER_LEVEL2").attr("value", "");
+
+            //Set Select
+            $("#branchInput1").val("All").trigger("change");
+            $("#branchInput2").val("All").trigger("change");
+            $("#USER_LEVEL1").val("0").trigger("change");
+            $("#USER_LEVEL2").val("0").trigger("change");
+
+        });
+    });
+</script>

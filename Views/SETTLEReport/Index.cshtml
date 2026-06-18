@@ -1,0 +1,429 @@
+﻿
+@model GHB_D1.Models.ATMViewModel
+@{
+    ViewBag.Title = "SETTLE Index";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+<script src="~/Scripts/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+
+<script>
+    $().ready(function () {
+        $("#FrDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#ToDate").datepicker({
+
+            language: 'en-en',
+            format: "dd/mm/yyyy",
+            maxViewMode: 3,
+            daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            showWeek: true,
+            showOtherMonths: true,
+            todayHighlight: true
+
+        });
+
+        $("#iconFr").click(function () {
+            $("#FrDate").datepicker("show");
+        });
+
+        $("#iconTo").click(function () {
+            $("#ToDate").datepicker("show");
+        });
+
+        $("#FrDate1").change(function () {
+            var inputStartDate = $("#FrDate").val();
+            var [Sday, Smonth, Syear] = inputStartDate.split('/');
+            var formattedStarDate = new Date(`${Smonth}/${Sday}/${Syear}`);
+            var startDate = new Date(formattedStarDate);
+
+            var inputEndDate = $("#ToDate").val();
+            var [day, month, year] = inputEndDate.split('/');
+            var formattedEndDate = new Date(`${month}/${day}/${year}`);
+            var endDate = new Date(formattedEndDate);
+
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+
+            if (dayDiff > 30) {
+                alert("จำนวนวันต้องไม่เกิน 30 วัน")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#FrDate").datepicker("setDate", yesterday);
+                $("#FrDate").datepicker("refresh");
+            } else if (dayDiff < 0) {
+                alert("วันเริ่มต้องมาก่อนวันสิ้นสุด")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#FrDate").datepicker("setDate", yesterday);
+                $("#FrDate").datepicker("refresh");
+            } else {
+                //alert("Dates are valid. Difference: " + dayDiff + " days.")
+            }
+
+        });
+
+        $("#ToDate1").change(function () {
+            var inputStartDate = $("#FrDate").val();
+            var [Sday, Smonth, Syear] = inputStartDate.split('/');
+            var formattedStarDate = new Date(`${Smonth}/${Sday}/${Syear}`);
+            var startDate = new Date(formattedStarDate);
+
+            var inputEndDate = $("#ToDate").val();
+            var [day, month, year] = inputEndDate.split('/');
+            var formattedEndDate = new Date(`${month}/${day}/${year}`);
+            var endDate = new Date(formattedEndDate);
+
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+
+            if (dayDiff > 30) {
+                alert("จำนวนวันต้องไม่เกิน 30 วัน")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#ToDate").datepicker("setDate", yesterday);
+                /*$("#ToDate").datepicker("refresh");*/
+            } else if (dayDiff < 0) {
+                alert("วันเริ่มต้องมาก่อนวันสิ้นสุด")
+                var yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                $("#ToDate").datepicker("setDate", yesterday);
+                //$("#ToDate").datepicker("refresh");
+            } else {
+                //alert("Dates are valid. Difference: " + dayDiff + " days.")
+            }
+        });
+
+        $("#T_DATE").change(function () {
+            let d = $(this).val();
+            var b = $("#T_DATE").val();
+            $("#displayDate").text(d);
+            $("#T_DATE").val(d);
+            $("#msg").hide();
+        });
+
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#searchTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#cmdClose").on("click", function () {
+            $("#msg").hide();
+        });
+
+        $('#SOLCODE').on('input', function () {
+            const maxLength = 3;
+            const value = $(this).val();
+
+            // Restrict input to numbers only
+            if (value.length > maxLength) {
+                $(this).val(value.slice(0, maxLength));
+            }
+        });
+    })
+</script>
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    /*.navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid #ff850c;
+        border-width: 5px;
+    }*/
+</style>
+
+<style>
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .ghbFont-color {
+        color: #ff850c;
+        font-size: 12pt;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .divContainer {
+        /*background-color: rgb(255,102,204);*/
+        height: auto;
+        /*width: 1200px;
+        position: absolute;*/
+    }
+
+        .divContainer .divMain {
+            /*background-color: rgb(204,51,0);*/
+            height: auto;
+            width: 100%;
+            overflow: auto;
+        }
+
+            .divContainer .divMain .div1 {
+                /*background-color: rgb(0,204,255);*/
+                /*float: left;
+            padding: 5px;*/
+                height: auto;
+                /*margin: 20px;*/
+            }
+
+    .clear {
+        clear: both;
+    }
+
+    .tblHeader {
+        border: 1px solid rgb(170, 170, 170);
+        border-radius: 13px;
+        overflow: hidden;
+        width: 100%;
+        border-collapse: separate !important;
+        border-spacing: 0;
+    }
+</style>
+
+@using (Html.BeginForm("GenReport", "RATMReport", FormMethod.Post, new { autocomplete = "off" }))
+{
+
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Home")"><i class="fa fa-home fa-color-orange"></i>Details Report</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">RATM</label>
+    </div>
+    <div class="setPage ">
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Detail Report RATM</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12">
+                <div class="col-md-5" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
+                    <label class="form-label labelCss" style=" margin-right: 7px;">วันที่เริ่มต้น</label>
+                    @*<input type="text" class="form-control" id="departInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("FrDate", @Model.F_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd-mm-yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 204px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconFr"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                @if (Session["RoleName"].ToString() == "Branch" || Session["RoleName"].ToString() == "HQ01")
+                {
+                    <div style="display:none;">
+                        <div class="col-md-2" style="display: flex; justify-content: flex-end; width: 19%; margin-left:-20px;">
+                            <input type="text" class="form-control rounded-lg txtinput inputWD" id="SOLCODE" style="border: 1px solid #aaa;" placeholder="รหัสสาขา-ondemand" name="SOLCODE" value="@ViewBag.SOLCODE">
+                            <input type="hidden" id="SOLCODE" name="SOLCODE" value="@ViewBag.SOLCODE" />
+                        </div>
+                    </div>
+                }
+                <div class="col-md-5" style="display: flex; align-items: flex-end; margin-left: -11px;">
+                    <label class="form-label labelCss" style="margin-right: 5px;">วันที่สิ้นสุด</label>
+                    @*<input type="text" class="form-control" id="disInput" style="width:50%;">*@
+                    <div class="input-group date calendar-width ">
+                        @Html.TextBox("ToDate", @Model.T_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd-mm-yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 204px;", autocomplete = "off" })
+                        <span class="input-group-addon" id="iconTo"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                &nbsp;
+                @if (Model.MESSAGE != null && Model.MESSAGE != "")
+                {
+                    <div class="form-row" id="msg">
+                        <div class="alert alert-danger show" role="alert">
+                            <strong>แจ้งเตือน</strong> @Model.MESSAGE
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="cmdClose">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="form-row">
+                <div class="col-12" style="padding:0px 18px;">
+                    <div class="divContainer">
+                        <div class="divMain">
+                            <div class="div1">
+                                <div class="tableFixHead" style="width: 100%;">
+                                    <table class="table table-striped display nowrap tblHeader">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ลำดับ</th>
+                                                <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อรายงาน</th>
+                                                @*@if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                                                    { }*@
+                                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> PDF Download </th>
+                                                <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color"> EXCEL Download </th>
+                                                <th style="text-align: center;vertical-align:top;" width="10%" class="ghb-background-color"> TEXT Download </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="searchTable">
+                                            @foreach (var item in ViewBag.GroupDetailReport)
+                                            {
+                                                var idBtnPDF = "btn_" + @item.REPORT_NAME + "_PDF_" + item.ID;
+                                                var idBtnEXCEL = "btn_" + @item.REPORT_NAME + "_EXCEL_" + item.ID;
+                                                var idBtnTEXT = "btn_" + @item.REPORT_NAME + "_TEXT_" + item.ID;
+                                                <tr>
+                                                    <td style="text-align: right; vertical-align: middle;">@item.ID</td>
+                                                    <td style="text-align: left; vertical-align: middle;">@item.REPORT_NAME</td>
+                                                    @*@if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
+                                                        { }*@
+                                                    @if (item.REPORT_NAME.Contains("EXCEL") == false && item.REPORT_NAME.Contains("TEXT") == false)
+                                                    {
+                                                        <td style="text-align: center;">
+                                                            <button id="btnADMPDF" type="submit" class="btn-ghb-pdf-export" data-toggle="tooltip" name="cmdButton" title="Export PDF File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|1" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|1"></button>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;">
+                                                            &nbsp;
+                                                        </td>
+                                                    }
+
+                                                    @if (item.REPORT_NAME.Contains("EXCEL") || item.REPORT_NAME == "RATM7301_M" || item.REPORT_NAME == "RATM1003")
+                                                    {
+                                                        <td style="text-align: center;">
+                                                            <button id="btnADMXLS" type="submit" class="btn-ghb-excel-export" data-toggle="tooltip" name="cmdButton" title="Export Excel File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|2" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|2"></button>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;">
+                                                        </td>
+                                                    }
+                                                    @if (item.REPORT_NAME.Contains("TEXT"))
+                                                    {
+                                                        <td style="text-align: center;">
+                                                            <button id="btnADMTXT" type="submit" class="btn-ghb-text-export" data-toggle="tooltip" name="cmdButton" title="Export Text File" style="cursor:pointer;" value="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|3" data-cmdButton="@item.T_TERM_T_TERM_ID|@item.REPORT_NAME|3"></button>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;">
+                                                        </td>
+                                                    }
+                                                </tr>
+
+
+                                            }
+                                        </tbody>
+
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @Html.HiddenFor(x => x.TITLE_REPORT)
+    @Html.HiddenFor(x => x.USER_ID)
+    @Html.HiddenFor(x => x.BRANCH_ID)
+    @Html.HiddenFor(x => x.T_DATE)
+    @Html.HiddenFor(x => x.ToDate)
+    @Html.HiddenFor(x => x.FrDate)
+}
+
+
+
+
+
+
+

@@ -1,0 +1,118 @@
+﻿@model GHB_D1.Models.RoleModels
+
+@{
+    ViewBag.Title = "AddRole";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+        });
+    });
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }
+</style>
+<div id="loading">
+    <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+</div>
+<div class="row">
+    <div class="col-2">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                    <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">ADD ROLE</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <a onclick="history.back()" title="ย้อนกลับ">
+        <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+    </a>
+</div>
+@using (Html.BeginForm("AddRole", "Administrator", FormMethod.Post))
+{
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="ghbFont-color">LEVEL&nbsp;</label>&nbsp;&nbsp;
+                @Html.TextBoxFor(m => m.ROLE_LEVEL, new { @class = "form-control rounded-lg", maxlength = "15" })
+                @*@Html.TextBox("ROLE_LEVEL", null, new { @class = "form-control rounded-lg", maxlength = "15" })*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="ghbFont-color">DEPARTMENT&nbsp;</label>&nbsp;&nbsp;
+                @Html.TextBoxFor(m => m.ROLE_DEPARTMENT, new { @class = "form-control rounded-lg", maxlength = "100" })
+                @*@Html.TextBox("ROLE_DEPARTMENT", null, new { @class = "form-control rounded-lg", maxlength = "100" })*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+
+                @*@Html.CheckBox("ROLE_ACTIVE", false, new { id = "cbxActive", @class = "form-control rounded-lg chkbox_css", maxlength = "1" })*@
+                @Html.CheckBoxFor(m => m.ROLE_ACTIVE, new { id = "cbxActive", @class = "form-control rounded-lg chkbox_css", maxlength = "1" })
+                <label for="cbxActive" class="ghbFont-color">STATUS&nbsp;</label>&nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;margin-bottom: 20px;">SAVE</button>
+                <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px; margin-bottom: 20px;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+}

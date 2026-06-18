@@ -1,0 +1,392 @@
+﻿@model GHB_D1.Models.AudiLogModel
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+@*<script src="~/Scripts/check-password-strength@2.0.10-umd.js"></script>*@
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //document.getElementById("USER_PASSWORD").onkeyup = function () { FunctionPassStrength() };
+        $('#loading').hide();
+        $("#btnSave").click(function () {
+            $('#loading').show();
+
+            var item = document.getElementById('isactive');
+            var chk = false;
+            if (item.checked) {
+                chk = true;
+            }
+            document.getElementById('isChecked').value = chk;
+
+            var userFlag = '@ViewBag.USER_FLAG'.toUpperCase();
+            if ("TRUE" == userFlag) {
+                document.getElementById('_userFlag').value = true;
+            }
+            else {
+                document.getElementById('_userFlag').value = false;
+            }
+        });
+    });
+    function FunctionPassStrength() {
+        let str = "Strength Password : ";
+        let val = document.getElementById("USER_PASSWORD");
+
+        const PasswordStrength = checkPasswordStrength.passwordStrength(val.value).value; // 'Weak'
+
+        if (val.value.length < 6) {
+            document.getElementById("check_password").innerHTML = "";
+            document.getElementById("check_password").innerHTML = "<b style='color:red'>Enter a password of <span style='font-size:35px'>more than 6 characters</span></b>";
+            document.getElementById("btnSave").disabled = true;
+
+        }
+        else {
+            if (PasswordStrength === "Weak") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:red'>" + str + "<span style='font-size:35px'>Weak</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+            else if (PasswordStrength === "Medium") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:orange'>" + str + "<span style='font-size:35px'>Medium</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+            else if (PasswordStrength === "Strong") {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:green'>" + str + "<span style='font-size:35px'>Strong</span></b>";
+                document.getElementById("btnSave").disabled = false;
+
+            }
+            else {
+                document.getElementById("check_password").innerHTML = "";
+                document.getElementById("check_password").innerHTML = "<b style='color:red'>" + str + "<span style='font-size:35px'>Weak</span></b>";
+                document.getElementById("btnSave").disabled = true;
+
+            }
+
+        }
+
+    }
+
+</script>
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    .disabled {
+        pointer-events: none; /* No cursor */
+        background-color: #eee; /* Gray background */
+    }
+
+    .navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    .chkbox_css {
+        display: inline;
+        margin-top: 0px !important;
+    }
+
+    /*hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }*/
+
+    /***************************/
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+    /*font-size: smaller;*/
+    /*font-weight: 400;*/
+    /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .ghbFont-color {
+        color: #ff850c;
+        font-size: 12pt;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+
+    .inputWD {
+        min-width: -webkit-fill-available;
+        opacity: 0.4 !important;
+    }
+
+    .inputWD1 {
+        opacity: 0.4 !important;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+</style>
+@*<div id="loading">
+        <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                        <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">EDIT USER</h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <a onclick="history.back()" title="ย้อนกลับ">
+            <i class="fa fa-2x fa-chevron-circle-left" aria-hidden="true" style="cursor:pointer;color:orange;" title="กลับสู่หน้าก่อนหน้า"></i>
+        </a>
+    </div>*@
+
+
+@using (Html.BeginForm("NdAudiDetails1", "Administrator", FormMethod.Post))
+{
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <a name="" class="setNavFont headPath" href="@Url.Action("NdAudiLog","Administrator")"><i class="fa fa-home fa-color-orange"></i>Audi Log</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">Audi Log Details</label>
+    </div>
+    @*@Html.Hidden("ID", ViewBag.ID as string)*@
+    <div class="setPage ">
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">ข้อมูล Audi Log Back Office (ISO 20022)</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="WorkFunction">ฟังก์ชั่นการใช้งาน</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="WorkFunction" placeholder="ฟังก์ชั่นการใช้งาน" name="WorkFunction" value="@ViewBag.WorkFunction" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="Details01">รายละเอียด</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="Details01" placeholder="รายละเอียด" name="Details01" value="@ViewBag.Details01" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="Details02">รายละเอียดเพิ่มเติม</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="Details02" placeholder="รายละเอียดเพิ่มเติม" name="Details02" value="@ViewBag.Details02" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="Created">วันเดือนปี เวลา</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="Created" placeholder="วันเดือนปี เวลา" name="Created" value="@ViewBag.Created" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="EmpCode">รหัสพนักงาน</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="EmpCode" placeholder="รหัสพนักงาน" name="EmpCode" value="@ViewBag.EmpCode" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="EmpName">ชื่อ-สกุล</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="EmpName" placeholder="ชื่อ-สกุล" name="EmpName" value="@ViewBag.EmpName" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="MAC_Address">MAC Address</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="MAC_Address" placeholder="MAC Address" name="MAC_Address" value="@ViewBag.MAC_Address" disabled>
+                </div>
+                <div class="col-md-1">&nbsp;</div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="OS">ระบบปฏิบัติการ OS</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="OS" placeholder="ระบบปฏิบัติการ OS" name="OS" value="@ViewBag.OS" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="URL">URL</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="URL" placeholder="URL" name="URL" value="@ViewBag.URL" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="Device">ชื่ออุปกรณ์</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="Device" placeholder="ชื่ออุปกรณ์" name="Device" value="@ViewBag.Device" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="IP_Address">IP Address</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD" id="IP_Address" placeholder="IP Address" name="IP_Address" value="@ViewBag.IP_Address" disabled>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="Latitude">ละติจูด X</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD1" id="Latitude" placeholder="ละติจูด X" name="Latitude" value="@ViewBag.Latitude" disabled>
+                </div>
+                <div class="col-md-1" style="text-align: right; display: flex;">
+                    <label class="form-label labelCss" for="Longitude">ลองติจูด Y</label>
+                </div>
+                <div class="col-md-4" style=" padding: 0px 0px 0px 4px;">
+                    <input type="text" class="form-control rounded-lg txtinput inputWD1" id="Longitude" placeholder="ลองติจูด Y" name="Longitude" value="@ViewBag.Longitude" disabled>
+                </div>
+                <div class="col-md-1">&nbsp;</div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-6" style=" display: flex; justify-content: flex-end;">
+                    <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px;width:19%;">กลับ</button>
+                </div>
+                <div class="col-md-6" style=" display: none;">
+                    <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px; width: 19%;">SAVE</button>
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+
+        </div>
+    </div>
+}

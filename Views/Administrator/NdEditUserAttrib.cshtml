@@ -1,0 +1,246 @@
+﻿@model GHB_D1.Models.UserAttribModel
+
+@{
+    ViewBag.Title = "Edit User Attrib";
+    Layout = "~/Views/Shared/_LayoutV3.cshtml";
+}
+<script src="~/Scripts/jquery-dataTable/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //$('#loading').hide();
+        $("#btnSave").click(function () {
+            //$('#loading').show();
+        });
+    });
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message");
+            });
+    </script>
+}
+
+<style>
+    /*.navbar-inverse {
+        background-color: #ff850c;
+        border-color: #ff850c;
+        min-height: 65px;
+    }
+
+        .navbar-inverse .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+        }
+
+    .lbcolor {
+        color: orange;
+    }
+
+    hr {
+        border-top: 1px solid orange !important;
+    }
+
+    #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        z-index: 100;
+    }*/
+
+    .setNav {
+        padding: 82px 0px 0px 155px;
+    }
+
+    .setPage {
+        padding: 108px 0px 0px 155px;
+    }
+
+    .setNavFont {
+        font-size: 12.5px;
+        /*font-size: smaller;*/
+        font-weight: 400;
+        color: #ff850c;
+    }
+
+    /*a:focus, a:hover, a:active {
+        font-size: 12.5px;*/
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        /*color: #ff850c;
+        text-decoration: none;
+    }*/
+
+    .headPath {
+        font-size: 12.5px !important;
+        /*font-size: smaller;*/
+        /*font-weight: 400;*/
+        color: #ff850c !important;
+        text-decoration: none !important;
+    }
+
+    .ghbFont-color {
+        color: #ff850c;
+        font-size: 12pt;
+    }
+
+    .formColor {
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
+    .labelCss {
+        font-size: 16px;
+        color: #ff850c;
+        font-weight: 400;
+        min-width: 20%;
+        text-align: end;
+    }
+
+    .labelForm {
+        font-size: 28px;
+        padding: 20px 0px 0px 0px;
+        color: #ff850c;
+        font-weight: 300;
+    }
+
+    .txtinput {
+        border: 1px solid #aaa !important;
+        background-color: white !important;
+    }
+</style>
+@*<div id="loading">
+        <img id="loading-image" src="~/images/Spinner-5.gif" alt="Loading..." />
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h2 class="header-topic" style="color: orange; margin-bottom: 0px;">Administrator</h2>
+                        <h5 class="header-topic" style="color: orange; margin-left: 70px; margin-top: 0px;">EDIT USER ATTRIB</h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>*@
+
+@using (Html.BeginForm("NdEditUserAttrib", "Administrator", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.NCFGVARIABLEID)
+    @Html.HiddenFor(m => m.SCFGVARIABLE)
+    <div class="col-md-12 setNav">
+        <a name="" class="setNavFont headPath" href="@Url.Action("Index","Administrator")"><i class="fa fa-home fa-color-orange"></i>หน้าหลัก</a>
+        <label class="setNavFont"> / </label>
+        <a name="" class="setNavFont headPath" href="@Url.Action("NdMainUserAttrib","Administrator")"><i class="fa fa-home fa-color-orange"></i>Config Parameters</a>
+        <label class="setNavFont"> / </label>
+        <label class="setNavFont">Modify Config Parameters</label>
+    </div>
+    <div class="setPage ">
+        <div class="row g-3 formColor">
+            <div class="col-md-12" style="border-bottom: 1px solid #e0e0e0;">
+                <div class="col-md-8">
+                    <label class="form-label labelForm">Modify Config Parameters</label>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 setButton1">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="Category">Category</label>
+                </div>
+                <div class="col-md-9">
+                    @*<input type="text" class="form-control rounded-lg txtinput inputWD" id="Category" placeholder="Category" name="Category" value="@ViewBag.Category" style="min-width: -webkit-fill-available;">*@
+                    @Html.TextBoxFor(m => m.Category, new { @class = "form-control rounded-lg txtinput", @style = "min-width: -webkit-fill-available; opacity: 0.4;", maxlength = "100", @readonly = "readonly", disabled = "true" })
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_LOGIN">Key Name</label>
+                </div>
+                <div class="col-md-9">
+                    @*<input type="text" class="form-control rounded-lg txtinput inputWD" id="USER_LOGIN" placeholder="Key Name" name="USER_LOGIN" value="@ViewBag.USER_LOGIN" style="min-width: -webkit-fill-available;">*@
+                    @Html.TextBoxFor(m => m.SCFGVARIABLE, new { @class = "form-control rounded-lg txtinput", @style = "min-width: -webkit-fill-available; opacity: 0.4;", maxlength = "100", @readonly = "readonly", disabled = "true" })
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_EMP_CODE">Key Value</label>
+                </div>
+                <div class="col-md-9">
+                    @*<input type="text" class="form-control rounded-lg txtinput inputWD" id="USER_EMP_CODE" placeholder="Key Value" name="USER_EMP_CODE" value="@ViewBag.USER_EMP_CODE">*@
+                    @Html.TextBoxFor(m => m.SCFGVALUE, new { @class = "form-control rounded-lg txtinput", @style = "min-width: -webkit-fill-available;", maxlength = "100" })
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="col-md-12" style="display: flex; align-items: center;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2" style="text-align:end;">
+                    <label class="form-label labelCss" for="USER_LOGIN">Description</label>
+                </div>
+                <div class="col-md-9">
+                    @*<input type="text" class="form-control rounded-lg txtinput inputWD" id="USER_LOGIN" placeholder="User name" name="USER_LOGIN" value="@ViewBag.USER_LOGIN">*@
+                    @Html.TextAreaFor(m => m.SDESCRIPTION, new { @class = "form-control rounded-lg txtinput", maxlength = "100", style = "width: 202px; height: 153px;min-width: -webkit-fill-available;margin:5px;", cols = "80", rows = "100" })
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div>
+                <div class="col-md-12" style="margin-top:-16px;">
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4" style="display:flex;">
+                        <button id="btnReset" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin: 20px; margin-bottom: 20px; width: inherit; background-color: red;">Cancel</button>
+                        <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin: 20px; margin-bottom: 20px; width: inherit;">Save</button>
+                    </div>
+                    <div class="col-md-4">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" style="display:none;">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="ghbFont-color">SCFGVALUE&nbsp;</label>&nbsp;&nbsp;
+                @Html.TextBoxFor(m => m.SCFGVALUE, new { @class = "form-control rounded-lg", maxlength = "100" })
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="ghbFont-color">SDESCRIPTION&nbsp;</label>&nbsp;&nbsp;
+
+                @Html.TextAreaFor(m => m.SDESCRIPTION, new { @class = "form-control rounded-lg", maxlength = "100", style = "width: 202px; height: 153px;", cols = "80", rows = "100" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <button id="btnSave" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Save" value="Save" style="margin-top: 20px;margin-bottom: 20px;">SAVE</button>
+                <button id="btnCancel" type="submit" class="btn btn-ghb-primary" data-toggle="tooltip" name="cmdButton" title="Cancel" value="Cancel" style="margin-top: 20px; margin-bottom: 20px;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,10 @@
+bin/
+obj/
+.vs/
+packages/
+TempFiles/*
+Logs/*
+GHB_D1.csproj.user
+publish/
+*.zip
+*.7z

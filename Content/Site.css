@@ -1,0 +1,225 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+.ghb-background-color {
+    background-color: #ff850c;
+    color: white;
+}
+
+.ghbFont-color {
+    color: #ff850c;
+    font-size: 12pt;
+}
+
+.btn-ghb-primary {
+    color: #fff;
+    background-color: orange;
+    border-color: orange;
+}
+
+    .btn-ghb-primary:hover, .btn-ghb-primary:focus {
+        color: white !important;
+        text-decoration: none;
+        background-color: #ff850c;
+    }
+
+.btn-outline-ghb-primary {
+    color: #000;
+    background-color: #fff;
+    border-color: #ff850c;
+    border-color: #ff850c !important;
+}
+
+    .btn-outline-ghb-primary:hover, .btn-outline-ghb-primary:focus {
+        color: white !important;
+        text-decoration: none;
+        background-color: #ff850c;
+    }
+
+hr {
+    border-top: 1px solid #ff850c;
+    border-width: 5px;
+}
+
+.navlist-primary li {
+    border-bottom: 1px solid #ff850c !important;
+}
+
+.btn-ghb-export {
+    background-image: url(../images/pdf_orange.png); /*url(https://localhost:44366/images/pdf_orange.png);*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    border: none;
+}
+
+
+.btn-ghb-pdf-export {
+    color: #fff;
+    border-color: #ff850c;
+    font-size: 18px;
+    width: 50px;
+    height: 50px;
+    background-image: url(../images/pdf_orange.png); /*url(https://localhost:44366/images/zip_orange.png);*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    border: none;
+}
+
+    .btn-ghb-pdf-export:hover, .btn-ghb-pdf-export:focus {
+        color: #fff;
+        border-color: #ff850c;
+        font-size: 18px;
+        width: 50px;
+        height: 50px;
+        background-image: url(../images/pdf_orange_hover.png); /*url(https://localhost:44366/images/zip_orange_hover.png);*/
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        border: none;
+    }
+
+.btn-ghb-zip-export {
+    color: #fff;
+    border-color: #ff850c;
+    font-size: 18px;
+    width: 50px;
+    height: 50px;
+    background-image: url(../images/zip_orange.png); /*url(https://localhost:44366/images/zip_orange.png);*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    border: none;
+}
+
+    .btn-ghb-zip-export:hover, .btn-ghb-zip-export:focus {
+        color: #fff;
+        border-color: #ff850c;
+        font-size: 18px;
+        width: 50px;
+        height: 50px;
+        background-image: url(../images/zip_orange_hover.png); /*url(https://localhost:44366/images/zip_orange_hover.png);*/
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        border: none;
+    }
+
+.btn-ghb-excel-export {
+    color: #fff;
+    border-color: #ff850c;
+    font-size: 18px;
+    width: 50px;
+    height: 50px;
+    background-image: url(../images/excel_orange.png); /*url(https://localhost:44366/images/excel_orange.png);*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    border: none;
+}
+
+    .btn-ghb-excel-export:hover, .btn-ghb-excel-export:focus {
+        color: #fff;
+        border-color: #ff850c;
+        font-size: 18px;
+        width: 50px;
+        height: 50px;
+        background-image: url(../images/excel_orange_hover.png); /*url(https://localhost:44366/images/excel_orange_hover.png);*/
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        border: none;
+    }
+
+.btn-ghb-text-export {
+    color: #fff;
+    border-color: #ff850c;
+    font-size: 18px;
+    width: 50px;
+    height: 50px;
+    background-image: url(../images/text_orange.png); /*url(https://localhost:44366/images/text_orange.png);*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    border: none;
+}
+
+    .btn-ghb-text-export:hover, .btn-ghb-text-export:focus {
+        color: #fff;
+        border-color: #ff850c;
+        font-size: 18px;
+        width: 50px;
+        height: 50px;
+        background-image: url(../images/text_orange_hover.png); /*url(https://localhost:44366/images/text_orange_hover.png);*/
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        border: none;
+    }
+
+.mg-top-10 {
+    margin-top:10px;
+}
+
+.lbtext {
+    margin-top: 40px !important;
+}
+
+btn-mg {
+    margin-top: 20px !important;
+}
+/*html {
+    background-color: white !important;
+}*/
+
+hr {
+    border-top: 1px solid #ff850c;
+    border-width: 5px;
+}
+
+.fa-color-orange {
+    color: #ff850c;
+}
+
+.fa-color-white {
+    color: white;
+}
+
+.mg-top-20 {
+    margin-top:20px;
+}
+
+.mn-link-left {
+    padding-left:0px !important;
+}
+
+.mn-link-right {
+    padding-right: 0px !important;
+}
+
+
+

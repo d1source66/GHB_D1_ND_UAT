@@ -1,0 +1,7 @@
+﻿ID_ROLE,Role_Name,Position_Role,Module_No,Module_Name,Group_No,Group_Module,Group_Report,RoleReport_Name,List_Role,Create_Role,View_Role,Update_Role,Delete_Role,Export_Role,Is_Active,Create_Date,Update_Date,Remark
+4315,superadmin,,6.8,SETTLE,6.80,6.80000,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.383,2025-06-04 23:25:42.383,remove menu QRP
+4316,superadmin,,6.8.1,AcqGHB_,6.80,6.80001,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.403,2025-06-04 23:25:42.403,remove menu QRP
+4317,superadmin,,6.8.2,CtlAcqGHB_,6.80,6.80002,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.417,2025-06-04 23:25:42.417,remove menu QRP
+4318,superadmin,,6.8.3,CtlIssGHB_,6.80,6.80003,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.453,2025-06-04 23:25:42.453,remove menu QRP
+4319,superadmin,,6.8.4,GHB_GLFile_,6.80,6.80004,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.463,2025-06-04 23:25:42.463,remove menu QRP
+4320,superadmin,,6.8.5,IssGHB_,6.80,6.80005,SETTLE,NULL,1,0,1,0,0,1,1,2025-06-04 23:25:42.480,2025-06-04 23:25:42.480,remove menu QRP

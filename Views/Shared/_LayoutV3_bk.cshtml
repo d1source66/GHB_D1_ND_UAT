@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/boxicons1.css" rel="stylesheet" />
+    <style>
+        .sideHeader{
+            width:30%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- navbar -->
+        <nav class="navbar">
+            <div class="logo_item" style="position:absolute;top:0px">
+                <i class="bx bx-menu" id="sidebarOpen"></i>
+                <div>
+                    <div>GHB ATM/CDM [SIT]</div>
+                    <div style="position: absolute;font-size:18px;">Audi Log / Index</div>
+                </div>
+            </div>
+            <div class="sideHeader">&nbsp;</div>
+            <div class="search_bar">
+                @*<input type="text" placeholder="Search" />*@
+            </div>
+            <div class="sideHeader">&nbsp;</div>
+            <div class="navbar_content">
+                <i class="bi bi-grid"></i>
+                <i class='bx bx-sun' id="darkLight"></i>
+                @*<i class='bx bx-bell'></i>
+            <img src="~/images/profile.jpg" alt="" class="profile" />*@
+                <div class="dropdown">
+                    <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                       id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
+                             alt="Black and White Portrait of a Man" loading="lazy" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                        <li>
+                            <a class="dropdown-item" href="#">My profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Settings</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Logout</a>
+                            @Html.Partial("_LoginPartialV3")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- sidebar -->
+        <nav class="sidebar" style="font-size:14px;">
+            <div class="menu_content">
+                <ul class="menu_items">
+                    <div class="menu_title menu_dahsboard"></div>
+                    <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
+                    <!-- start -->
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="bx bx-home-alt"></i>
+                            </span>
+                            <span class="navlink">Home</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+
+                        <ul class="menu_items submenu">
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                        </ul>
+                    </li>
+                    <!-- end -->
+                    <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
+                    <!-- start -->
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="bx bx-grid-alt"></i>
+                            </span>
+                            <span class="navlink">Overview</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+
+                        <ul class="menu_items submenu">
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                        </ul>
+                    </li>
+                    <!-- end -->
+                </ul>
+
+                <ul class="menu_items">
+                    <div class="menu_title menu_editor"></div>
+                    <!-- duplicate these li tag if you want to add or remove navlink only -->
+                    <!-- Start -->
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bxs-magic-wand"></i>
+                            </span>
+                            <span class="navlink">Magic build</span>
+                        </a>
+                    </li>
+                    <!-- End -->
+
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-loader-circle"></i>
+                            </span>
+                            <span class="navlink">Filters</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-filter"></i>
+                            </span>
+                            <span class="navlink">Filter</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-cloud-upload"></i>
+                            </span>
+                            <span class="navlink">Upload new</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="menu_items">
+                    <div class="menu_title menu_setting"></div>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-flag"></i>
+                            </span>
+                            <span class="navlink">Notice board</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-medal"></i>
+                            </span>
+                            <span class="navlink">Award</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-cog"></i>
+                            </span>
+                            <span class="navlink">Setting</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-layer"></i>
+                            </span>
+                            <span class="navlink">Features</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Sidebar Open / Close -->
+                <div class="bottom_content" style="display:none;">
+                    <div class="bottom expand_sidebar">
+                        <span> Expand</span>
+                        <i class='bx bx-log-in'></i>
+                    </div>
+                    <div class="bottom collapse_sidebar">
+                        <span> Collapse</span>
+                        <i class='bx bx-log-out'></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+
+            <div class="container">
+                <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+
+            </div>
+        </div>*@
+    <div class="container body-content" style="padding:95px;">
+        @RenderBody()
+        <hr />
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+    </div>
+
+    <!-- JavaScript -->
+    <script src="~/Scripts/script.js"></script>
+    <script src="~/Scripts/mdb.umd.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
