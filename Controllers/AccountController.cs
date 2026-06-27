@@ -145,6 +145,7 @@ namespace GHB_D1.Controllers
                 userPostRequest.password = model.Password;
                 if (model.Username.Contains("bypass"))//Bypass to local first
                 {
+                    _logSys.WriteProcessLogFile(_strPathFile, "login with bypass");
                     var str = model.Username.Length;
                     model.Username = model.Username.Substring(0, str - 6);
                     return (await Loging(model, returnUrl, cmdButton));//, system
@@ -464,7 +465,7 @@ namespace GHB_D1.Controllers
                     {
                         bool _result = AdministratorBAL.UpdateLoginLogout(loginVM.Emp_Code, loginVM.UserID, 1);
                         SetAllSession(loginVM, audilog, model.Username.ToString(), loginVM.BranchName);
-
+                        _logSys.WriteProcessLogFile(_strPathFile, "AccountController Loging after set All session.");
                         if (Session["AudiLog"] != null)
                         {
                             audilog = (AudiLogModel)Session["AudiLog"];

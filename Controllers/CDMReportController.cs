@@ -66,7 +66,8 @@ namespace GHB_D1.Controllers
 
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
 
-            if (Session["UserId"] != null && Session["UserId"].ToString() == py)
+            //if (Session["UserId"] != null && Session["UserId"].ToString() == py)
+            if (Session["UserId"] != null)
             {
                 //_strGroupNo = _accService.GetGroupNoReportByName("CDM");
                 //list = _accService.AuthorizeGroupDetailReport(px, py, _strGroupNo, SEARCH_KEY);
@@ -94,18 +95,15 @@ namespace GHB_D1.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+
         [HttpPost]
-        
         public ActionResult GenReport(string px, string py, string cmdButton, ADMViewModel AdmVM, string SOLCODE)
         {
+            _logSys.WriteProcessLogFile(_strPathFile, $"Begin ฉDM GenReport (branch Id):{AdmVM.BRANCH_ID} user id:{AdmVM.USER_ID}");
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
             List<ADMModel> _admdata = new List<ADMModel>();
             DataTable _dt = new DataTable();
-            //_strGroupNo = _accService.GetGroupNoReportByName("CDM");
-            _logSys.WriteProcessLogFile(_strPathFile, "GenReport T_Date : " + AdmVM.T_DATE);
-            _logSys.WriteProcessLogFile(_strPathFile, "GenReport SEARCH_KEY : " + AdmVM.SEARCH_KEY);
-            _logSys.WriteProcessLogFile(_strPathFile, "GetGroupDetailReport : " + _strGroupNo);
-            //AdmVM.T_DATE = AdmVM.ToDate;
+            AdmVM.T_DATE = AdmVM.ToDate;
             AdmVM.T_DATE = (AdmVM.T_DATE == null || AdmVM.T_DATE == "") ? DateTime.Now.Date.ToShortDateString() : AdmVM.T_DATE;
             AdmVM.DISPLAY_FILTER = (AdmVM.T_DATE == null || AdmVM.T_DATE == "") ? DateTime.Now.Date.ToShortDateString() : AdmVM.T_DATE;
             AdmVM.SEARCH_KEY = AdmVM.SEARCH_KEY;
@@ -144,51 +142,13 @@ namespace GHB_D1.Controllers
 
                     string[] _arrDate = null;
                     _arrDate = AdmVM.ToDate.Split('/');
-
-
-
-                    int dt = Int32.Parse(_arrDate[2].ToString());
-
-                    //DateTime dt = DateTime.Parse(AdmVM.T_DATE);
-
-
-                    string year = "";
-                    if (dt != 0)
-                    {
-                        year = (dt <= 2000) ? (dt + 543).ToString().Substring(2) : dt.ToString().Substring(2);
-                    }
-                    else
-                    {
-                        year = DateTime.Now.Year.ToString().Substring(2);
-                    }
-
-
-                   
+                                       
                     string _strReport_Name = _arrCon[1].ToString();
                     string _strFormatType = _arrCon[2].ToString();
-
                     string strT_Date = AdmVM.ToDate.Replace("/", "");
-
-                    if (strT_Date != "")
-                    {
-                        _tmpdate = strT_Date;
-                        strT_Date = year + _tmpdate.Substring(2, 2) + _tmpdate.Substring(0, 2);
-                    }
-
-
                     StringBuilder sb = new StringBuilder();
                     List<string> RptParramList = new List<string>();
                     _iniCon.stp = ModConf.ReadIni(_iniCon.iniFile, "DS", _strReport_Name);
-
-                    char[] _sps = new char[] { '|' };
-                    char[] _spd = new char[] { '-' };
-                   // string _tmpdate = string.Empty;
-                    string _depRecMOoney = string.Empty;
-                    string _department = string.Empty;
-                    string _pointRecMoney = string.Empty;
-
-                    string strReport = string.Empty;
-                    string _strTempFile = string.Empty;
 
                     try
                     {
@@ -218,7 +178,7 @@ namespace GHB_D1.Controllers
                         yearDir = _arrDate[2]; //format 2026
                         monthDir = "M"+_arrDate[1]; //format M01
                         dayDir = _arrDate[0]; //format 14
-                        t_Date_data = strT_Date; //format 260114
+                        t_Date_data = $"{_arrDate[2].Substring(2, 2)}{_arrDate[1]}{_arrDate[0]}"; //format 260114
                         //folder report to check = D:\ReportFile\2026\M01\14\groupReport
                         string reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "D1-CBS-REPORT-CDM");
                         string reportNameToCheck = "", hdrContentType = "", downloadReportName="";
@@ -242,7 +202,11 @@ namespace GHB_D1.Controllers
                         }
                         else if (_strReport_Name.EndsWith("ONDEMAND"))
                         {
-                            //not include ONDEMAND in the list. wait implement.
+                            _logSys.WriteProcessLogFile(_strPathFile, "ONDEMAND _strReport_Name: " + _strReport_Name);
+                            reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "OnDemandReport");
+                            reportNameToCheck = $"{_strReport_Name.Replace("_ONDEMAND", "")}_{AdmVM.BRANCH_ID}_{t_Date_data}.pdf";
+                            downloadReportName = reportNameToCheck;
+                            hdrContentType = "application/pdf";
                         }
                         else
                         {
@@ -254,10 +218,17 @@ namespace GHB_D1.Controllers
                         string fullReportNameToCheck = Path.Combine(reportToCheckDir, reportNameToCheck);
                         if (System.IO.File.Exists(fullReportNameToCheck))
                         {   //existing file no need generate report
-
+                            _logSys.WriteProcessLogFile(_strPathFile, $"found find to download : {fullReportNameToCheck} ");
                             return File(fullReportNameToCheck, hdrContentType, downloadReportName);
                         }
+                        else
+                        {
+                            _logSys.WriteProcessLogFile(_strPathFile, $"File {fullReportNameToCheck} not found.");
+                            AdmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + AdmVM.DISPLAY_FILTER + " ไม่พบข้อมูล";
+                        }
 
+                        #region "generated pdf from .rpt"
+                        /**
                         //===========
                         string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");
                         _logSys.WriteProcessLogFile(_strPathFile, "_strReportPath1(176) : " + _strReportPath);
@@ -345,6 +316,9 @@ namespace GHB_D1.Controllers
                            
                             return RedirectToAction("Index", "CDMReport", new { px = px, py = py, T_DATE = AdmVM.T_DATE, SEARCH_KEY = "", pz = AdmVM.TITLE_REPORT, message = AdmVM.MESSAGE });
                         }
+                        **/
+                        #endregion
+                        
                     }
                     catch (Exception ex)
                     {
@@ -356,6 +330,7 @@ namespace GHB_D1.Controllers
                        
                         return RedirectToAction("Index", "CDMReport", new { px = px, py = py, T_DATE = AdmVM.T_DATE, SEARCH_KEY = "", pz = AdmVM.TITLE_REPORT, message = AdmVM.MESSAGE });
                     }
+                    break; //break default.
             }
             return View("CDM", AdmVM);
 
@@ -396,6 +371,4 @@ namespace GHB_D1.Controllers
 
     }
 }
-
-
 

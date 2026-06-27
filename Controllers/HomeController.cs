@@ -1,6 +1,7 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using GHB_D1.Code.BAL;
+using GHB_D1.Code.DAL;
 using GHB_D1.Code.Util;
 using GHB_D1.Models;
 using GHB_D1.ReportFiles.DataSet;
@@ -8,6 +9,7 @@ using GHB_D1.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -80,42 +82,17 @@ namespace GHB_D1.Controllers
                 string _strT_Date = DateTime.Now.Date.AddDays(-1).ToString();
 
 
-                mnVM.T_DATE = DateTime.Now.Date.ToShortDateString();
-                DateTime dt = DateTime.Parse(mnVM.T_DATE);
-                string year = "";
-                if (dt != null)
-                {
-                    year = (dt.Year <= 2000) ? (dt.Year + 543).ToString().Substring(2) : dt.Year.ToString().Substring(2);
-
-                }
-                else
-                {
-                    year = DateTime.Now.Year.ToString().Substring(2);
-                }
-
-
-                _strT_Date = mnVM.T_DATE;
-
-
-                string strT_Date = _strT_Date.Replace("/", "");
-
-                if (strT_Date != "")
-                {
-                    _tmpdate = strT_Date;
-                    strT_Date = year + _tmpdate.Substring(2, 2) + _tmpdate.Substring(0, 2);
-                }
-
                 _logSys.WriteErrLog(_strPathFile, "HomeController.cs : AuthorizeUserReport2ND begin");
                 mnVM = _accService.AuthorizeUserReport2ND(rolename);
                 //mnVM.T_DATE = DateTime.Now.Date.AddDays(-1).ToString("dd/MM/yyyy", _cultureEnInfo);
                 _logSys.WriteErrLog(_strPathFile, "HomeController.cs : GetNewDesignRole1 begin");
-                mnVM.roleList = _accService.GetNewDesignRole1(empcode, rolename, strT_Date);//New Design20250308
+                mnVM.roleList = _accService.GetNewDesignRole1(empcode, rolename);//New Design20250308
                 mnVM.T_DATE = (T_DATE == null || T_DATE == "") ? DateTime.Now.Date.AddDays(-1).ToString("dd/MM/yyyy", new CultureInfo("en-US")) : T_DATE;
                 mnVM.F_DATE = (F_DATE == null || F_DATE == "") ? DateTime.Now.Date.AddDays(-1).ToString("dd/MM/yyyy", new CultureInfo("en-US")) : T_DATE;
                 mnVM.BRANCH_ID = branchId;
                 mnVM.USER_ID = userId;
-                mnVM.BRANCH_NAME = branchName != mnVM.BRANCH_NAME ? branchName + " (กลุ่มรายงาน: " + mnVM.BRANCH_NAME + ")" : branchName;
-
+                //mnVM.BRANCH_NAME = branchName != mnVM.BRANCH_NAME ? branchName + " (กลุ่มรายงาน: " + mnVM.BRANCH_NAME + ")" : branchName;
+                mnVM.BRANCH_NAME = branchName;
                 mnVM.DISPLAY_FILTER = (mnVM.T_DATE == null || mnVM.T_DATE == "") ? DateTime.Now.Date.ToString("dd/MM/yyyy", new CultureInfo("en-US")) : mnVM.T_DATE;
                 mnVM.SEARCH_KEY = SEARCH_KEY;
 
@@ -159,17 +136,17 @@ namespace GHB_D1.Controllers
 
 
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult AllDownload(string branchID, string T_DATE, string groupNo, string groupName, string cmdButton, MenuViewModel mnVM, string SOLCODE)
         {
 
             branchID = (branchID != null && branchID != "") ? branchID.PadLeft(3, '0').ToString() : "001";
 
-            mnVM.T_DATE = DateTime.Now.Date.AddDays(-1).ToShortDateString();
+            //mnVM.T_DATE = DateTime.Now.Date.AddDays(-1).ToShortDateString();
 
             //string _strT_Date = DateTime.Parse(mnVM.T_DATE).ToString("dd/MM/yyyy");
 
-            string _strT_Date = (mnVM.T_DATE == null || mnVM.T_DATE == "") ? DateTime.Now.Date.ToShortDateString() : mnVM.T_DATE.ToString();
+            string _strT_Date = (mnVM.T_DATE == null || mnVM.T_DATE == "") ? DateTime.Now.Date.ToString("MM/dd/yyyy") : mnVM.T_DATE.ToString();
 
             StringBuilder sb = new StringBuilder();
             List<string> RptParramList = new List<string>();
@@ -213,7 +190,7 @@ namespace GHB_D1.Controllers
                 //    }                  
                 //}
 
-                mnVM = DownloadAllFiles(branchID, T_DATE, groupNo, roleName);
+                mnVM = DownloadAllFiles(branchID, T_DATE, groupNo, roleName, groupName);
 
                 List<string> files = new List<string>();
                 files = mnVM.files;
@@ -222,7 +199,7 @@ namespace GHB_D1.Controllers
                 {
                     mnVM.MESSAGE = "Download All Reports เรียบร้อยแล้ว ";
 
-                    mnVM.T_DATE = DateTime.Now.Date.AddDays(-1).ToShortDateString();
+                    //mnVM.T_DATE = DateTime.Now.Date.AddDays(-1).ToShortDateString();
                     mnVM.BRANCH_ID = branchId;
                     mnVM.USER_ID = userId;
                     mnVM.BRANCH_NAME = branchName;
@@ -249,20 +226,23 @@ namespace GHB_D1.Controllers
 
                 //DirectoryInfo directoryInfo = new DirectoryInfo(physicalFilePath);
                 //directoryInfo.Create();
+                //if (!Directory.Exists(physicalFilePath))
+                //    Directory.CreateDirectory(physicalFilePath); //Create folder ~/Files/userId/ if not exist.
 
                 // Delete all files in a memory-efficient way
-                Directory.EnumerateFiles(physicalFilePath).ToList().ForEach(file =>
-                {
-                    try
-                    {
-                        System.IO.File.Delete(file);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logSys.WriteProcessLogFile(_strPathFile, $"HomeController.cs_AllDownload:Error before save .zip file with {ex.Message} ");
-                    }
-                });
+                //Directory.EnumerateFiles(physicalFilePath).ToList().ForEach(file =>
+                //{
+                //    try
+                //    {
+                //        System.IO.File.Delete(file);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        _logSys.WriteProcessLogFile(_strPathFile, $"HomeController.cs_AllDownload:Error before save .zip file with {ex.Message} ");
+                //    }
+                //});
 
+                // Create an in-memory ZIP
                 var memoryStream = new MemoryStream();
                 
                 using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
@@ -279,17 +259,20 @@ namespace GHB_D1.Controllers
                             }
                         }
                     }
-                }
-
+                }//end using zip
+                
                 // รีเซ็ตตำแหน่งของ memoryStream
-                //memoryStream.Position = 0;
+                memoryStream.Position = 0;
 
                 // ส่งไฟล์ ZIP ไปยังไคลเอนต์
                 //return File(memoryStream, "application/zip", zipFileName);
                 // บันทึกไฟล์ ZIP ลงในโฟลเดอร์เซิร์ฟเวอร์
-                System.IO.File.WriteAllBytes(zipFilePath, memoryStream.ToArray());
-                
-                return Json(new { fileUrl = Url.Content(virtualFilePath) });
+                //System.IO.File.WriteAllBytes(zipFilePath, memoryStream.ToArray());
+
+                // Return the ZIP as a stream
+                //return File(memoryStream, "application/zip", "download.zip");
+                return File(memoryStream.ToArray(), "application/zip", "download.zip");
+                //return Json(new { fileUrl = Url.Content(virtualFilePath) });
             }
             catch (Exception ex)
             {
@@ -352,77 +335,54 @@ namespace GHB_D1.Controllers
             return mnVM;
         }
 
-        private MenuViewModel DownloadAllFiles(string branchID, string T_DATE, string groupNo, string roleName)
+        private MenuViewModel DownloadAllFiles(string branchID, string T_DATE, string groupNo, string roleName, string groupName)
         {
             MenuViewModel mnVM = new MenuViewModel();
-            DataTable _dt = new DataTable();
-            string bOndemand = string.Empty;
-            string userId = (string)Session["UserId"];
-            List<ADMModel> _admdata = new List<ADMModel>();
-            List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
-            string _strT_Date = (mnVM.T_DATE == null || mnVM.T_DATE == "") ? DateTime.Now.Date.ToShortDateString() : mnVM.T_DATE.ToString();
-            string strReport = string.Empty;
-            string _strTempFile = string.Empty;
-            //var deciGroupNo = Convert.ToDouble(groupNo);
-
-            string[] _arrDate = null;
+            //DataTable _dt = new DataTable();
+            //string bOndemand = string.Empty;
+            //string userId = (string)Session["UserId"];
+            //List<ADMModel> _admdata = new List<ADMModel>();
+            //List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
             mnVM.T_DATE = T_DATE;
-            if (mnVM.T_DATE.Contains('-') == true)
-            {
-                _arrDate = mnVM.T_DATE.Split('-');
-            }
-            else
-            {
-                _arrDate = mnVM.T_DATE.Split('/');
-            }
-            int dt = Int32.Parse(_arrDate[2].ToString());
-
-            string year = "";
-            if (dt != 0)
-            {
-                year = (dt <= 2000) ? (dt + 543).ToString().Substring(2) : dt.ToString().Substring(2);
-            }
-            else
-            {
-                year = DateTime.Now.Year.ToString().Substring(2);
-            }
-
-
-            _strT_Date = mnVM.T_DATE;
-            string strT_Date = string.Empty;
-            if (_strT_Date.Contains('-') == true)
-            {
-                strT_Date = _strT_Date.Replace("-", "");
-            }
-            else
-            {
-                strT_Date = _strT_Date.Replace("/", "");
-            }
-            //string strT_Date = _strT_Date.Replace("-", "");
-
-            if (strT_Date != "")
-            {
-                _tmpdate = strT_Date;
-                strT_Date = year + _tmpdate.Substring(2, 2) + _tmpdate.Substring(0, 2);
-            }
-
-            List<string> files = new List<string>();
+            string[] arrDate = T_DATE.Split('/');
+            string yearFolder = arrDate[2]; //2026
+            string monthFolder = "M" + arrDate[1]; //M01
+            string dayFolder = arrDate[0]; //14
+            string dayData = $"{arrDate[2].Substring(2, 2)}{arrDate[1]}{arrDate[0]}"; //260114
+            List<string> listFiles = new List<string>(); //all file (with full path) for zip
             string subBrandID = string.Empty;
-            if (branchID.Length > 3)
+            //if (branchID.Length > 3)
+            //{
+            //    subBrandID = branchID.Substring(0, 3);
+            //}
+            //else
+            //{
+            //    subBrandID = branchID;
+            //}
+            //list = GroupReportBAL.GetGroupDetailReport(subBrandID, userId, groupNo, "%");
+            ////add 20250513
+            //if (list.Count == 0 && roleName != "")
+            //{
+            //    list = GroupReportBAL.GetGroupDetailReport2(roleName, groupNo);
+            //}
+
+            #region "Logic to check only branch (on-demand) and get files (no re-generate pdf)"
+            bool isBranchOnly = false; //check branch only (on-demand)
+            isBranchOnly = IsBranchOnly(roleName);
+            var dirFileNames = new HashSet<string>();
+            if (isBranchOnly)
             {
-                subBrandID = branchID.Substring(0, 3);
+                dirFileNames = GetReportOnDemandByGroupNameAndBranchId(groupName, branchID, yearFolder, monthFolder, dayFolder);
             }
             else
             {
-                subBrandID = branchID;
+                dirFileNames = GetReportOnDemandByGroupName(groupName, yearFolder, monthFolder, dayFolder);
             }
-            list = GroupReportBAL.GetGroupDetailReport(subBrandID, userId, groupNo, "%");
-            //add 20250513
-            if (list.Count == 0 && roleName != "")
-            {
-                list = GroupReportBAL.GetGroupDetailReport2(roleName, groupNo);
-            }
+            #endregion
 
+
+            #region "unused new logic
+            /**
             // check report new logic.
             // Get the list file from Dir.
             string report_dir = string.Empty; //report directory to check with Db.
@@ -469,15 +429,19 @@ namespace GHB_D1.Controllers
                 if (!string.IsNullOrEmpty(_rptRegenerateFile))
                     files.Add(_rptRegenerateFile);
             }
+            **/
+            #endregion
 
             // add Dir File Names to list for generate a .zip file.
-            var tmpDirFileNames = new HashSet<string>();
-            foreach (var item in dirFileNames)
-            {
-                tmpDirFileNames.Add(Path.Combine(report_dir, item));
-            }
-            files.AddRange(tmpDirFileNames);
+            //var tmpDirFileNames = new HashSet<string>();
+            //foreach (var item in dirFileNames)
+            //{
+            //    //tmpDirFileNames.Add(Path.Combine(report_dir, item));
+            //    tmpDirFileNames.Add( item);
+            //}
+            //files.AddRange(tmpDirFileNames);
 
+            listFiles.AddRange(dirFileNames);
             mnVM.DownloadCompleted = true;
 
             #region "comment for old logic "
@@ -714,8 +678,100 @@ namespace GHB_D1.Controllers
             ***/
             #endregion
 
-            mnVM.files = files;
+            mnVM.files = listFiles;
             return mnVM;
+        }
+
+        private HashSet<string> GetReportOnDemandByGroupName(string groupName, string yFolder, string mFolder, string dFolder)
+        {
+            HashSet<string> retval = new HashSet<string>();
+            string reportRootDir = _iniCon.rptPath;
+            string reportDir = string.Empty;
+            switch (groupName)
+            {
+                case "ADM":
+                    reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "D1-CBS-REPORT-ADM");
+                    break;
+                case "CDM":
+                    reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "D1-CBS-REPORT-CDM");
+                    break;
+                case "CRM":
+                    reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "D1-CBS-REPORT-CRM");
+                    break;
+                case "LRM":
+                    reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "D1-CBS-REPORT-LRM");
+                    break;
+                case "RATM":
+                    reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "D1-CBS-REPORT");
+                    break;
+                case "SETTLE":
+                    reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "D1-CBS-SETTLE");
+                    break;
+                default:
+                    break;
+            }
+
+            //file the files by folder
+            var files = Directory.GetFiles(reportDir, "*.*");
+
+            foreach (var file in files)
+            {
+                retval.Add(file);
+            }
+            return retval;
+        }
+
+        private HashSet<string> GetReportOnDemandByGroupNameAndBranchId(
+            string groupName, string branchID, string yFolder, string mFolder, string dFolder)
+        {
+            HashSet<string> retval = new HashSet<string>();
+            string reportRootDir = _iniCon.rptPath;
+            string reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "OnDemandReport");
+
+            //file the files by group (ADM, CDM, etc..) and branch
+            var files = Directory.GetFiles(reportDir, $"{groupName}*_{branchID}_*");
+
+            foreach (var file in files)
+            {
+                retval.Add(file);
+            }
+            return retval;
+
+        }
+
+        /// <summary>
+        /// Check branch only (on-demand). 
+        /// Group_Report = IND and List_Role = true, it is branch
+        /// Group_Report = ALL and List_Role = true, it is HQ
+        /// </summary>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        private bool IsBranchOnly(string roleName)
+        {
+            bool retval = false;
+            DBAccess dbAccess = new DBAccess();
+            DataTable dt = new DataTable();
+            SqlParameter[] sqlParameter = new SqlParameter[] {
+                                                new SqlParameter("@Role_Name", roleName)
+            };
+            string sql = "SELECT Group_Report, List_Role ";
+            sql += "FROM TBL_ROLE_MANAGEMENT "; 
+            sql += "WHERE Role_Name = @Role_Name AND Group_Report IN ('IND','ALL') ";
+            sql += "ORDER BY Group_Report";
+
+            dt = dbAccess.ExecuteQueryMoreOneParameters(sql, sqlParameter, 1);
+
+            if (dt.Rows.Count > 0) 
+            {
+                if ((dt.Rows[0]["Group_Report"].ToString() == "ALL") && 
+                    ((bool)dt.Rows[0]["List_Role"] == false))
+                {
+                    retval = true; //it is branch only.
+                }                
+            }
+
+            dbAccess = null;
+            return retval;
         }
 
         #region "New logic check existing file if not re-generate file"
@@ -1087,12 +1143,6 @@ namespace GHB_D1.Controllers
                         {
                             _logSys.WriteProcessLogFile(_strPathFile, "GenReport_HomeController_foreach (HomeModel data in _admdata) : ReportName : " + _strReportPath + "message_detail :" + ex.Message);
                         }
-
-
-
-
-
-
                     }
                     cryRpt.Load(_strReportPath_test);
                     cryRpt.SetDataSource(_dt);

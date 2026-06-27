@@ -49,8 +49,9 @@ namespace GHB_D1.Controllers
             atmVM.SEARCH_KEY = SEARCH_KEY;
 
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
-            
-            if (Session["UserId"] != null && Session["UserId"].ToString() == py)
+
+            //if (Session["UserId"] != null && Session["UserId"].ToString() == py)
+            if (Session["UserId"] != null)
             {
                 //_strGroupNo = _accService.GetGroupNoReportByName("RATM");
                 //list = GroupReportBAL.GetGroupDetailReport(px,py,_strGroupNo, SEARCH_KEY);
@@ -249,7 +250,7 @@ namespace GHB_D1.Controllers
                         }
 
                         //===========
-
+                        #region "generated pdf from .rpt"
 
 
                         string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");
@@ -326,7 +327,7 @@ namespace GHB_D1.Controllers
                             return View("RATM", AtmVM);
                         }
 
-
+                        #endregion
                     }
                     catch (Exception ex)
                     {

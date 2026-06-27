@@ -315,22 +315,22 @@
             <div class="col-md-12">&nbsp;</div>
 
             <div class="col-md-12">
-                <div class="col-md-5" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
-                    <label class="form-label labelCss" style=" margin-right: 7px;">วันที่เริ่มต้น</label>
+                <!--<div class="col-md-5" style="text-align: end; display: flex; justify-content: flex-end; align-items: center; padding: 5px 18px 5px 0px;">
+                    <label class="form-label labelCss" style=" margin-right: 7px;">วันที่เริ่มต้น</label>-->
                     @*<input type="text" class="form-control" id="departInput" style="width:50%;">*@
-                    <div class="input-group date calendar-width ">
+                    <!--<div class="input-group date calendar-width ">
                         @Html.TextBox("FrDate", @Model.F_DATE as string, new { @class = "form-control rounded-lg", @placeholder = "dd-mm-yyyy", @indexer = "-1", @style = "margin:0px;border: 1px solid #aaa;width: 204px;", autocomplete = "off" })
                         <span class="input-group-addon" id="iconFr"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
-                </div>
+                </div>-->
                 @if (Session["RoleName"].ToString() == "Branch" || Session["RoleName"].ToString() == "HQ01")
                 {
-                    <div style="display:none;">
+                    @*<div style="display:none;">
                         <div class="col-md-2" style="display: flex; justify-content: flex-end; width: 19%; margin-left:-20px;">
                             <input type="text" class="form-control rounded-lg txtinput inputWD" id="SOLCODE" style="border: 1px solid #aaa;" placeholder="รหัสสาขา-ondemand" name="SOLCODE" value="@ViewBag.SOLCODE">
                             <input type="hidden" id="SOLCODE" name="SOLCODE" value="@ViewBag.SOLCODE" />
                         </div>
-                    </div>
+                    </div>*@
                 }
                 <div class="col-md-5" style="display: flex; align-items: flex-end; margin-left: -11px;">
                     <label class="form-label labelCss" style="margin-right: 5px;">วันที่สิ้นสุด</label>
@@ -370,12 +370,10 @@
                                             <tr>
                                                 <th style="text-align:center;vertical-align:top;" width="10%" class="ghb-background-color">ลำดับ</th>
                                                 <th style="text-align:center;vertical-align:top;" width="80%" class="ghb-background-color">ชื่อรายงาน</th>
-                                                @*@if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
-                                                    {}*@
                                                 <th style="text-align: center; vertical-align: top; " width="10%" class="ghb-background-color"> PDF Download </th>
+                                                
                                                 <th style="text-align: center; vertical-align: top; " width="10%" class="ghb-background-color"> EXCEL Download </th>
                                                 <th style="text-align: center; vertical-align: top; " width="10%" class="ghb-background-color"> TEXT Download </th>
-
                                             </tr>
                                         </thead>
                                         <tbody id="searchTable">
@@ -387,8 +385,7 @@
                                                 <tr>
                                                     <td style="text-align: right; vertical-align: middle;">@item.ID</td>
                                                     <td style="text-align: left; vertical-align: middle;">@item.REPORT_NAME</td>
-                                                    @*@if (Model.BRANCH_ID == "001" || Model.BRANCH_ID == "049")
-                                                        { }*@
+                                                    
                                                     @if (item.REPORT_NAME.Contains("EXCEL") == false && item.REPORT_NAME.Contains("TEXT") == false)
                                                     {
                                                         <td style="text-align: center;">

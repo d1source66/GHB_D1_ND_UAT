@@ -312,24 +312,6 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\UserTransferScheduleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RATM1006_Midnight.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RATM1006_Midnight.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RATM1102.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RATM1102.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RDM9000_M.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RDM9000_M.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ReportFiles\ACCT_NON_TYPE_15_ORFT.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1676,6 +1658,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\boxicons1.css" />
     <Content Include="Content\chosen-sprite%402x.png" />
     <Content Include="Content\chosen-sprite.png" />
     <Content Include="Content\font-awesome.css" />
@@ -2039,18 +2022,6 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="RATM1006_Midnight.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RATM1006_Midnight.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RATM1102.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RATM1102.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RDM9000_M.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RDM9000_M.cs</LastGenOutput>
-    </EmbeddedResource>
     <Content Include="ReportFiles\ADM1001_ds.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ADM1001_ds.cs</LastGenOutput>

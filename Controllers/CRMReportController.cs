@@ -66,7 +66,8 @@ namespace GHB_D1.Controllers
 
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
 
-            if (Session["UserId"] != null && Session["UserId"].ToString() == py)
+            //if (Session["UserId"] != null && Session["UserId"].ToString() == py)
+            if (Session["UserId"] != null)
             {
 
                 //_strGroupNo = _accService.GetGroupNoReportByName("CRM");
@@ -238,7 +239,7 @@ namespace GHB_D1.Controllers
                         }
 
                         //===========
-
+                        #region "generated pdf from .rpt"
                         string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");
                         _logSys.WriteProcessLogFile(_strPathFile, "_strReportPath1(176) : " + _strReportPath);
 
@@ -319,6 +320,7 @@ namespace GHB_D1.Controllers
                             _logSys.WriteProcessLogFile(_strPathFile, "Choose Report Type(ex) : " + ex.Message.ToString());                                                                          
                             return RedirectToAction("Index", "CRMReport", new { px = px, py = py , T_DATE  = CrmVM.T_DATE , SEARCH_KEY  = "",pz= CrmVM.TITLE_REPORT,message= CrmVM.MESSAGE });                          
                         }
+                        #endregion
                     }
                     catch (Exception ex)
                     {

@@ -831,7 +831,7 @@ namespace GHB_D1.Services
             return mnVM;
         }
 
-        public groupRole GetNewDesignRole1(string empcode, string rolename, string Date)
+        public groupRole GetNewDesignRole1(string empcode, string rolename)
         {
             //string branchId = ""; string userId = "";
             DataTable _result = new DataTable();
@@ -1015,7 +1015,6 @@ namespace GHB_D1.Services
             catch (Exception ex)
             {
                 _logSys.WriteProcessLogFile(_strPathFile, "AuthorizeGroupDetailReport : " + ex.Message.ToString());
-
             }
 
 
@@ -1073,9 +1072,7 @@ namespace GHB_D1.Services
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
-
                     groupNo = dt.Rows[0]["Module_No"].ToString();
-
                 }
 
             }

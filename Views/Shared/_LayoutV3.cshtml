@@ -68,7 +68,7 @@
             <div class="logo_item" style="position:absolute;top:18px;color:#ffffff">
                 <i class="bx bx-menu" id="sidebarOpen"></i>
                 <div>
-                    <div>GHB ATM/CDM <span>[SIT]</span></div>
+                    <div>GHB ATM/CDM <span></span></div>
                     <div style="position: absolute;font-size:18px;"></div>
                     @*@Html.Partial("pagePosition")*@
                 </div>
@@ -89,7 +89,7 @@
                         @if (@Session["BranchName"].ToString() != "")
                         {
                             <div class="avata">
-                                สาขา:&nbsp;@Session["BranchName"].ToString()&nbsp;
+                                สาขา:&nbsp;@Session["BranchName"].ToString()&nbsp;(@Session["BranchId"].ToString())
                                 สถานะ:&nbsp;@Session["IsActive"].ToString()
                             </div>
                         }

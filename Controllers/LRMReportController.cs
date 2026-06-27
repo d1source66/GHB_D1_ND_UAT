@@ -55,7 +55,8 @@ namespace GHB_D1.Controllers
             lrmVM.SEARCH_KEY = lrmVM.SEARCH_KEY;
 
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
-            if (Session["UserId"] != null && Session["UserId"].ToString() == py && Session["RoleName"].ToString() != null)
+            //if (Session["UserId"] != null && Session["UserId"].ToString() == py && Session["RoleName"].ToString() != null)
+            if (Session["UserId"] != null)
             {
                 //_strGroupNo = _accService.GetGroupNoReportByName("LRM");
                 var rolename = Session["RoleName"].ToString();
@@ -237,7 +238,7 @@ namespace GHB_D1.Controllers
 
                         //===========
 
-
+                        #region "generated pdf from .rpt"
                         string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");
                      
                         string _param = string.Empty;
@@ -316,7 +317,7 @@ namespace GHB_D1.Controllers
                             return View("LRM", lrmVM);
                         }
 
-
+                        #endregion
                     }
                     catch (Exception ex)
                     {

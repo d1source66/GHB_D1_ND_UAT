@@ -93,16 +93,14 @@ namespace GHB_D1.Controllers
         [HttpPost]
         public ActionResult GenReport(string px, string pd, string cmdButton, ADMViewModel AdmVM, string SOLCODE)
         {
+            _logSys.WriteProcessLogFile(_strPathFile, $"Begin ADM GenReport (branch Id):{AdmVM.BRANCH_ID} user id:{AdmVM.USER_ID}");
+            string t_date = AdmVM.ToDate; //user select date in date-picker.
+
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
             List<ADMModel> _admdata = new List<ADMModel>();
             DataTable _dt = new DataTable();
-            //_strGroupNo = _accService.GetGroupNoReportByName("ADM");
-            _logSys.WriteProcessLogFile(_strPathFile, "GenReport T_Date : " + AdmVM.T_DATE);
-            _logSys.WriteProcessLogFile(_strPathFile, "GenReport SEARCH_KEY : " + AdmVM.SEARCH_KEY);
-            _logSys.WriteProcessLogFile(_strPathFile, "GetGroupDetailReport : " + _strGroupNo);
-            AdmVM.T_DATE = AdmVM.ToDate;
-            AdmVM.T_DATE = (AdmVM.T_DATE == null || AdmVM.T_DATE == "") ? DateTime.Now.Date.ToShortDateString() : AdmVM.T_DATE;
-            AdmVM.DISPLAY_FILTER = (AdmVM.T_DATE == null || AdmVM.T_DATE == "") ? DateTime.Now.Date.ToShortDateString() : AdmVM.T_DATE;
+
+            AdmVM.DISPLAY_FILTER = t_date;
             AdmVM.SEARCH_KEY = AdmVM.SEARCH_KEY;
             var rolename = Session["RoleName"].ToString();
             _strGroupNo = _accService.GetGroupNoReportByNameND("ADM");
@@ -136,36 +134,6 @@ namespace GHB_D1.Controllers
                     _arrCon = cmdButton.Split('|');
                     _logSys.WriteProcessLogFile(_strPathFile, "cmdButton.Split('|') : " + _arrCon.Length);
 
-                    string[] _arrDate = null;
-                    _arrDate = AdmVM.T_DATE.Split('/');
-                    _logSys.WriteProcessLogFile(_strPathFile, "arrDate[0] : " + _arrDate[0].ToString());
-                    _logSys.WriteProcessLogFile(_strPathFile, "arrDate[1] : " + _arrDate[1].ToString());
-                    _logSys.WriteProcessLogFile(_strPathFile, "arrDate[2] : " + _arrDate[2].ToString());
-
-                    int dt = Int32.Parse(_arrDate[2].ToString());
-
-                    //DateTime dt = DateTime.Parse(AdmVM.T_DATE);
-
-
-                    string year = "";
-                    if (dt != 0)
-                    {
-                        year = (dt <= 2000) ? (dt + 543).ToString().Substring(2) : dt.ToString().Substring(2);
-                    }
-                    else
-                    {
-                        year = DateTime.Now.Year.ToString().Substring(2);
-                    }
-
-
-
-                    //string _strT_Date = DateTime.Parse(AdmVM.T_DATE).ToString("dd/MM/yyyy");
-
-                    _logSys.WriteProcessLogFile(_strPathFile, "set DataTime.Parse(AdmVM.T_DATE) : " + AdmVM.T_DATE);
-                    _logSys.WriteProcessLogFile(_strPathFile, "_strTermId : " + _arrCon[0].ToString());
-                    _logSys.WriteProcessLogFile(_strPathFile, "_strReport_Name : " + _arrCon[1].ToString());
-                    _logSys.WriteProcessLogFile(_strPathFile, "_strFormatType : " + _arrCon[2].ToString());
-
                     string _strTermId = _arrCon[0].ToString();
                     string _strReport_Name = _arrCon[1].ToString();
                     string _strFormatType = _arrCon[2].ToString();
@@ -173,28 +141,11 @@ namespace GHB_D1.Controllers
                     List<string> RptParramList = new List<string>();
                     _iniCon.stp = ModConf.ReadIni(_iniCon.iniFile, "DS", _strReport_Name);
 
-                    char[] _sps = new char[] { '|' };
-                    char[] _spd = new char[] { '-' };
-                    string _tmpdate = string.Empty;
-                    string _depRecMOoney = string.Empty;
-                    string _department = string.Empty;
-                    string _pointRecMoney = string.Empty;
-
                     string strReport = string.Empty;
                     string _strTempFile = string.Empty;
 
                     try
                     {
-                        string strT_Date = AdmVM.T_DATE.Replace("/", "");
-
-                        if (strT_Date != "")
-                        {
-                            _tmpdate = strT_Date;
-                            strT_Date = year + _tmpdate.Substring(2, 2) + _tmpdate.Substring(0, 2);
-                        }
-                        _logSys.WriteProcessLogFile(_strPathFile, "strT_Date : " + strT_Date.ToString());
-
-
                         if (_strFormatType == "2")
                         {
                             switch (_strReport_Name)
@@ -215,7 +166,65 @@ namespace GHB_D1.Controllers
                             }
                         }
 
+                        //==== check existing file
+                        // if exist in D:\ReportFile\yyyy\Mmm\dd\D1-CBS-REPORT-CDM\tt.pdf then use it, otherwise regenerate.
+                        string yearDir = "", monthDir = "", dayDir = "", t_Date_data = "";
+                        string[] _arrDate = t_date.Split('/');
+                        yearDir = _arrDate[2]; //format 2026
+                        monthDir = "M" + _arrDate[1]; //format M01
+                        dayDir = _arrDate[0]; //format 14
+                        t_Date_data = $"{_arrDate[2].Substring(2,2)}{_arrDate[1]}{_arrDate[0]}"; //format 260114
+                                                 //folder report to check = D:\ReportFile\2026\M01\14\groupReport
 
+                        _iniCon.rptPath = ModConf.ReadIni(_iniCon.iniFile, "PathFile", "PathReport");
+                        string reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "D1-CBS-REPORT-ADM");
+                        string reportNameToCheck = "", hdrContentType = "", downloadReportName = "";
+                        if (_strReport_Name.Contains("_EXCEL"))
+                        {
+                            reportNameToCheck = $"{_strReport_Name.Replace("_EXCEL", "")}.xls";
+                            downloadReportName = $"{_strReport_Name.Replace("_EXCEL", "")}_{t_Date_data}.xls";
+                            hdrContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        }
+                        else if (_strReport_Name.Contains("TEXT"))
+                        {
+                            reportNameToCheck = $"{_strReport_Name.Replace("_TEXT", "")}.txt";
+                            downloadReportName = $"{_strReport_Name.Replace("_TEXT", "")}_{t_Date_data}.txt";
+                            hdrContentType = "application/txt";
+                        }
+                        else if (_strReport_Name.StartsWith("PPD"))
+                        {
+                            reportNameToCheck = $"{_strReport_Name}{_arrDate[2].Substring(2, 2)}{_arrDate[1]}{_arrDate[0]}.pdf";
+                            downloadReportName = reportNameToCheck;
+                            hdrContentType = "application/pdf";
+                        }
+                        else if (_strReport_Name.EndsWith("ONDEMAND"))
+                        {
+                            _logSys.WriteProcessLogFile(_strPathFile, "ONDEMAND _strReport_Name: " + _strReport_Name);
+                            reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "OnDemandReport");
+                            reportNameToCheck = $"{_strReport_Name.Replace("_ONDEMAND", "")}_{AdmVM.BRANCH_ID}_{t_Date_data}.pdf";
+                            downloadReportName = reportNameToCheck;
+                            hdrContentType = "application/pdf";
+                        }
+                        else
+                        {
+                            reportNameToCheck = $"{_strReport_Name}.pdf";
+                            downloadReportName = $"{_strReport_Name}_{t_Date_data}.pdf";
+                            hdrContentType = "application/pdf";
+                        }
+
+                        string fullReportNameToCheck = Path.Combine(reportToCheckDir, reportNameToCheck);
+                        if (System.IO.File.Exists(fullReportNameToCheck))
+                        {   //existing file no need generate report
+                            _logSys.WriteProcessLogFile(_strPathFile, $"found find to download : {fullReportNameToCheck} ");
+                            return File(fullReportNameToCheck, hdrContentType, downloadReportName);
+                        }
+                        else
+                        {
+                            AdmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + AdmVM.DISPLAY_FILTER + " ไม่พบข้อมูล";
+                        }
+                        #region "generated pdf from .rpt"
+                        //===========
+                        /**
                         string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");
                         _logSys.WriteProcessLogFile(_strPathFile, "_strReportPath1(176) : " + _strReportPath);
 
@@ -385,6 +394,10 @@ namespace GHB_D1.Controllers
                             _logSys.WriteProcessLogFile(_strPathFile, "Choose Report Type(ex) : " + ex.Message.ToString());
                             return View("ADM", AdmVM);
                         }
+
+                        **/
+                        #endregion
+                        break;
                     }
                     catch (Exception ex)
                     {

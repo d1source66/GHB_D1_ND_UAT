@@ -262,45 +262,49 @@
         //alert("groupNo:" + groupNo + " groupName:" + groupName);
         $("#displayLoading").show();
         console.log("groupNo:" + groupNo + " groupName:" + groupName)
-                if (groupNo != undefined) {
+        var url = '@Url.Action("AllDownload", "Home")';
+        var qrystr = "?branchID=" + $("#BRANCH_ID").val() + "&T_DATE=" + $("#ToDate").val();
+        qrystr += "&groupNo=" + groupNo + "&groupName=" + groupName + "&SOLCODE=" + $("#SOLCODE").val();
+        window.location = url + qrystr;
+        $("#displayLoading").hide();
+        @*if (groupNo != undefined) {
 
-                    $("#popmsg").hide();
+            $("#popmsg").hide();
+            $("#popmsg-success").hide();
+            $("#msg").text("");
+            $("#msg-success").text("");
+
+            //e.preventDefault();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '", "T_DATE" : "' + $("#ToDate").val() + '", "groupNo" : "' + groupNo + '", "groupName" : "' + groupName + '", "SOLCODE" : "' + $("#SOLCODE").val() + '" }',
+                contentType: 'application/json; charset=utf-8',
+                url: '@Url.Action("AllDownload", "Home")', beforeSend: function (xhr) {
+                    //$("#displayLoading").show();
+                },
+                success: function (result) {
+                    $("#displayLoading").hide();
                     $("#popmsg-success").hide();
-                    $("#msg").text("");
-                    $("#msg-success").text("");
+                    if (result.length == 0) {
 
-
-                    //e.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        data: '{ "branchID" : "' + $("#BRANCH_ID").val() + '", "T_DATE" : "' + $("#ToDate").val() + '", "groupNo" : "' + groupNo + '", "groupName" : "' + groupName + '", "SOLCODE" : "' + $("#SOLCODE").val() + '" }',
-                        contentType: 'application/json; charset=utf-8',
-                        url: '@Url.Action("AllDownload", "Home")', beforeSend: function (xhr) {
-                            //$("#displayLoading").show();
-                        },
-                        success: function (result) {
-                            $("#displayLoading").hide();
-                            $("#popmsg-success").hide();
-                            if (result.length == 0) {
-
-                            } else {
-                                $("#msg").hide();
-                                $("#msg-success").text("โหลดข้อมูลรายงานกลุ่ม " + groupName +" ทั้งหมด เรียบร้อยแล้ว");
-                                $("#popmsg-success").show();
-                                window.location.href = result.fileUrl;
-                            }
-                        }
-                        ,
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            $("#displayLoading").hide();
-                            $("#msg").text("ไม่สามารถโหลดรายงาน");
-                            $("#msg").show();
-                            $("#popmsg").show();
-                        }
-
-                    });
+                    } else {
+                        $("#msg").hide();
+                        $("#msg-success").text("โหลดข้อมูลรายงานกลุ่ม " + groupName +" ทั้งหมด เรียบร้อยแล้ว");
+                        $("#popmsg-success").show();
+                        window.location.href = result.fileUrl;
+                    }
                 }
+                ,
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#displayLoading").hide();
+                    $("#msg").text("ไม่สามารถโหลดรายงาน");
+                    $("#msg").show();
+                    $("#popmsg").show();
+                }
+
+            });
+        }*@
 
     }
 </script>
@@ -515,10 +519,10 @@
                         </div>*@
                         @if (Session["RoleName"].ToString() == "B01" || Session["RoleName"].ToString() == "B02" || Session["RoleName"].ToString() == "B03" || Session["RoleName"].ToString() == "B04")
                         {
-                            <div class="col-md-2" style="display: flex; justify-content: flex-end; width: 19%; margin-left:-20px;">
+                            @*<div class="col-md-2" style="display: flex; justify-content: flex-end; width: 19%; margin-left:-20px;">
                                 <input type="text" class="form-control rounded-lg txtinput inputWD" id="SOLCODE" style="border: 1px solid #aaa;" placeholder="รหัสสาขา-ondemand" name="SOLCODE" value="@ViewBag.SOLCODE">
                                 <input type="hidden" id="SOLCODE" name="SOLCODE" value="@ViewBag.SOLCODE" />
-                            </div>
+                            </div>*@
                         }
                         <div class="col-md-5" style="display: flex; align-items: flex-end; margin-left: -11px;">
                             <label class="form-label labelCss" style="margin-right: 5px;">วันที่ออกรายงาน</label>
