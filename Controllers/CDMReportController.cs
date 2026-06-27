@@ -99,8 +99,8 @@ namespace GHB_D1.Controllers
         [HttpPost]
         public ActionResult GenReport(string px, string py, string cmdButton, ADMViewModel AdmVM, string SOLCODE)
         {
-            _logSys.WriteProcessLogFile(_strPathFile, $"Begin ฉDM GenReport (branch Id):{AdmVM.BRANCH_ID} user id:{AdmVM.USER_ID}");
-            List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
+            _logSys.WriteProcessLogFile(_strPathFile, $"Begin CDM GenReport (branch Id):{AdmVM.BRANCH_ID} user id:{AdmVM.USER_ID}, T_Date:{AdmVM.ToDate}");
+            List <GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
             List<ADMModel> _admdata = new List<ADMModel>();
             DataTable _dt = new DataTable();
             AdmVM.T_DATE = AdmVM.ToDate;
