@@ -203,6 +203,7 @@ namespace GHB_D1.Controllers
                             lrmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + lrmVM.DISPLAY_FILTER + " ไม่พบข้อมูล";
                         }
                         break; //break case default
+
                         #region "generated pdf from .rpt"
                         /**
                         string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");                     

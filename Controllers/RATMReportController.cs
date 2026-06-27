@@ -13,6 +13,8 @@ using GHB_D1.Services;
 using System.Security.Claims;
 using System.Globalization;
 using System.Data;
+using GHB_D1.Code.Util;
+using System.IO;
 
 namespace GHB_D1.Controllers
 {
@@ -21,8 +23,10 @@ namespace GHB_D1.Controllers
         private AccountService _accService = new AccountService();
         string _strGroupNo = "";
         string StartPath = AppDomain.CurrentDomain.BaseDirectory;
+        string _strPathFile = System.Web.HttpContext.Current.Server.MapPath(@"~\Logs\");
         iniConnection _iniCon = null;
-     
+        Loger _logSys = new Loger();
+
         public RATMReportController()
         {
             _accService = new AccountService();
@@ -81,6 +85,7 @@ namespace GHB_D1.Controllers
         [HttpPost]
         public ActionResult GenReport(string px, string py, string T_Date, string cmdButton, string Search, ATMViewModel AtmVM, string SOLCODE)
         {
+            _logSys.WriteProcessLogFile(_strPathFile, $"Begin RATM GenReport (branch Id):{AtmVM.BRANCH_ID} user id:{AtmVM.USER_ID}, T_Date:{AtmVM.ToDate}");
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
             AtmVM.T_DATE = AtmVM.ToDate;
             AtmVM.T_DATE = (AtmVM.T_DATE == null || AtmVM.T_DATE == "") ? DateTime.Now.Date.ToShortDateString() : AtmVM.T_DATE;
@@ -89,7 +94,7 @@ namespace GHB_D1.Controllers
             //_strGroupNo = _accService.GetGroupNoReportByName("RATM");
             //list = GroupReportBAL.GetGroupDetailReport(px,py,_strGroupNo, AtmVM.SEARCH_KEY);
             var rolename = Session["RoleName"].ToString();
-            _strGroupNo = _accService.GetGroupNoReportByNameND("RATM");
+            _strGroupNo = _accService.GetGroupNoReportByNameND("RATM"); //return '6.7' RATM
             list = _accService.AuthorizeGroupDetailReportND(rolename, py, _strGroupNo, AtmVM.SEARCH_KEY);
             ViewBag.GroupDetailReport = list;
             if (Session["GroupReport"] != null)
@@ -116,50 +121,11 @@ namespace GHB_D1.Controllers
                 default:
                     string[] _arrCon = null;
                     _arrCon = cmdButton.Split('|');
-                    string _tmpdate = string.Empty;
-
                     string[] _arrDate = null;
                     _arrDate = AtmVM.ToDate.Split('/');
-                   
-
-
-                    int dt = Int32.Parse(_arrDate[2].ToString());
-
-                    //DateTime dt = DateTime.Parse(AdmVM.T_DATE);
-
-
-                    string year = "";
-                    if (dt != 0)
-                    {
-                        year = (dt <= 2000) ? (dt + 543).ToString().Substring(2) : dt.ToString().Substring(2);
-                    }
-                    else
-                    {
-                        year = DateTime.Now.Year.ToString().Substring(2);
-                    }
-
-
-               
+                                  
                     string _strReport_Name = _arrCon[1].ToString();
                     string _strFormatType = _arrCon[2].ToString();
-
-                    string strT_Date = AtmVM.ToDate.Replace("/", "");
-
-                    if (strT_Date != "")
-                    {
-                        _tmpdate = strT_Date;
-                        strT_Date = year + _tmpdate.Substring(2, 2) + _tmpdate.Substring(0, 2);
-                    }
-                
-                    StringBuilder sb = new StringBuilder();
-                    List<string> RptParramList = new List<string>();
-
-                    char[] _sps = new char[] { '|' };
-                    char[] _spd = new char[] { '-' };
-                  
-                    string _depRecMOoney = string.Empty;
-                    string _department = string.Empty;
-                    string _pointRecMoney = string.Empty;
 
                     string strReport = string.Empty;
                     string _strTempFile = string.Empty;
@@ -209,7 +175,7 @@ namespace GHB_D1.Controllers
                         yearDir = _arrDate[2]; //format 2026
                         monthDir = "M" + _arrDate[1]; //format M01
                         dayDir = _arrDate[0]; //format 14
-                        t_Date_data = strT_Date; //format 260114
+                        t_Date_data = $"{_arrDate[2].Substring(2, 2)}{_arrDate[1]}{_arrDate[0]}"; //format 260114
                         //folder report to check = D:\ReportFile\2026\M01\14\groupReport
                         string reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "D1-CBS-REPORT");
                         string reportNameToCheck = "", hdrContentType = "", downloadReportName = "";
@@ -233,7 +199,11 @@ namespace GHB_D1.Controllers
                         }
                         else if (_strReport_Name.EndsWith("ONDEMAND"))
                         {
-                            //not include ONDEMAND in the list. wait implement.
+                            _logSys.WriteProcessLogFile(_strPathFile, "ONDEMAND _strReport_Name: " + _strReport_Name);
+                            reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "OnDemandReport");
+                            reportNameToCheck = $"{_strReport_Name.Replace("_ONDEMAND", "")}_{AtmVM.BRANCH_ID}_{t_Date_data}.pdf";
+                            downloadReportName = reportNameToCheck;
+                            hdrContentType = "application/pdf";
                         }
                         else
                         {
@@ -242,17 +212,25 @@ namespace GHB_D1.Controllers
                             hdrContentType = "application/pdf";
                         }
 
-                        string fullReportNameToCheck = System.IO.Path.Combine(reportToCheckDir, reportNameToCheck);
+
+                        string fullReportNameToCheck = Path.Combine(reportToCheckDir, reportNameToCheck);
                         if (System.IO.File.Exists(fullReportNameToCheck))
                         {   //existing file no need generate report
-
+                            _logSys.WriteProcessLogFile(_strPathFile, $"found find to download : {fullReportNameToCheck} ");
                             return File(fullReportNameToCheck, hdrContentType, downloadReportName);
                         }
+                        else
+                        {
+                            _logSys.WriteProcessLogFile(_strPathFile, $"File {fullReportNameToCheck} not found.");
+                            AtmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + AtmVM.DISPLAY_FILTER + " ไม่พบข้อมูล";
+                        }
+                        break; //break case default
+
 
                         //===========
                         #region "generated pdf from .rpt"
 
-
+                        /** no need to generated pdf from .rpt. Web App will get the data from ReportFile folder.
                         string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");
 
                         string _param = string.Empty;
@@ -326,7 +304,7 @@ namespace GHB_D1.Controllers
                             AtmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + AtmVM.DISPLAY_FILTER + " ไม่มีข้อมูล";
                             return View("RATM", AtmVM);
                         }
-
+                        **/
                         #endregion
                     }
                     catch (Exception ex)
