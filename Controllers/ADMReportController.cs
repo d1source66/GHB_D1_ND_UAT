@@ -93,7 +93,7 @@ namespace GHB_D1.Controllers
         [HttpPost]
         public ActionResult GenReport(string px, string pd, string cmdButton, ADMViewModel AdmVM, string SOLCODE)
         {
-            _logSys.WriteProcessLogFile(_strPathFile, $"Begin ADM GenReport (branch Id):{AdmVM.BRANCH_ID} user id:{AdmVM.USER_ID}");
+            _logSys.WriteProcessLogFile(_strPathFile, $"Begin ADM GenReport (branch Id):{AdmVM.BRANCH_ID} user id:{AdmVM.USER_ID}, T_Date:{AdmVM.ToDate}");
             string t_date = AdmVM.ToDate; //user select date in date-picker.
 
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
