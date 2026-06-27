@@ -86,8 +86,7 @@ namespace GHB_D1.Controllers
         [HttpPost]
         public ActionResult GenReport(string px, string pd, string cmdButton, LRMViewModel lrmVM, string SOLCODE)
         {
-
-            _logSys.WriteProcessLogFile(_strPathFile, "GenReport : " + lrmVM.ToDate);
+            _logSys.WriteProcessLogFile(_strPathFile, $"Begin LRM GenReport (branch Id):{lrmVM.BRANCH_ID} user id:{lrmVM.USER_ID}, T_Date:{lrmVM.ToDate}");
             lrmVM.T_DATE = lrmVM.ToDate;
 
             List<GroupDetailReportViewModel> list = new List<GroupDetailReportViewModel>();
@@ -124,58 +123,17 @@ namespace GHB_D1.Controllers
                     break;
                 default:
 
-                    _strPathFile = Server.MapPath(@"~\Logs\");
-
-                    List<string> RptParramList = new List<string>();
-
-                    char[] _sps = new char[] { '|' };
-                    char[] _spd = new char[] { '-' };
-                    string _tmpdate = string.Empty;
-                    string _depRecMOoney = string.Empty;
-                    string _department = string.Empty;
-                    string _pointRecMoney = string.Empty;
-
-                    string strReport = string.Empty;
-                    string _strTempFile = string.Empty;
-                    string contentType = "";
                     string[] _arrCon = null;
-
                     _arrCon = cmdButton.Split('|');
 
                     string[] _arrDate = null;
                     _arrDate = lrmVM.ToDate.Split('/');
-
-                    int dt = Int32.Parse(_arrDate[2].ToString());
-
-                    string year = "";
-                    if (dt != 0)
-                    {
-                        //if (dt > 2500)
-                        //{
-                        //    dt = dt - 543;
-                        //}
-                        year = (dt <= 2000) ? (dt + 543).ToString().Substring(2) : dt.ToString().Substring(2);
-                    }
-                    else
-                    {
-                        year = DateTime.Now.Year.ToString().Substring(2);
-                    }
-
 
                     string _strReport_Name = _arrCon[1].ToString(); //_arrCon[0].ToString();
                     string _strFormatType = _arrCon[2].ToString();
 
                     try
                     {
-                       
-                        string strT_Date = lrmVM.T_DATE.Replace("/", "");
-
-                        if (strT_Date != "")
-                        {
-                            _tmpdate = strT_Date;
-                            strT_Date = year + _tmpdate.Substring(2, 2) + _tmpdate.Substring(0, 2);
-                        }
-
                         if (_strFormatType == "2")
                         {
                             switch (_strReport_Name)
@@ -196,7 +154,7 @@ namespace GHB_D1.Controllers
                         yearDir = _arrDate[2]; //format 2026
                         monthDir = "M" + _arrDate[1]; //format M01
                         dayDir = _arrDate[0]; //format 14
-                        t_Date_data = strT_Date; //format 260114
+                        t_Date_data = $"{_arrDate[2].Substring(2, 2)}{_arrDate[1]}{_arrDate[0]}"; //format 260114
                         //folder report to check = D:\ReportFile\2026\M01\14\groupReport
                         string reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "D1-CBS-REPORT-LRM");
                         string reportNameToCheck = "", hdrContentType = "", downloadReportName = "";
@@ -220,7 +178,11 @@ namespace GHB_D1.Controllers
                         }
                         else if (_strReport_Name.EndsWith("ONDEMAND"))
                         {
-                            //not include ONDEMAND in the list. wait implement.
+                            _logSys.WriteProcessLogFile(_strPathFile, "ONDEMAND _strReport_Name: " + _strReport_Name);
+                            reportToCheckDir = System.IO.Path.Combine(_iniCon.rptPath, yearDir, monthDir, dayDir, "OnDemandReport");
+                            reportNameToCheck = $"{_strReport_Name.Replace("_ONDEMAND", "")}_{lrmVM.BRANCH_ID}_{t_Date_data}.pdf";
+                            downloadReportName = reportNameToCheck;
+                            hdrContentType = "application/pdf";
                         }
                         else
                         {
@@ -229,18 +191,21 @@ namespace GHB_D1.Controllers
                             hdrContentType = "application/pdf";
                         }
 
-                        string fullReportNameToCheck = System.IO.Path.Combine(reportToCheckDir, reportNameToCheck);
+                        string fullReportNameToCheck = Path.Combine(reportToCheckDir, reportNameToCheck);
                         if (System.IO.File.Exists(fullReportNameToCheck))
                         {   //existing file no need generate report
-
+                            _logSys.WriteProcessLogFile(_strPathFile, $"found find to download : {fullReportNameToCheck} ");
                             return File(fullReportNameToCheck, hdrContentType, downloadReportName);
                         }
-
-                        //===========
-
+                        else
+                        {
+                            _logSys.WriteProcessLogFile(_strPathFile, $"File {fullReportNameToCheck} not found.");
+                            lrmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + lrmVM.DISPLAY_FILTER + " ไม่พบข้อมูล";
+                        }
+                        break; //break case default
                         #region "generated pdf from .rpt"
-                        string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");
-                     
+                        /**
+                        string _strReportPath = Server.MapPath(@"~\ReportFiles\" + _strReport_Name + ".rpt");                     
                         string _param = string.Empty;
 
                         DiskFileDestinationOptions dfdopt = new DiskFileDestinationOptions();
@@ -316,7 +281,7 @@ namespace GHB_D1.Controllers
                             lrmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + lrmVM.DISPLAY_FILTER + " ไม่มีข้อมูล";
                             return View("LRM", lrmVM);
                         }
-
+                        **/
                         #endregion
                     }
                     catch (Exception ex)
@@ -325,9 +290,6 @@ namespace GHB_D1.Controllers
                         lrmVM.MESSAGE = _strReport_Name + " ณ วันที่ " + lrmVM.DISPLAY_FILTER + " ไม่มีข้อมูล";
                         return View("LRM", lrmVM);
                     }
-                    
-                    return File(_strTempFile, contentType, strReport);
-
             }
 
             return View("LRM", lrmVM);

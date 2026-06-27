@@ -1,0 +1,118 @@
+-- On demand . Edit
+table TBL_MAP_USER_BRANCH ==> add user ID (27) referenc from table TBL_USERS.USER_ID
+TBL_MAP_BRANCH_REPORTS t4 ON t2.ID_BRANCH = t4.ID_BRANCH
+Table_Branch Add branch Id 009
+LEFT JOIN SYSTEMBRANCH 
+
+ AMS].[dbo].[TBL_ROLE_MANAGEMENT] Role_name = 'B01'
+ AMS_SP_GET_GROUP_REPORT_ND ==> show menu which Module_No > 6.
+ 
+ ---
+ Edit SP: AMS.[dbo].[AMS_SP_MAP_USER_BRANCH]
+	change sb.BRANCH_CATEGORY_TITLE_TH AS BRANCH_NAME,
+	to	   sb.BRANCH_TITLE_TH AS BRANCH_NAME,
+ 
+--- [dbo].[AMS_SP_MAP_USER_BRANCH] เพื่อหา branch name & Id.
+Example data
+select * FROM TBL_USERS where [USER_ID] = 27
+USER_ID	USER_LOGIN	USER_PASSWORD	USER_PASSWORD_UPDATE_TIME	USER_FIRSTNAME	USER_LASTNAME	USER_DEPARTMENT	USER_POSITION	USER_LEVEL	USER_LOGIN_FLAG	USER_FONT_NAME	USER_FONT_SIZE	USER_FONT_BOLD	USER_FONT_ITALIC	USER_RUN_OUTSIDEVIEW	USER_DEFAULT_PAGE	USER_CONDITION	USER_UPDATE_TIME	USER_LAST_LOGON	USER_LAST_LOGOFF	ADMIN_LAST_MA	ADMIN_BY	ADMIN_CREATE_DATE	ADMIN_CREATE_BY	USER_WRONG_PWD	USER_EMAIL	USER_FLAG	USER_LOCK	USER_EMP_CODE	SOL_CODE	IS_ACTIVE	REMARK	Role_Name
+27	help33	52l+CZrCt97JemJ4nWamyA==	2010-02-17 09:05:21.000	วิโรจน์	ลุประสงค์จิตร์	HELP DESK	Help Desk	3	0	NULL	NULL	NULL	NULL	NULL	NULL	NULL	2018-06-29 10:20:26.830	2026-06-26 16:55:30.520	2026-06-25 16:27:31.163	ก.พ. 17 2010  3:08PM	AdminControl	2010-02-17 09:05:21.000	@Porn062567	50	admin@admingmail.com	0	0	11114	009	1	@Porn062567	B01
+----------
+
+SELECT * from TBL_MAP_USER_BRANCH where ID_USER = 27 /* PERMA & OPEN_OPT must be 1 */
+ID	ID_USER	ID_BRANCH	CREATE_DATE	UPDATE_DATE	ID_BRANCH2	B_DATE	E_DATE	PERMA	OPEN_OPT
+494	27	009	2026-06-22 12:34:56.000	2026-06-22 12:34:56.000	009	2026-06-22 12:34:56.000	2026-06-22 12:34:56.000	1	1
+--------
+select * FROM TBL_MAP_BRANCH_REPORTS where ID_BRANCH = '009' /* branch reference report */
+----
+select * FROM Table_Branch where BRANCH = '009' /*BRANCH	DESC	DESC_ENG FLAGCLOSE must have value*/
+BRANCH	DESC	DESC_ENG	ZONE	REGION	EMAIL	EXCEPTREGION	BNREGION	FLAGCLOSE	Alt1	Alt2	Alt3
+009	สาขาหนองแขม	Nong Khaem Branch		010  		     	 	1	011	012	013
+
+-------
+select * FROM SYSTEMBRANCH where SOL_CODE = '009' /* SOL_CODE must 3 digits */
+BRANCH_ID	SOL_CODE	BRANCH_CATEGORY_ID	BRANCH_CATEGORY_TITLE_TH	BRANCH_TITLE_TH	BRANCH_LOCATION	BRANCH_DISTRICT_ID	BRANCH_AMPHUR_ID	BRANCH_PROVINCE_ID	BRANCH_REGION_ID	BRANCH_POSTCODE	BRANCH_PHONE	BRANCH_FAX	BRANCH_FAX_LOAN	BRANCH_FAX_FINANCE	BRANCH_OPENDATE	BRANCH_OPENTIME	BRANCH_LAT	BRANCH_LNG	BRANCH_LINE	IS_ACTIVE	IMPORT_DATE	MOBILE_PHONE	EMAIL	BRANCH_SIZE	service_ids	operating_time	Branch_group
+67	009	2	สาขาหลัก	หนองแขม	1085,1087 หมู่ 2 ถ.เพชรเกษม	162	23	1	7	10160	0-2420-5793, 0-2420-6583, 0-2420-7475-7	0-2420-6009 , 0-2420-7311			จันทร์ - ศุกร์	8.30 - 15.30	13.704464	100.334075		Y	2020-09-21 13:25:00.000		info-00900@ghb.co.th			[{""start_time"":""08:30"",""end_time"":""15:30"",""day_of_week"":""monday""},{""start_time"":""08:30"",""end_time"":""15:30"",""day_of_week"":""tuesday""},{""start_time"":""08:30"",""end_time"":""15:30"",""day_of_week"":""wednesday""},{""start_time"":""08:30"",""end_time"":""15:30"",""day_of_week"":""thursday""},{""start_time"":""08:30"",""end_time"":""15:30"",""day_of_week"":""friday""}]	009
+
+---------- insert into role_management.
+
+INSERT INTO [dbo].[TBL_ROLE_MANAGEMENT]
+           ([Role_Name],[Position_Role],[Module_No],[Module_Name],[Group_No],[Group_Module]
+           ,[Group_Report],[RoleReport_Name],[List_Role],[Create_Role],[View_Role],[Update_Role]
+           ,[Delete_Role],[Export_Role],[Is_Active],[Create_Date],[Update_Date],[Remark])
+select 'B01','2','6.1.20','ADM1005_ONDEMAND','6.10','6.10020'
+           ,'ADM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.1.21','ADM1005_1_ONDEMAND','6.10','6.10021'
+           ,'ADM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.1.22','ADM1005_2_ONDEMAND','6.10','6.10022'
+           ,'ADM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+-- cdm
+UNION
+select 'B01','2','6.2.27','CDM1001_ONDEMAND','6.20','6.20027'
+           ,'CDM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.2.28','CDM1005_ONDEMAND','6.20','6.20028'
+           ,'CDM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.2.29','CDM1005_1_ONDEMAND','6.20','6.20029'
+           ,'CDM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.2.30','CDM1005_2_ONDEMAND','6.20','6.20030'
+           ,'CDM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.2.31','CDM1102_ONDEMAND','6.20','6.20031'
+           ,'CDM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+
+-- LRM
+UNION
+select 'B01','2','6.5.14','LRM1001_ONDEMAND','6.50','6.50014'
+           ,'LRM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.5.15','LRM1005_ONDEMAND','6.50','6.50015'
+           ,'LRM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.5.16','LRM1005_1_ONDEMAND','6.50','6.50016'
+           ,'LRM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.5.17','LRM1005_2_ONDEMAND','6.50','6.50017'
+           ,'LRM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.5.18','LRM1102_ONDEMAND','6.50','6.50018'
+           ,'LRM',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+
+-- RATM
+UNION
+select 'B01','2','6.7.69','RATM1001_ONDEMAND','6.70','6.70069'
+           ,'RAT',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.7.70','RATM1005_ONDEMAND','6.70','6.70070'
+           ,'RAT',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.7.71','RATM1005_1_ONDEMAND','6.70','6.70071'
+           ,'RAT',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+UNION
+select 'B01','2','6.7.72','RATM1102_ONDEMAND','6.70','6.70072'
+           ,'RAT',NULL,1,0,0,0
+           ,0,0,1,GETDATE(),GETDATE(),''
+
+-- modify [dbo].[AMS_SP_GET_GROUP_REPORT_ND]
+order by in mode 2 & mode 3.
+		ORDER BY REPORT_NAME
