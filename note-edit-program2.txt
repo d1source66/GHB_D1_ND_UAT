@@ -116,3 +116,32 @@ select 'B01','2','6.7.72','RATM1102_ONDEMAND','6.70','6.70072'
 -- modify [dbo].[AMS_SP_GET_GROUP_REPORT_ND]
 order by in mode 2 & mode 3.
 		ORDER BY REPORT_NAME
+		
+-- update SYSTEMBRANCH set the SOL_CODE from 5 digits to 3 digits.
+update SYSTEMBRANCH set SOL_CODE = SUBSTRING(sol_code,1,3);
+==========================================================
+-- if change branch Id then
+--- update tbl_users.sol_code -->009 dummy #1
+--- TBL_MAP_USER_BRANCH ==> change ID_BRANCH, ID_BRANCH2 to new branch Id.
+	update TBL_MAP_USER_BRANCH set ID_BRANCH = '007' , ID_BRANCH2='007' WHERE ID_USER = 27 
+--- TBL_MAP_BRANCH_REPORTS ==> change ID_BRANCH to new branch Id.
+	update TBL_MAP_BRANCH_REPORTS 
+	   set ID_BRANCH = '007' where ID_BRANCH = '009' 
+
+-- Modify	[AMS_SP_ADD_USER_LDAP2] add branch when add new user. (append command below)
+   /** Insert TBL_MAP_USER_BRANCH, TBL_MAP_BRANCH_REPORTS **/
+INSERT INTO [dbo].[TBL_MAP_USER_BRANCH]
+       ([ID_USER],[ID_BRANCH],[CREATE_DATE],[UPDATE_DATE],[ID_BRANCH2],[B_DATE],[E_DATE],[PERMA],[OPEN_OPT])
+ VALUES
+       (@result_USER_ID ,@SOL_CODE ,GETDATE(),GETDATE() ,@SOL_CODE,GETDATE() ,GETDATE(),1,1);
+
+INSERT INTO [dbo].[TBL_MAP_USER_REPORT]
+       ([ID_USER],[GROUP_NO],[REPORT_NO],[CREATE_DATE],[UPDATE_DATE],[ID_BRANCH])
+ VALUES
+       (@result_USER_ID
+       ,6.00 ,6.0001  ,GETDATE(), GETDATE(), @SOL_CODE);
+	   
+--- dbo.ams_sp_get_group_report_nd
+	==> show menu and detail in the web page.
+--- [dbo].[AMS_SP_MAP_USER_BRANCH]
+	==> map user id and branch id

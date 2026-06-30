@@ -219,7 +219,7 @@ namespace GHB_D1.Services
                             loginVM.BranchID = reader["ID_BRANCH"].ToString();
                             _logSys.WriteProcessLogFile(_strPathFile, "ID_BRANCH : line 75 " + reader["ID_BRANCH"].ToString());
                             loginVM.BranchName = reader["BRANCH_NAME"].ToString();
-                            _logSys.WriteProcessLogFile(_strPathFile, "BRANCH_NAME : line 77 " + reader["BRANCH_NAME"].ToString());
+                            _logSys.WriteProcessLogFile(_strPathFile, "BRANCH_NAME : line 87 " + reader["BRANCH_NAME"].ToString());
                             loginVM.Username = reader["USER_LOGIN"].ToString();
                             _logSys.WriteProcessLogFile(_strPathFile, "USER_LOGIN : line 79 " + reader["USER_LOGIN"].ToString());
                             loginVM.UserID = reader["USER_ID"].ToString();
@@ -305,7 +305,7 @@ namespace GHB_D1.Services
                             loginVM.BranchID = reader["ID_BRANCH"].ToString();
                             _logSys.WriteProcessLogFile(_strPathFile, "ID_BRANCH : line 75 " + reader["ID_BRANCH"].ToString());
                             loginVM.BranchName = reader["BRANCH_NAME"].ToString();
-                            _logSys.WriteProcessLogFile(_strPathFile, "BRANCH_NAME : line 77 " + reader["BRANCH_NAME"].ToString());
+                            _logSys.WriteProcessLogFile(_strPathFile, "BRANCH_NAME : line 97 " + reader["BRANCH_NAME"].ToString());
                             loginVM.Username = reader["USER_LOGIN"].ToString();
                             _logSys.WriteProcessLogFile(_strPathFile, "USER_LOGIN : line 79 " + reader["USER_LOGIN"].ToString());
                             loginVM.UserID = reader["USER_ID"].ToString();
@@ -410,7 +410,7 @@ namespace GHB_D1.Services
                                 loginVM.BranchID = reader["ID_BRANCH"].ToString();
                                 _logSys.WriteProcessLogFile(_strPathFile, "ID_BRANCH : line 75 " + reader["ID_BRANCH"].ToString());
                                 loginVM.BranchName = reader["BRANCH_NAME"].ToString();
-                                _logSys.WriteProcessLogFile(_strPathFile, "BRANCH_NAME : line 77 " + reader["BRANCH_NAME"].ToString());
+                                _logSys.WriteProcessLogFile(_strPathFile, "BRANCH_NAME : line 107 " + reader["BRANCH_NAME"].ToString());
                                 loginVM.Username = reader["USER_LOGIN"].ToString();
                                 _logSys.WriteProcessLogFile(_strPathFile, "USER_LOGIN : line 79 " + reader["USER_LOGIN"].ToString());
                                 loginVM.UserID = reader["USER_ID"].ToString();

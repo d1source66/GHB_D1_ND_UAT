@@ -96,6 +96,10 @@ namespace GHB_D1.Controllers
                 mnVM.DISPLAY_FILTER = (mnVM.T_DATE == null || mnVM.T_DATE == "") ? DateTime.Now.Date.ToString("dd/MM/yyyy", new CultureInfo("en-US")) : mnVM.T_DATE;
                 mnVM.SEARCH_KEY = SEARCH_KEY;
 
+                if (px == "NotFound")
+                {
+                    mnVM.MESSAGE = "ไม่พบข้อมูล ตามวันที่เลือก ";
+                }
                 //if (branchId == "001" || branchId == "049")
                 //{
                 //    return View("NdMainReport", mnVM);
@@ -195,6 +199,18 @@ namespace GHB_D1.Controllers
                 List<string> files = new List<string>();
                 files = mnVM.files;
 
+                if (files.Count == 0)
+                {
+                    return Index("NotFound", "", T_DATE, "", "", "");
+                    //mnVM.MESSAGE = "ไม่พบข้อมูล ตามวันที่เลือก ";
+                    //mnVM.BRANCH_ID = branchId;
+                    //mnVM.USER_ID = userId;
+                    //mnVM.BRANCH_NAME = branchName;
+                    ////mnVM = Post(mnVM);
+                    //mnVM.roleList = 
+                    //return View("NdMainReport", mnVM);                    
+                }
+
                 if (mnVM.DownloadCompleted)
                 {
                     mnVM.MESSAGE = "Download All Reports เรียบร้อยแล้ว ";
@@ -271,7 +287,7 @@ namespace GHB_D1.Controllers
 
                 // Return the ZIP as a stream
                 //return File(memoryStream, "application/zip", "download.zip");
-                return File(memoryStream.ToArray(), "application/zip", "download.zip");
+                return File(memoryStream.ToArray(), "application/zip", zipFileName);
                 //return Json(new { fileUrl = Url.Content(virtualFilePath) });
             }
             catch (Exception ex)
@@ -294,39 +310,14 @@ namespace GHB_D1.Controllers
 
         private MenuViewModel Post(MenuViewModel mnVM)
         {
-
             string branchId = (string)Session["BranchId"];
             string branchName = (string)Session["BranchName"];
             string userId = (string)Session["UserId"];
             string _tmpdate = string.Empty;
             string _strT_Date = DateTime.Now.Date.AddDays(-1).ToString();
 
-            //  mnVM.T_DATE = "09/06/2023";
-            DateTime dt = DateTime.Parse(mnVM.T_DATE);
-            string year = "";
-            if (dt != null)
-            {
-                year = (dt.Year <= 2000) ? (dt.Year + 543).ToString().Substring(2) : dt.Year.ToString().Substring(2);
-            }
-            else
-            {
-                year = DateTime.Now.Year.ToString().Substring(2);
-            }
-
-
-            _strT_Date = mnVM.T_DATE;
-
-
-            string strT_Date = _strT_Date.Replace("/", "");
-
-            if (strT_Date != "")
-            {
-                _tmpdate = strT_Date;
-                strT_Date = year + _tmpdate.Substring(2, 2) + _tmpdate.Substring(0, 2);
-            }
-
-
-            mnVM = _accService.AuthorizeUserReport(branchId, userId, strT_Date);
+            //  mnVM.T_DATE = "15/06/2023";
+            mnVM = _accService.AuthorizeUserReport(branchId, userId, "");
             mnVM.T_DATE = DateTime.Now.Date.AddDays(-1).ToShortDateString();
             mnVM.BRANCH_ID = branchId;
             mnVM.USER_ID = userId;
@@ -727,6 +718,11 @@ namespace GHB_D1.Controllers
             HashSet<string> retval = new HashSet<string>();
             string reportRootDir = _iniCon.rptPath;
             string reportDir = Path.Combine(reportRootDir, yFolder, mFolder, dFolder, "OnDemandReport");
+
+            if (!Directory.Exists(reportDir))
+            {
+                return retval;
+            }
 
             //file the files by group (ADM, CDM, etc..) and branch
             var files = Directory.GetFiles(reportDir, $"{groupName}*_{branchID}_*");
