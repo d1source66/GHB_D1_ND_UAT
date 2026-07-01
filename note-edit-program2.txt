@@ -145,3 +145,18 @@ INSERT INTO [dbo].[TBL_MAP_USER_REPORT]
 	==> show menu and detail in the web page.
 --- [dbo].[AMS_SP_MAP_USER_BRANCH]
 	==> map user id and branch id
+	
+--- Crystal report CRM1001, 1005, 1102 on-demand
+fBranchIdCheck
+IF IsNull({?@BranchId}) OR {?@BranchId} = "" THEN
+    ""
+ELSE
+    "(On Demand)"
+	
+	{?@BranchId} <> ""
+
+-- CRM1102.rpt in the suppress => suppress report footer a	
+if Count ({SP_RPT_CRM1102;1.spTermID}) = 0 then
+true
+else
+false		

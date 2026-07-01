@@ -96,9 +96,11 @@ namespace GHB_D1.Controllers
                 mnVM.DISPLAY_FILTER = (mnVM.T_DATE == null || mnVM.T_DATE == "") ? DateTime.Now.Date.ToString("dd/MM/yyyy", new CultureInfo("en-US")) : mnVM.T_DATE;
                 mnVM.SEARCH_KEY = SEARCH_KEY;
 
-                if (px == "NotFound")
+                if ((!string.IsNullOrEmpty(px)) && (px.IndexOf("NotFound") >= 0))
                 {
-                    mnVM.MESSAGE = "ไม่พบข้อมูล ตามวันที่เลือก ";
+                    //_strReport_Name + " ณ วันที่ " + CrmVM.DISPLAY_FILTER + " ไม่มีข้อมูล"
+                    string errmsg = $"ไม่พบข้อมูล {px.Split(':')[2]} ตามวันที่เลือก {px.Split(':')[1]}";
+                    mnVM.MESSAGE = errmsg;
                 }
                 //if (branchId == "001" || branchId == "049")
                 //{
@@ -201,7 +203,7 @@ namespace GHB_D1.Controllers
 
                 if (files.Count == 0)
                 {
-                    return Index("NotFound", "", T_DATE, "", "", "");
+                    return Index($"NotFound:{T_DATE}:{groupName}", "", T_DATE, "", "", "");
                     //mnVM.MESSAGE = "ไม่พบข้อมูล ตามวันที่เลือก ";
                     //mnVM.BRANCH_ID = branchId;
                     //mnVM.USER_ID = userId;
